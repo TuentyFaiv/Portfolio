@@ -1,30 +1,26 @@
 # About
 
-This is the first in our series of Gatsby Starters inspired by Google's [Material Design](https://material.io). The Material Business starter features all the basics for a typical business' website such as a home page, about page, contact page with an email form, and a fully featured blog. This one is sourced from Markdown but we'll have others that use a headless CMS (stay tuned). So don't be shy, feel free to clone the
+Actualmente estoy estudiando en línea en Platzi.com y he completado algunos cursos de desarrollo de software.
 
-# Heading 1
+Me estoy esforzando por ser un buen desarrollador Frontend con buenas prácticas en la escritura de código y el trabajo en equipo, también quiero centrarme un poco en el desarrollo móvil y el backend.
 
-# Heading 2
+Me gusta jugar videojuegos, practico deporte, veo anime y me gustan los gatos.
 
-### Heading 3
+Uso React.js como mi librería principal de desarrollo Frontend, sé un poco sobre preprocesadores de estilos, el que más me gustó es SASS, también uso webpack para empaquetar algunos de mis proyectos y estoy empezando a aprender GraphQL, así como fundamentos de bases de datos relacionales y no relacionales para complementar mis conocimientos; y para el desarrollo móvil estoy aprendiendo varias tecnologías/lenguajes como Flutter, React Native, Dart, Kotlin y Java, todavía no sé mucho sobre el desarrollo móvil, pero todos los días estoy aprendiendo algo nuevo.
 
-#### Heading 4
+## ¿Quieres colaborar conmigo?
 
-##### Heading 5
+Puedes enviarme un correo a:
+- contact@tuentyfaiv.com
 
-```html
-<p>Here is an example code block</p>
-```
+O si prefieres puedes contactarme por redes sociales:
 
-### Bulleted List
+- ![image](../assets/icons/facebook-icon.svg) [Facebook](https://www.facebook.com/tuentyfaivpage/) 
 
-* Gatsby
-* Netlify
-* Github
-* ANOUN
+- ![image](../assets/icons/twitter-icon.svg) [Twitter](https://twitter.com/TuentyFaiv)
 
-### Body Text
+- ![image](../assets/icons/github-icon-24px.svg) [GitHub](https://github.com/TuentyFaiv)
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Risus quis varius quam quisque id diam vel quam elementum. Proin fermentum leo vel orci. Risus sed vulputate odio ut enim blandit volutpat. Enim tortor at auctor urna nunc id cursus metus. Dictum at tempor commodo ullamcorper a lacus vestibulum. Ut sem nulla pharetra diam sit amet. Molestie nunc non blandit massa enim. Id diam maecenas ultricies mi eget mauris. Sagittis vitae et leo duis ut diam quam nulla. Venenatis tellus in metus vulputate eu  Diam phasellus vestibulum lorem sed. In dictum non consectetur a erat. Odio morbi quis commodo odio aenean sed adipiscing diam donec. Etiam dignissim diam quis enim lobortis scelerisque fermentum. Habitasse platea dictumst quisque sagittis purus sit. Nibh venenatis cras sed felis eget velit aliquet. Massa sed elementum tempus egestas sed sed risus pretium quam. Viverra suspendisse potenti nullam ac tortor vitae purus.
+- ![image](../assets/icons/linkedin-icon.svg) [Linked In](https://www.linkedin.com/in/tuentyfaiv/)
 
-Non curabitur gravida arcu ac tortor dignissim convallis. Lacus sed viverra tellus in. Egestas tellus rutrum tellus pellentesque eu tincidunt. Pulvinar sapien et ligula ullamcorper malesuada proin libero. Sit amet cursus sit amet dictum sit amet justo donec. Fringilla phasellus faucibus scelerisque eleifend donec pretium vulputate sapien. In vitae turpis massa sed elementum tempus. Donec et odio pellentesque diam volutpat commodo. Tempor id eu nisl nunc mi ipsum faucibus vitae aliquet. Ultrices gravida dictum fusce ut placerat orci. Tempus egestas sed sed risus pretium quam vulputate. Nulla aliquet enim tortor at auctor urna. Donec pretium vulputate sapien nec sagittis aliquam. Aliquet sagittis id consectetur purus ut faucibus pulvinar. Eu non diam phasellus vestibulum lorem sed risus. Scelerisque in dictum non consectetur a. Vitae suscipit tellus mauris a diam maecenas sed enim ut. Elementum nibh tellus molestie nunc non blandit massa enim.
+- ![image](../assets/icons/instagram-round-white-24px.svg) [Instagram](https://www.instagram.com/tuenty_faiv)
