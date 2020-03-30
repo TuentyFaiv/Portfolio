@@ -1,0 +1,26 @@
+@import "../../styles/theme.scss";
+
+.siteContainer {
+  min-height: 100vh; /* will cover the 100% of viewport */
+  overflow: hidden;
+  display: block;
+  position: relative;
+}
+
+.siteMain {
+  width: 90%;
+  min-height: 100%;
+  margin: 0 auto;
+  padding: 1rem;
+  h1 {
+    text-align: center;
+    margin-bottom: 1em;
+    font-family: 'Roboto', sans-serif;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  // .siteMain {
+  //   max-width: 960px;
+  // }
+}
