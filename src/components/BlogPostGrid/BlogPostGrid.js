@@ -1,53 +1,34 @@
-import React from "react"
-import { Link, StaticQuery, graphql } from "gatsby"
-import Img from "gatsby-image"
+import React from "react";
+import { StaticQuery, graphql } from "gatsby";
 
-import Card from "@material/react-card"
+import Card from "../Card/Card";
 
 function BlogPostGrid() {
   return (
     <StaticQuery
       query={blogPostQuery}
       render={data => {
-        const posts = data.allMarkdownRemark.edges
+        const posts = data.allMarkdownRemark.edges;
         return (
           <section className="page-main__section">
             <div className="blog-posts__container">
-              {posts.map(({ node }) => {
-                const title = node.frontmatter.title || node.fields.slug
-                return (
-                  <Link to={node.fields.slug} key={node.fields.slug}>
-                    <Card
-                      className="mdc-card--clickable blog-card"
-                    >
-                      <Img
-                        className="mdc-card__media"
-                        fluid={
-                          node.frontmatter.featured_image.childImageSharp
-                            .fluid
-                        }
-                      />
-                      <div className="blog-card-content__container">
-                        <h3>{title}</h3>
-                        <small>{node.frontmatter.date}</small>
-                        <p
-                          dangerouslySetInnerHTML={{
-                            __html:
-                              node.frontmatter.description || node.excerpt,
-                          }}
-                        />
-                      </div>
-                    </Card>
-                  </Link>
-                )
-              })}
+              {posts.map(({ node }) => (
+                <Card
+                  key={node.fields.slug}
+                  slug={node.fields.slug}
+                  image={node.frontmatter.banner.childImageSharp.fluid}
+                  title={node.frontmatter.title}
+                  date={node.frontmatter.date}
+                  description={node.frontmatter.description}
+                />
+              ))}
             </div>
           </section>
-        )
+        );
       }}
     />
-  )
-}
+  );
+};
 
 const blogPostQuery = graphql`
   query BlogPostQuery {
@@ -62,9 +43,11 @@ const blogPostQuery = graphql`
             slug
           }
           frontmatter {
-            date(formatString: "MMMM DD, YYYY")
             title
-            featured_image {
+            date(formatString: "MMMM DD, YYYY")
+            description
+            twitterUser
+            banner {
               childImageSharp {
                 fluid(maxWidth: 1200, quality: 92) {
                   ...GatsbyImageSharpFluid_withWebp
@@ -76,6 +59,6 @@ const blogPostQuery = graphql`
       }
     }
   }
-`
+`;
 
-export default BlogPostGrid
+export default BlogPostGrid;

@@ -1,100 +1,96 @@
-import React from "react"
-import { Link, graphql } from "gatsby"
-import Img from "gatsby-image"
-import SEO from "../components/SEO/SEO"
-import Layout from "../components/Layout/Layout"
+import React from "react";
+import { graphql } from "gatsby";
 
-import Card from "@material/react-card"
+import SEO from "../components/SEO/SEO";
+import Layout from "../components/Layout/Layout";
+import Card from "../components/Card/Card";
 
-// import idahoOutlineLightTheme from "../images/icons/idaho-outline--lightTheme.svg"
-import heroImage from "../images/undraw-hero-image.svg"
+import hero from "../images/hero.jpg";
 
-// Styles
-import "../styles/app.scss"
+import "../styles/app.scss";
 
 class IndexPage extends React.Component {
   render() {
-    const { data } = this.props
-    const posts = data.allMarkdownRemark.edges
+    const { data } = this.props;
+    const projects = data.allMarkdownRemark.edges;
     return (
       <Layout>
-        <SEO title="" />
+        <SEO title="Home" />
         <section className="home--section1">
-          <img src={heroImage} alt="hero" />
+          <img src={hero} alt="hero" />
+          <div className="home--section1-overlay">
+            <h1>Recuerda tener siempre la mente sana y el cuerpo sano.</h1>
+            <p><span role="img" aria-label="icon">💪🏻</span></p>
+          </div>
         </section>
         <section className="home--section2">
-          <h3>This is the power statement section</h3>
-          <h3>Say something that stands out</h3>
-          <h3>Say something visitors will remember</h3>
+          <h3>Piensa fuera de la caja, y no veas todo desde el miso angulo. <span role="img" aria-label="icon">👌🏻</span></h3>
+          <h3>La mejor forma de aprender es enseñando, no importa si consideras que es poco por algo se empieza. <span role="img" aria-label="icon">😁</span></h3>
+          <h3>Tratare de publicar contenido al menos una vez a la semana. <span role="img" aria-label="icon">🙌🏻</span> </h3>
           <h3>
-            Say something <strong>bold</strong> about your brand
+            ¿Te gustaría compartir algo aquí? Mandame un mensaje a
+            {" "}
+            <a
+              style={{
+                color: 'cyan',
+                textDecoration: 'underline'
+              }}
+              href="http://twitter.com/TuentyFaiv" target="_blank" rel="noopener noreferrer"
+            >
+              Twitter
+            </a>
+            {" "}
+            <span role="img" aria-label="icon">💬.</span>
           </h3>
         </section>
         <section className="home--section3">
           <h2>Projects</h2>
           <div className="blog-posts__container">
-            {posts.map(({ node }) => {
-              const title = node.frontmatter.title || node.fields.slug
-              return (
-                <Link to={node.fields.slug} key={node.fields.slug}>
-                  <Card
-                    className="mdc-card--clickable blog-card"
-                  >
-                    <Img
-                      className="mdc-card__media"
-                      fluid={
-                        node.frontmatter.featured_image.childImageSharp
-                          .fluid
-                      }
-                    />
-                    <div className="blog-card-content__container">
-                      <h3>{title}</h3>
-                      <small>{node.frontmatter.date}</small>
-                      <p
-                        dangerouslySetInnerHTML={{
-                          __html:
-                            node.frontmatter.description || node.excerpt,
-                        }}
-                      />
-                    </div>
-                  </Card>
-                </Link>
-              )
-            })}
+            {projects.map(({ node }) => (
+              <Card
+                key={node.fields.slug}
+                slug={node.fields.slug}
+                image={node.frontmatter.banner.childImageSharp.fluid}
+                title={node.frontmatter.title}
+                date={node.frontmatter.date}
+                description={node.frontmatter.description}
+              />
+            ))}
           </div>
         </section>
       </Layout>
-    )
+    );
   }
 }
 
-export default IndexPage
+export default IndexPage;
 
 export const indexQuery = graphql`
-         query {
-           allMarkdownRemark(
-             filter: { fileAbsolutePath: { regex: "/projects/" } }
-             sort: { fields: [frontmatter___date], order: DESC }
-           ) {
-             edges {
-               node {
-                 excerpt
-                 fields {
-                   slug
-                 }
-                 frontmatter {
-                   date(formatString: "MMMM DD, YYYY")
-                   title
-                   featured_image {
-                     childImageSharp {
-                       fluid(maxWidth: 1200, quality: 92) {
-                         ...GatsbyImageSharpFluid_withWebp
-                       }
-                     }
-                   }
-                 }
-               }
-             }
-           }
-         }
-       `
+  query {
+    allMarkdownRemark(
+      filter: { fileAbsolutePath: { regex: "/projects/" } }
+      sort: { fields: [frontmatter___date], order: DESC }
+    ) {
+      edges {
+        node {
+          excerpt
+          fields {
+            slug
+          }
+          frontmatter {
+            date(formatString: "MMMM DD, YYYY")
+            title
+            description
+            banner {
+              childImageSharp {
+                fluid(maxWidth: 1200, quality: 92) {
+                  ...GatsbyImageSharpFluid_withWebp
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
