@@ -56,6 +56,7 @@ class IndexPage extends React.Component {
                     title={node.frontmatter.title}
                     date={node.frontmatter.date}
                     description={node.frontmatter.description}
+                    author={node.frontmatter.author}
                   />
                 ))}
               </div>
@@ -86,6 +87,7 @@ export const indexQuery = graphql`
             date(formatString: "MMMM DD, YYYY")
             title
             description
+            author
             banner {
               childImageSharp {
                 fluid(maxWidth: 1200, quality: 92) {
