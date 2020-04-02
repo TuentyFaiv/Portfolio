@@ -250,6 +250,11 @@ code span::selection {
   color: var(--mdc-theme-primary);
 }
 
+.withoutContent {
+  margin: 5em 0;
+  font-family: 'Lato', sans-serif;
+}
+
 // Blog
 
 .blog-posts__container {

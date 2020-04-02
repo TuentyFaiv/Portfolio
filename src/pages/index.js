@@ -12,7 +12,7 @@ import "../styles/app.scss";
 class IndexPage extends React.Component {
   render() {
     const { data } = this.props;
-    const projects = data.allMarkdownRemark.edges;
+    const projects = data.allMarkdownRemark.edges || [];
     return (
       <Layout>
         <SEO title="Home" />
@@ -45,18 +45,23 @@ class IndexPage extends React.Component {
         </section>
         <section className="home--section3">
           <h2>Projects</h2>
-          <div className="blog-posts__container">
-            {projects.map(({ node }) => (
-              <Card
-                key={node.fields.slug}
-                slug={node.fields.slug}
-                image={node.frontmatter.banner.childImageSharp.fluid}
-                title={node.frontmatter.title}
-                date={node.frontmatter.date}
-                description={node.frontmatter.description}
-              />
-            ))}
-          </div>
+          {
+            projects.length > 0 ?
+              <div className="blog-posts__container">
+                {projects.map(({ node }) => (
+                  <Card
+                    key={node.fields.slug}
+                    slug={node.fields.slug}
+                    image={node.frontmatter.banner.childImageSharp.fluid}
+                    title={node.frontmatter.title}
+                    date={node.frontmatter.date}
+                    description={node.frontmatter.description}
+                  />
+                ))}
+              </div>
+              : <h3 className="withoutContent">Aún no hay contenido vuelve en unos días <span role="img" aria-label="icon">😉</span></h3>
+          }
+
         </section>
       </Layout>
     );

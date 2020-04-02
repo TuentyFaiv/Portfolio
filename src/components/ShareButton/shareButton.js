@@ -18,7 +18,7 @@ const ShareButton = ({ title, description, url }) => {
         text: description,
         url
       })
-        .catch(error => swal("No se pudo compartir", ":'(", "error"));
+        .catch(error => swal("No se pudo compartir", "😥", "error"));
     } else {
       setModal(!modal);
     }
@@ -26,10 +26,10 @@ const ShareButton = ({ title, description, url }) => {
 
   const copyLink = () => {
     url.toString();
-    navigator.clipboard.writeText(url).then(function () {
+    navigator.clipboard.writeText(url).then(() => {
       swal("Url copiada", `${url}`, "success");
-    }, function () {
-      swal("No se pudo compartir", ":'(", "error");
+    }, () => {
+      swal("No se pudo compartir", "😥", "error");
     });
   };
 
@@ -47,7 +47,6 @@ const ShareButton = ({ title, description, url }) => {
               href={`https://twitter.com/intent/tweet?url=${url}&text=${title}`}
               target="_blank"
               rel="noopener noreferrer"
-              data-show-count="false"
             >
               <img
                 src={shareTwitter}

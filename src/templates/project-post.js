@@ -11,30 +11,33 @@ import styles from "./blogPost.module.scss";
 
 class ProjectPostTemplate extends React.Component {
   render() {
-    const post = this.props.data.markdownRemark;
+    const project = this.props.data.markdownRemark;
     const { previous, next } = this.props.pageContext;
     return (
       <CenteredLayout location={this.props.location}>
         <SEO
-          title={post.frontmatter.title}
-          description={post.frontmatter.description}
+          title={project.frontmatter.title}
+          description={project.frontmatter.description}
         />
-        <h1>{post.frontmatter.title}</h1>
-        <p
+        <h1>{project.frontmatter.title}</h1>
+        <div
           style={{
-            display: `block`,
+            display: `flex`,
+            alignItems: 'center',
+            justifyContent: 'space-between'
           }}
         >
-          {post.frontmatter.date}
-        </p>
-        <Img fluid={post.frontmatter.banner.childImageSharp.fluid} />
+          <p style={{ margin: `15px 5px` }}>{project.frontmatter.date}</p>
+          <p style={{ margin: `15px 5px` }}><a style={{ textDecoration: 'underline' }} href={`https://twitter.com/${project.frontmatter.twitterUser}`} target="_blank" rel="noopener noreferrer">{project.frontmatter.author}</a></p>
+        </div>
+        <Img fluid={project.frontmatter.banner.childImageSharp.fluid} />
         <div
           className={styles.blogPostContent}
-          dangerouslySetInnerHTML={{ __html: post.html }}
+          dangerouslySetInnerHTML={{ __html: project.html }}
         />
         <ShareButton
-          title={post.frontmatter.title}
-          description={post.frontmatter.description}
+          title={project.frontmatter.title}
+          description={project.frontmatter.description}
           url={this.props.location.href}
         />
         <ul

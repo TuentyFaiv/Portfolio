@@ -8,21 +8,25 @@ function BlogPostGrid() {
     <StaticQuery
       query={blogPostQuery}
       render={data => {
-        const posts = data.allMarkdownRemark.edges;
+        const posts = data.allMarkdownRemark.edges || [];
         return (
           <section className="page-main__section">
-            <div className="blog-posts__container">
-              {posts.map(({ node }) => (
-                <Card
-                  key={node.fields.slug}
-                  slug={node.fields.slug}
-                  image={node.frontmatter.banner.childImageSharp.fluid}
-                  title={node.frontmatter.title}
-                  date={node.frontmatter.date}
-                  description={node.frontmatter.description}
-                />
-              ))}
-            </div>
+            {
+              posts.length > 0 ?
+                <div className="blog-posts__container">
+                  {posts.map(({ node }) => (
+                    <Card
+                      key={node.fields.slug}
+                      slug={node.fields.slug}
+                      image={node.frontmatter.banner.childImageSharp.fluid}
+                      title={node.frontmatter.title}
+                      date={node.frontmatter.date}
+                      description={node.frontmatter.description}
+                      author={node.frontmatter.author}
+                    />
+                  ))}
+                </div> : <h3 className="withoutContent">Aún no hay contenido vuelve en unos días <span role="img" aria-label="icon">😉</span></h3>
+            }
           </section>
         );
       }}
@@ -46,7 +50,7 @@ const blogPostQuery = graphql`
             title
             date(formatString: "MMMM DD, YYYY")
             description
-            twitterUser
+            author
             banner {
               childImageSharp {
                 fluid(maxWidth: 1200, quality: 92) {

@@ -5,7 +5,7 @@ import Img from "gatsby-image";
 import CardMaterial from "@material/react-card";
 
 const Card = (props) => {
-  const { slug, image, title, date, description } = props;
+  const { slug, image, title, date, description, author } = props;
   return (
     <Link to={slug}>
       <CardMaterial
@@ -18,6 +18,8 @@ const Card = (props) => {
         <div className="blog-card-content__container">
           <h3>{title}</h3>
           <small>{date}</small>
+          {" | "}
+          <small>{author}</small>
           <p
             dangerouslySetInnerHTML={{
               __html: description

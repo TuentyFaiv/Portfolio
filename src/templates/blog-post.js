@@ -20,13 +20,16 @@ class BlogPostTemplate extends React.Component {
           description={post.frontmatter.description}
         />
         <h1>{post.frontmatter.title}</h1>
-        <p
+        <div
           style={{
-            display: `block`,
+            display: `flex`,
+            alignItems: 'center',
+            justifyContent: 'space-between'
           }}
         >
-          {post.frontmatter.date}
-        </p>
+          <p style={{ margin: `15px 5px` }}>{post.frontmatter.date}</p>
+          <p style={{ margin: `15px 5px` }}><a style={{ textDecoration: 'underline' }} href={`https://twitter.com/${post.frontmatter.twitterUser}`} target="_blank" rel="noopener noreferrer">{post.frontmatter.author}</a></p>
+        </div>
         <Img fluid={post.frontmatter.banner.childImageSharp.fluid} />
         <div
           className={styles.blogPostContent}
