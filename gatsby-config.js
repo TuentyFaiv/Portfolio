@@ -83,7 +83,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
-        trackingId: procees.env.GAID,
+        trackingId: process.env.GAID,
         head: true,
         anonymize: true,
         cookieDomain: "tuentyfaiv.com",
