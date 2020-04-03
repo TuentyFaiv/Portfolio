@@ -1,5 +1,5 @@
 require("dotenv").config({
-  path: `.env.${process.env.NODE_ENV}`,
+  path: `.env.${process.env.NODE_ENV || 'production'}`,
 });
 
 const website = require("./config/website");
@@ -84,6 +84,9 @@ module.exports = {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
         trackingId: procees.env.GAID,
+        head: true,
+        anonymize: true,
+        cookieDomain: "tuentyfaiv.com",
       },
     },
     `gatsby-plugin-react-helmet`,

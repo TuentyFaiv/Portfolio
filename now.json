@@ -16,7 +16,7 @@
       "dest": "404.html"
     }
   ],
-  "build": {
+  "production": {
     "env": {
       "GAID": "@ga-tracking-id"
     }
