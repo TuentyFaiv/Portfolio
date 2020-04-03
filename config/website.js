@@ -13,8 +13,5 @@ module.exports = {
   owner: "Tonalli López", // Author
   theme_color: "#961E1E",
   background_color: "#903636",
-
-  // Social and Analytics
-  twitterUsername: "@TuentyFaiv", // Twitter Username
-  googleAnalyticsID: "", // Google Analytics Tag ID
+  twitterUsername: "@TuentyFaiv"
 }
