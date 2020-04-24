@@ -16,9 +16,7 @@
       "dest": "404.html"
     }
   ],
-  "production": {
-    "env": {
-      "GAID": "@ga-tracking-id"
-    }
+  "env": {
+    "GAID": "@ga-tracking-id"
   }
 }

@@ -41,6 +41,16 @@ body {
   line-height: 1.5rem;
 }
 
+::-webkit-scrollbar {
+  width: 10px;
+  background-color: #DDDDDD;
+}
+
+::-webkit-scrollbar-thumb {
+  width: 10px;
+  background-color: var(--mdc-theme-primary);
+}
+
 p {
   margin: 1rem auto;
 }
@@ -65,7 +75,7 @@ a {
 
 ::selection {
   color: var(--mdc-theme-on-primary);
-  background: var(--mdc-theme-primary);
+  background: transparentize($color: #961E1E, $amount: .15);
 }
 
 pre {
@@ -76,6 +86,10 @@ pre {
   line-height: 1.45;
   overflow: auto;
   padding: 16px;
+  code {
+    background: transparent;
+    padding: 0;
+  }
 }
 
 // pre::-moz-selection {
@@ -84,11 +98,34 @@ pre {
 //   background: var(--mdc-theme-on-primary);
 // }
 
+code {
+  background-color: #666666;
+  color: var(--mdc-theme-on-primary);
+  padding: 5px 10px;
+  border-radius: 3px;
+}
+
 pre::selection,
 code::selection,
 code span::selection {
   color: var(--mdc-theme-background);
   background: var(--mdc-theme-background);
+}
+
+blockquote {
+  margin-left: -1.75rem;
+  margin-right: 1.75rem;
+  margin-top: 0;
+  padding-bottom: 0;
+  padding-left: 1.42188rem;
+  padding-right: 0;
+  padding-top: 0;
+  margin-bottom: 1.75rem;
+  font-size: 1.20112rem;
+  line-height: 1.75rem;
+  color: hsla(0,0%,0%,0.59);
+  font-style: italic;
+  border-left: 0.32813rem solid hsla(0,0%,0%,0.9);
 }
 
 /* MDC Styles*/
@@ -302,6 +339,15 @@ code span::selection {
   }
   &-mail{
     font-weight: bold;
+    a {
+      padding: 2px 0;
+      color: var(--mdc-theme-secondary);
+      border-bottom: 1px solid transparent;
+      &:hover {
+        cursor: pointer;
+        border-bottom: 1px solid var(--mdc-theme-secondary);
+      }
+    }
   }
 }
 
@@ -318,6 +364,8 @@ code span::selection {
     a {
       display: flex;
       align-items: center;
+      padding: 5px 0;
+      border-bottom: 1px solid transparent;
       img {
         width: 32px;
         height: 32px;
@@ -329,13 +377,8 @@ code span::selection {
       }
       &:hover {
         cursor: pointer;
-        text-decoration: underline;
-      }
-    }
-    :nth-child(2) {
-      a img {
-        width: 36px;
-        height: 36px;
+        color: var(--mdc-theme-secondary);
+        border-bottom: 1px solid var(--mdc-theme-secondary);
       }
     }
   } 
@@ -371,6 +414,13 @@ code span::selection {
   }
 }
 
+@media screen and (min-width: 801px) {
+  .about__content {
+    margin: 0 22%;
+    width: 56%;
+  }
+}
+
 /* TABLET LAYOUT STYLES */
 @media screen and (max-width: 800px) {
   .home--section1 > img {
@@ -391,6 +441,11 @@ code span::selection {
     column-gap: 1.5em;
     row-gap: 1.5em;
     grid-auto-rows: 500px;
+  }
+
+  .about__content {
+    margin: 0 15%;
+    width: 70%;
   }
 }
 
@@ -446,6 +501,24 @@ code span::selection {
       height: 250px;
       h1 {
         margin: .8em;
+      }
+    }
+  }
+
+  .about__content {
+    margin: 0;
+    width: 100%;
+  }
+
+  .list_socials {
+    width: 100%;
+    li {
+      margin: 10px 0;
+      a {
+        img {
+          width: 28px;
+          height: 28px;
+        }
       }
     }
   }

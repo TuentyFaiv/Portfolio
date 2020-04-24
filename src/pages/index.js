@@ -43,7 +43,7 @@ class IndexPage extends React.Component {
             <span role="img" aria-label="icon">💬.</span>
           </h3>
         </section>
-        <section className="home--section3">
+        <section id="projects" className="home--section3">
           <h2>Projects</h2>
           {
             projects.length > 0 ?

@@ -20,7 +20,7 @@ class Header extends Component {
         </Link>
         <nav>
           <ul>
-            <ListLink to={`/`}>Projects</ListLink>
+            <ListLink to={`/#projects`}>Projects</ListLink>
             <ListLink to={`/blog/`}>Blog</ListLink>
             <ListLink to={`/about/`}>About</ListLink>
           </ul>

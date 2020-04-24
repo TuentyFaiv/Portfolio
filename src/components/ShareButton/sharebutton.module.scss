@@ -1,8 +1,6 @@
 .blogpost__share {  
   position: relative;
-  width: 100%;
   height: 40px;
-  margin: 20px 0;
 }
 
 .blogpost__share button {
@@ -86,4 +84,25 @@
   z-index: 99;
   top: -17px;
   left: 80px;
+}
+
+@media screen and (min-width: 801px) {
+  .blogpost__share {
+    width: 54%;
+    margin: 20px 23%;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .blogpost__share {  
+    width: 70%;
+    margin: 20px 15%;
+  }
+}
+
+@media screen and (max-width: 510px) {
+  .blogpost__share {  
+    width: 100%;
+    margin: 20px 0;
+  }
 }

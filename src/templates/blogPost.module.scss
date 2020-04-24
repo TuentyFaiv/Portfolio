@@ -1,3 +1,32 @@
-.blogPostContent a {
-  text-decoration: underline !important;
+.blogPostContent{
+  padding-bottom: 10px;
+  border-bottom: 2px solid #676767;
+  a {
+    text-decoration: underline !important;
+    &:hover {
+      cursor: pointer;
+      color: var(--mdc-theme-secondary);
+    }
+  }
+}
+
+@media screen and (min-width: 801px) {
+  .blogPostContent{
+    margin: 45px 23% 0;
+    width: 54%;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .blogPostContent{
+    margin: 35px 15% 0;
+    width: 70%;
+  }
+}
+
+@media screen and (max-width: 510px) {
+  .blogPostContent{
+    margin: 35px 0 0;
+    width: 100%;
+  }
 }
