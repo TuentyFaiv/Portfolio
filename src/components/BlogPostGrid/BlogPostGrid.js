@@ -37,7 +37,7 @@ function BlogPostGrid() {
 const blogPostQuery = graphql`
   query BlogPostQuery {
     allMarkdownRemark(
-      filter: { fileAbsolutePath: { regex: "/posts/" } }
+      filter: { fileAbsolutePath: { regex: "/posts/blog/" } }
       sort: { fields: [frontmatter___date], order: DESC }
     ) {
       edges {

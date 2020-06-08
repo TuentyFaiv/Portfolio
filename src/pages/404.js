@@ -25,7 +25,7 @@ const NotFoundPage = () => (
     </p>
     <Link to="/">
       {/* // TODO add back icon */}
-      <Button raised>Go Back Home</Button>
+      <Button className="btn-centered" raised>Go Back Home</Button>
     </Link>
   </CenteredLayout>
 )

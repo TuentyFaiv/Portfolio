@@ -27,7 +27,7 @@ class ContactForm extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault()
-    fetch('https://submit-form.com/JOkjn0y8YzUohXij-0wMg', {
+    fetch('https://submit-form.com/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

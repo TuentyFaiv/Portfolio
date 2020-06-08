@@ -1,13 +1,15 @@
 import React from "react";
-import { graphql } from "gatsby";
+import { Link, graphql } from "gatsby";
 
 import SEO from "../components/SEO/SEO";
 import Layout from "../components/Layout/Layout";
 import Card from "../components/Card/Card";
+import Button from "@material/react-button";
 
 import hero from "../images/hero.jpg";
 
 import "../styles/app.scss";
+
 
 class IndexPage extends React.Component {
   render() {
@@ -17,17 +19,23 @@ class IndexPage extends React.Component {
       <Layout>
         <SEO title="Home" />
         <section className="home--section1">
-          <img src={hero} alt="hero" />
           <div className="home--section1-overlay">
+            <img src={hero} alt="hero" />
+            <span className="overlay" />
             <h1>Recuerda tener siempre la mente sana y el cuerpo sano.</h1>
             <p><span role="img" aria-label="icon">💪🏻</span></p>
+            <Link to="/#projects">
+              <Button raised className="mdc-button--round">
+                Ver proyectos
+              </Button>
+            </Link>
           </div>
         </section>
         <section className="home--section2">
-          <h3>Piensa fuera de la caja, y no veas todo desde el miso angulo. <span role="img" aria-label="icon">👌🏻</span></h3>
-          <h3>La mejor forma de aprender es enseñando, no importa si consideras que es poco por algo se empieza. <span role="img" aria-label="icon">😁</span></h3>
-          <h3>Tratare de publicar contenido al menos una vez a la semana. <span role="img" aria-label="icon">🙌🏻</span> </h3>
-          <h3>
+          <h2>Piensa fuera de la caja, y no veas todo desde el miso angulo. <span role="img" aria-label="icon">👌🏻</span></h2>
+          <h2>La mejor forma de aprender es enseñando, no importa si consideras que es poco por algo se empieza. <span role="img" aria-label="icon">😁</span></h2>
+          <h2>Tratare de publicar contenido al menos una vez a la semana. <span role="img" aria-label="icon">🙌🏻</span> </h2>
+          <h2>
             ¿Te gustaría compartir algo aquí? Mandame un mensaje a
             {" "}
             <a
@@ -41,7 +49,7 @@ class IndexPage extends React.Component {
             </a>
             {" "}
             <span role="img" aria-label="icon">💬.</span>
-          </h3>
+          </h2>
         </section>
         <section id="projects" className="home--section3">
           <h2>Projects</h2>
@@ -59,10 +67,9 @@ class IndexPage extends React.Component {
                     author={node.frontmatter.author}
                   />
                 ))}
-              </div>
-              : <h3 className="withoutContent">Aún no hay contenido vuelve en unos días <span role="img" aria-label="icon">😉</span></h3>
+              </div> :
+              <h3 className="withoutContent">Aún no hay contenido vuelve en unos días <span role="img" aria-label="icon">😉</span></h3>
           }
-
         </section>
       </Layout>
     );
@@ -74,7 +81,7 @@ export default IndexPage;
 export const indexQuery = graphql`
   query {
     allMarkdownRemark(
-      filter: { fileAbsolutePath: { regex: "/projects/" } }
+      filter: { fileAbsolutePath: { regex: "/posts/projects/" } }
       sort: { fields: [frontmatter___date], order: DESC }
     ) {
       edges {

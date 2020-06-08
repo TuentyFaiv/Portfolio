@@ -1,6 +1,17 @@
 .blogPostContent{
   padding-bottom: 10px;
   border-bottom: 2px solid #676767;
+  h2,
+  h3 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+  }
+  h2 {
+    font-size: 28px;
+  }
+  h3 {
+    font-size: 22px;
+  }
   a {
     text-decoration: underline !important;
     &:hover {

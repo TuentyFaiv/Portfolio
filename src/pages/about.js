@@ -7,10 +7,7 @@ import "../styles/app.scss";
 
 class About extends React.Component {
   render() {
-    const { data: { markdownRemark: { html }, sanity } } = this.props;
-    // const { markdownRemark } = data; // data.markdownRemark holds our post data
-    // const { html } = markdownRemark;
-    console.log(sanity);
+    const { data: { markdownRemark: { html } } } = this.props;
     return (
       <CenteredLayout location={this.props.location}>
         <SEO title="About" />

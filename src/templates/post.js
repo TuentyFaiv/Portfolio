@@ -7,7 +7,7 @@ import SEO from "../components/SEO/SEO";
 import ShareButton from "../components/ShareButton/shareButton";
 
 // Styles
-import styles from "./blogPost.module.scss";
+import styles from "./post.module.scss";
 
 class BlogPostTemplate extends React.Component {
   render() {
