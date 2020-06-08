@@ -31,16 +31,16 @@ rl.on('close', () => {
   postData['date'] = now.toISOString();
 
   try {
-    fs.statSync(`content/posts/${slug}`);
+    fs.statSync(`content/posts/blog/${slug}`);
   } catch (err) {
-    fs.mkdirSync(`content/posts/${slug}`);
+    fs.mkdirSync(`content/posts/blog/${slug}`);
   }
 
   try {
-    fs.statSync(`content/posts/${slug}/${postData.fileName}`)
+    fs.statSync(`content/posts/blog/${slug}/${postData.fileName}`)
     console.error('Error!!: The post has already been created');
   } catch (err) {
-    fs.writeFileSync(`content/posts/${slug}/${postData.fileName}`, `---
+    fs.writeFileSync(`content/posts/blog/${slug}/${postData.fileName}`, `---
 title: '${postData.title}'
 date: ${postData.date}
 description: '${postData.description}'
@@ -48,6 +48,6 @@ author: '${postData.author}'
 twitterUser: '${postData.twitterUser}'
 banner: ''
 ---`);
-    console.log(`Success!!: content/posts/${slug}/${postData.fileName} was created`);
+    console.log(`Success!!: content/posts/blog/${slug}/${postData.fileName} was created`);
   }
 });
