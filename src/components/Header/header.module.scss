@@ -36,3 +36,15 @@
   padding: .2em 0;
   border-bottom: 2px solid var(--mdc-theme-primary);
 }
+
+@media screen and (max-width: 460px) {
+  .siteHeader {
+    nav {
+      width: 90%;
+      ul {
+        display: flex;
+        flex-wrap: wrap;
+      }
+    }
+  }
+}

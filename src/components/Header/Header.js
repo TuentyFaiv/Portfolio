@@ -23,6 +23,7 @@ class Header extends Component {
             <ListLink to={`/#projects`}>Projects</ListLink>
             <ListLink to={`/blog/`}>Blog</ListLink>
             <ListLink to={`/about/`}>About</ListLink>
+            <ListLink to={`/mentoring/`}>Tech me</ListLink>
           </ul>
         </nav>
       </header>

@@ -34,6 +34,7 @@ class Footer extends Component {
             </li>
             <li>
               <Link to="/about/">About</Link>
+              <Link to="/mentoring/">Tech me</Link>
             </li>
           </ul>
         </nav>

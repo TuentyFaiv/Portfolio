@@ -1,14 +1,12 @@
-import React from "react"
-import { Link } from "gatsby"
+import React from "react";
+import { Link } from "gatsby";
 
-import CenteredLayout from "../components/CenteredLayout/CenteredLayout"
-import awkwardKidGif from "../images/awkward-kid.gif"
+import SEO from "../components/SEO/SEO";
+import CenteredLayout from "../components/CenteredLayout/CenteredLayout";
+import Button from "@material/react-button";
 
-import SEO from "../components/SEO/SEO"
+import awkwardKidGif from "../images/awkward-kid.gif";
 
-import Button from "@material/react-button"
-
-// Styles
 import "../styles/app.scss"
 
 const NotFoundPage = () => (
