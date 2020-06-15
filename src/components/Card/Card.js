@@ -2,15 +2,11 @@ import React from 'react';
 import { Link } from "gatsby";
 import Img from "gatsby-image";
 
-import CardMaterial from "@material/react-card";
-
 const Card = (props) => {
   const { slug, image, title, date, description, author } = props;
   return (
     <Link to={slug}>
-      <CardMaterial
-        className="mdc-card--clickable blog-card"
-      >
+      <article className="blog-card">
         <Img
           className="mdc-card__media"
           fluid={image}
@@ -26,7 +22,7 @@ const Card = (props) => {
             }}
           />
         </div>
-      </CardMaterial>
+      </article>
     </Link>
   );
 };
