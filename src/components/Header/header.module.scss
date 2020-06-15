@@ -37,12 +37,14 @@
   border-bottom: 2px solid var(--mdc-theme-primary);
 }
 
-@media screen and (max-width: 460px) {
+@media screen and (max-width: 420px) {
   .siteHeader {
     nav {
       width: 90%;
       ul {
         display: flex;
+        align-items: center;
+        justify-content: flex-end;
         flex-wrap: wrap;
       }
     }

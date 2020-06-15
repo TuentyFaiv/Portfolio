@@ -12,10 +12,7 @@ Así como fundamentos de bases de datos relacionales y no relacionales para comp
 
 <h3 class="title-center">¿Quieres colaborar conmigo?</h3>
 <div class="infoContact-center">
-Puedes enviarme un correo a:
-<p class="infoContact-mail"><a href="mailto:contact@tuentyfaiv.com"> contact@tuentyfaiv.com</a></p>
-
-O si prefieres puedes contactarme por redes sociales:
+Puedes contactarme por redes sociales:
 </div>
 
 <ul class="list_socials">
