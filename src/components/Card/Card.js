@@ -6,7 +6,7 @@ const Card = (props) => {
   const { slug, image, title, date, description, author, color } = props;
   console.log(color);
   return (
-    <Link to={slug}>
+    <Link to={slug} aria-label={title}>
       <Container shadowColor={color}>
         <Image
           fluid={image}
