@@ -1,11 +1,10 @@
 import React from 'react';
-
-import styles from "./loader.module.scss";
+import { Loader as Wrapper } from './styles';
 
 const Loader = () => {
   return (
-    <div className={styles.loader}><div></div><div></div></div>
+    <Wrapper><div></div><div></div></Wrapper>
   );
-}
+};
 
 export default Loader;
