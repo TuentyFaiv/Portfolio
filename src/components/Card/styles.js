@@ -16,7 +16,7 @@ export const Container = styled.article`
   transition-timing-function: ease;
   transition-delay: 0s;
   &:hover {  
-    box-shadow: 1px 1px 8px 3px rgba(0, 0, 0, .2), 6px 6px 0px 0px #961E1E;
+    box-shadow: 1px 1px 8px 3px rgba(0, 0, 0, .2), 6px 6px 0px 0px ${props => props.shadowColor ? props.shadowColor : '#961E1E'};
     cursor: pointer;
   }
 `;

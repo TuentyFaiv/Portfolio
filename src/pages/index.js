@@ -58,6 +58,7 @@ class IndexPage extends React.Component {
                       date={node.frontmatter.date}
                       description={node.frontmatter.description}
                       author={node.frontmatter.author}
+                      color={node.frontmatter.color}
                     />
                   ))}
                 </GridPosts> :
@@ -96,6 +97,7 @@ export const indexQuery = graphql`
                 }
               }
             }
+            color
           }
         }
       }

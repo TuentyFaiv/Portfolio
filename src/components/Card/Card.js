@@ -3,10 +3,11 @@ import { Link } from "gatsby";
 import { Container, Image, Content } from "./styles";
 
 const Card = (props) => {
-  const { slug, image, title, date, description, author } = props;
+  const { slug, image, title, date, description, author, color } = props;
+  console.log(color);
   return (
     <Link to={slug}>
-      <Container>
+      <Container shadowColor={color}>
         <Image
           fluid={image}
         />

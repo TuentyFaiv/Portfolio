@@ -24,6 +24,7 @@ function BlogPostGrid() {
                       date={node.frontmatter.date}
                       description={node.frontmatter.description}
                       author={node.frontmatter.author}
+                      color={node.frontmatter.color}
                     />
                   ))}
                 </GridPosts> :
@@ -60,6 +61,7 @@ const blogPostQuery = graphql`
                 }
               }
             }
+            color
           }
         }
       }

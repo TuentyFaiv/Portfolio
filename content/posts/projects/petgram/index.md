@@ -5,4 +5,5 @@ description: 'Una red social para mascotas creada con React y GraphQL. Se implem
 author: 'TuentyFaiv'
 twitterUser: 'TuentyFaiv'
 banner: ./petgram.png
+color: '#b500b5'
 ---

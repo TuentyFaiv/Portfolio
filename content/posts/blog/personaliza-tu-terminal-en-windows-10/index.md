@@ -5,6 +5,7 @@ description: '¿No es aburrido tener siempre en negro la terminal?, bueno, veamo
 author: 'TuentyFaiv'
 twitterUser: 'TuentyFaiv'
 banner: ./hero-post.png
+color: '#323232'
 ---
 Como sabes la terminal en Windows carece de personalización por ende se ve muy soso o aburrido si la utilizas muy seguido ya sea en CMD.exe o en WSL (Windows Subsystem Linux), así que vamos a ver cómo agregarle un toque de tu personalidad.
 
