@@ -1,8 +1,10 @@
-import React from "react"
-import TextField, { Input } from "@material/react-text-field"
-import MaterialIcon from "@material/react-material-icon"
-import Button from "@material/react-button"
-import { Snackbar } from '@material/react-snackbar'
+import React from "react";
+import { Form } from "./styles";
+
+// import TextField, { Input } from "@material/react-text-field";
+// import MaterialIcon from "@material/react-material-icon";
+// import Button from "@material/react-button";
+// import { Snackbar } from '@material/react-snackbar';
 
 class ContactForm extends React.Component {
   constructor(props) {
@@ -52,10 +54,8 @@ class ContactForm extends React.Component {
   }
   render() {
     return (
-
-      <form
+      <Form
         onSubmit={this.handleSubmit}
-        className="contact__form"
       >
         {/* <!-- Prevent spam without a captcha --> */}
         <input
@@ -109,9 +109,9 @@ class ContactForm extends React.Component {
           send
         </Button>
         <Snackbar open={this.state.open} message="Sent! We'll get back to you ASAP 😊" actionText="dismiss" />
-      </form>
-    )
+      </Form>
+    );
   }
 }
 
-export default ContactForm
+export default ContactForm;
