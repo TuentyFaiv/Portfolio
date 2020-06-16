@@ -1,22 +1,22 @@
-import React from "react"
-import Header from "../Header/Header"
-import Footer from "../Footer/Footer"
-import MetaLinks from "../MetaLinks/MetaLinks"
+import React from "react";
+import { Container, Main } from "./styles";
 
-import styles from "./layout.module.scss"
+import Header from "../Header/Header";
+import Footer from "../Footer/Footer";
+import MetaLinks from "../MetaLinks/MetaLinks";
 
 class Layout extends React.Component {
   render() {
     const { children } = this.props
     return (
-      <div className={styles.siteContainer}>
+      <Container>
         <MetaLinks />
         <Header />
-        <div className={styles.siteMain}>{children}</div>
+        <Main>{children}</Main>
         <Footer />
-      </div>
+      </Container>
     )
   }
 }
 
-export default Layout
+export default Layout;
