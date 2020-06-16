@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import swal from 'sweetalert';
-
-import styles from "./sharebutton.module.scss";
+import { Wrapper, Modal, Square } from './styles';
 
 import shareTwitter from '../../images/icons/shareTwitter.svg';
 import shareFacebook from '../../images/icons/shareFacebook.svg';
@@ -34,7 +33,7 @@ const ShareButton = ({ title, description, url }) => {
   };
 
   return (
-    <div className={styles.blogpost__share}>
+    <Wrapper>
       <button onClick={handleShare}>
         <img src={shareIcon} alt="Share Icon" />
         <p>Compartir</p>
@@ -42,7 +41,7 @@ const ShareButton = ({ title, description, url }) => {
       {
         modal &&
         <>
-          <div className={styles.blogpost__shareModal}>
+          <Modal>
             <a
               href={`https://twitter.com/intent/tweet?url=${url}&text=${title}`}
               target="_blank"
@@ -70,11 +69,11 @@ const ShareButton = ({ title, description, url }) => {
               alt="Copy Link"
               onClick={() => { copyLink(); setModal(!modal); }}
             />
-          </div>
-          <span className={styles.blogpost__shareModalsquare}></span>
+          </Modal>
+          <Square />
         </>
       }
-    </div>
+    </Wrapper>
   );
 };
 
