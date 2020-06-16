@@ -45,15 +45,15 @@ exports.createPages = ({ graphql, actions }) => {
     const projects = result.data.projects.edges;
 
     posts.forEach((post, index) => {
-      const previous =
-        index === posts.length - 1 ? null : posts[index + 1].node;
+      const previous = index === posts.length - 1 ? null : posts[index + 1].node;
       const next = index === 0 ? null : posts[index - 1].node;
+      const slug = post.node.fields.slug;
 
       createPage({
-        path: post.node.fields.slug,
+        path: slug,
         component: postPage,
         context: {
-          slug: post.node.fields.slug,
+          slug,
           previous,
           next,
         },
@@ -61,15 +61,15 @@ exports.createPages = ({ graphql, actions }) => {
     });
 
     projects.forEach((post, index) => {
-      const previous =
-        index === posts.length - 1 ? null : posts[index + 1].node;
-      const next = index === 0 ? null : posts[index - 1].node;
+      const previous = index === projects.length - 1 ? null : projects[index + 1].node;
+      const next = index === 0 ? null : projects[index - 1].node;
+      const slug = post.node.fields.slug;
 
       createPage({
-        path: post.node.fields.slug,
+        path: slug,
         component: postPage,
         context: {
-          slug: post.node.fields.slug,
+          slug,
           previous,
           next,
         },
