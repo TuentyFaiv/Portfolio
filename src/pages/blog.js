@@ -1,5 +1,6 @@
 import React from "react";
 import { graphql } from "gatsby";
+import { GlobalStyles } from "../styles/GlobalStyles";
 
 import CenteredLayout from "../components/CenteredLayout/CenteredLayout";
 import SEO from "../components/SEO/SEO";
@@ -10,16 +11,19 @@ class BlogPage extends React.Component {
     const { data } = this.props;
     const siteTitle = data.site.siteMetadata.title;
     return (
-      <CenteredLayout location={this.props.location} title={siteTitle}>
-        <SEO
-          title="Blog"
-          keywords={[`blog`, `gatsby`, `javascript`, `react`]}
-        />
-        <h1>
-          Blog Posts
-        </h1>
-        <BlogPostGrid />
-      </CenteredLayout>
+      <>
+        <GlobalStyles />
+        <CenteredLayout location={this.props.location} title={siteTitle}>
+          <SEO
+            title="Blog"
+            keywords={[`blog`, `gatsby`, `javascript`, `react`, `TuentyFaiv`]}
+          />
+          <h1>
+            Blog Posts
+          </h1>
+          <BlogPostGrid />
+        </CenteredLayout>
+      </>
     );
   }
 }

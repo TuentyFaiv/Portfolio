@@ -1,5 +1,6 @@
 import React from "react";
 import { StaticQuery, graphql } from "gatsby";
+import { MainSection, GridPosts, NoContent } from "../../styles/content";
 
 import Card from "../Card/Card";
 
@@ -10,10 +11,10 @@ function BlogPostGrid() {
       render={data => {
         const posts = data.allMarkdownRemark.edges || [];
         return (
-          <section className="page-main__section">
+          <MainSection>
             {
               posts.length > 0 ?
-                <div className="blog-posts__container">
+                <GridPosts>
                   {posts.map(({ node }) => (
                     <Card
                       key={node.fields.slug}
@@ -25,9 +26,10 @@ function BlogPostGrid() {
                       author={node.frontmatter.author}
                     />
                   ))}
-                </div> : <h3 className="withoutContent">Aún no hay contenido vuelve en unos días <span role="img" aria-label="icon">😉</span></h3>
+                </GridPosts> :
+                <NoContent>Aún no hay contenido vuelve en unos días <span role="img" aria-label="icon">😉</span></NoContent>
             }
-          </section>
+          </MainSection>
         );
       }}
     />
