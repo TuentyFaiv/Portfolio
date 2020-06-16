@@ -47,6 +47,7 @@ description: '${postData.description}'
 author: '${postData.author}'
 twitterUser: '${postData.twitterUser}'
 banner: ''
+color: ''
 ---`);
     console.log(`Success!!: content/posts/projects/${slug}/${postData.fileName} was created`);
   }
