@@ -1,17 +1,16 @@
-import React from 'react';
+import React from "react";
 import { Link } from "gatsby";
-import Img from "gatsby-image";
+import { Container, Image, Content } from "./styles";
 
 const Card = (props) => {
   const { slug, image, title, date, description, author } = props;
   return (
     <Link to={slug}>
-      <article className="blog-card">
-        <Img
-          className="mdc-card__media"
+      <Container>
+        <Image
           fluid={image}
         />
-        <div className="blog-card-content__container">
+        <Content>
           <h3>{title}</h3>
           <small>{date}</small>
           {" | "}
@@ -21,8 +20,8 @@ const Card = (props) => {
               __html: description
             }}
           />
-        </div>
-      </article>
+        </Content>
+      </Container>
     </Link>
   );
 };
