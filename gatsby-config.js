@@ -61,12 +61,7 @@ module.exports = {
     },
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
-    {
-      resolve: "gatsby-plugin-sass",
-      options: {
-        includePaths: ["node_modules"],
-      },
-    },
+    `gatsby-plugin-styled-components`,
     {
       resolve: "gatsby-plugin-typography",
       options: {
