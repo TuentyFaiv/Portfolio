@@ -1,18 +1,22 @@
 import React from "react";
 import { graphql } from "gatsby";
-import CenteredLayout from "../components/CenteredLayout/CenteredLayout";
-import SEO from "../components/SEO/SEO";
+import { GlobalStyles } from "../styles/GlobalStyles";
+import { Content } from "../styles/about";
 
-import "../styles/app.scss";
+import SEO from "../components/SEO/SEO";
+import CenteredLayout from "../components/CenteredLayout/CenteredLayout";
 
 class About extends React.Component {
   render() {
     const { data: { markdownRemark: { html } } } = this.props;
     return (
-      <CenteredLayout location={this.props.location}>
-        <SEO title="About" />
-        <div className="about__content" dangerouslySetInnerHTML={{ __html: html }} />
-      </CenteredLayout>
+      <>
+        <GlobalStyles />
+        <CenteredLayout location={this.props.location}>
+          <SEO title="About" />
+          <Content dangerouslySetInnerHTML={{ __html: html }} />
+        </CenteredLayout>
+      </>
     );
   }
 }
