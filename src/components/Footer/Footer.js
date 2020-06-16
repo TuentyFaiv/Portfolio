@@ -1,5 +1,7 @@
-import { Link } from "gatsby";
 import React, { Component } from "react";
+import { Link } from "gatsby";
+import { Footer as Wrapper, FooterLogo, FooterNav, FooterNavTwo, FooterIcon } from './styles';
+
 import facebookIcon from "../../images/icons/facebook-icon.svg";
 import twitterIcon from "../../images/icons/twitter-icon.svg";
 import githubIcon from "../../images/icons/github-icon-24px.svg";
@@ -7,22 +9,18 @@ import linkedinIcon from "../../images/icons/linkedin-icon.svg";
 import instagramIcon from "../../images/icons/instagram-round-white-24px.svg";
 import youtubeIcon from "../../images/icons/youtube-icon-24px.svg";
 
-import footerLogo from "../../images/logo@3x.png"
-
-import styles from "./footer.module.scss"
+import footerLogo from "../../images/logo@3x.png";
 
 class Footer extends Component {
   render() {
     return (
-      <footer className={styles.siteFooter}>
-        <nav className={styles.footerNav}>
-          {/* LOGO */}
+      <Wrapper>
+        <FooterNav >
           <Link to="/">
-            <img
+            <FooterLogo
               src={footerLogo}
               width="100px"
               alt="TuentyFaiv-logo"
-              className={styles.footerLogo}
             />
           </Link>
           <ul>
@@ -34,19 +32,20 @@ class Footer extends Component {
             </li>
             <li>
               <Link to="/about/">About</Link>
+            </li>
+            <li>
               <Link to="/mentoring/">Tech me</Link>
             </li>
           </ul>
-        </nav>
-        <nav className={styles.footerNav2}>
+        </FooterNav>
+        <FooterNavTwo>
           <a
             href="https://www.facebook.com/tuentyfaivpage/"
             target="_blank"
             rel="noopener noreferrer"
           >
-            <img
+            <FooterIcon
               src={facebookIcon}
-              className={styles.footerIcon}
               width="24px"
               alt="facebook-social-link"
             />
@@ -56,9 +55,8 @@ class Footer extends Component {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <img
+            <FooterIcon
               src={twitterIcon}
-              className={styles.footerIcon}
               width="30px"
               alt="twitter-social-link"
             />
@@ -68,9 +66,8 @@ class Footer extends Component {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <img
+            <FooterIcon
               src={githubIcon}
-              className={styles.footerIcon}
               width="24px"
               alt="github-social-link"
             />
@@ -80,9 +77,8 @@ class Footer extends Component {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <img
+            <FooterIcon
               src={linkedinIcon}
-              className={styles.footerIcon}
               width="24px"
               alt="linkedin-social-link"
             />
@@ -92,9 +88,8 @@ class Footer extends Component {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <img
+            <FooterIcon
               src={instagramIcon}
-              className={styles.footerIcon}
               width="24px"
               alt="instagram-social-link"
             />
@@ -104,15 +99,14 @@ class Footer extends Component {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <img
+            <FooterIcon
               src={youtubeIcon}
-              className={styles.footerIcon}
               width="24px"
               alt="youtube-social-link"
             />
           </a>
-        </nav>
-      </footer>
+        </FooterNavTwo>
+      </Wrapper>
     )
   }
 }
