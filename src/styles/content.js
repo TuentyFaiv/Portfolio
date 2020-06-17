@@ -12,7 +12,6 @@ export const GridPosts = styled.div`
     grid-template-columns: repeat(3, 1fr);
     column-gap: 2em;
     row-gap: 2em;
-    grid-auto-rows: 500px;
   }
 
   @media screen and (max-width: 800px) {
@@ -20,7 +19,6 @@ export const GridPosts = styled.div`
     grid-template-columns: repeat(2, 1fr);
     column-gap: 1.5em;
     row-gap: 1.5em;
-    grid-auto-rows: 500px;
   }
 
   @media screen and (max-width: 580px) {
@@ -28,11 +26,6 @@ export const GridPosts = styled.div`
     grid-template-columns: repeat(1, 1fr);
     column-gap: 1.2em;
     row-gap: 1.2em;
-    grid-auto-rows: 400px;
-  }
-
-  @media screen and (max-width: 460px) {
-    grid-auto-rows: 450px;
   }
 `;
 

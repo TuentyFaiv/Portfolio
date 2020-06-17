@@ -5,7 +5,7 @@ export const Footer = styled.footer`
   flex-direction: column;
   justify-content: space-between;
   width: 100%;
-  margin-top: 80px;
+  margin-top: 220px;
   padding: 1.5rem;
   background-color: var(--mdc-theme-primary);
   color: var(--mdc-theme-on-primary);

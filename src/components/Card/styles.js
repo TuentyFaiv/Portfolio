@@ -3,12 +3,10 @@ import Img from "gatsby-image";
 
 export const Container = styled.article`
   width: 100%;
-  height: auto;
   display: flex;
-  margin-bottom: 0.75rem;
   box-sizing: border-box;
   border-radius: 0;
-  box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: 1px 1px 6px 0 rgba(0, 0, 0, 0.2);
   flex-direction: column;
   transition: box-shadow ease 0.35s;
   transition-property: box-shadow;
@@ -16,7 +14,7 @@ export const Container = styled.article`
   transition-timing-function: ease;
   transition-delay: 0s;
   &:hover {  
-    box-shadow: 1px 1px 8px 3px rgba(0, 0, 0, .2), 6px 6px 0px 0px ${props => props.shadowColor ? props.shadowColor : '#961E1E'};
+    box-shadow: 1px 1px 9px 3px rgba(0, 0, 0, .2), 6px 6px 0px 0px ${props => props.shadowColor ? props.shadowColor : '#961E1E'};
     cursor: pointer;
   }
 `;
