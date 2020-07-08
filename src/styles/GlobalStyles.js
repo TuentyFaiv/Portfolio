@@ -205,13 +205,13 @@ export const GlobalStyles = createGlobalStyle`
 
   ::-moz-selection {
     /* Code for Firefox */
-    color: var(--mdc-theme-on-primary);
     background: var(--mdc-theme-primary);
+    color: var(--mdc-theme-on-primary);
   }
 
   ::selection {
+    background: var(--mdc-theme-primary);
     color: var(--mdc-theme-on-primary);
-    background: transparentize($color: #961E1E, $amount: .15);
   }
 
   pre {
@@ -240,11 +240,24 @@ export const GlobalStyles = createGlobalStyle`
     border-radius: 3px;
   }
 
-  pre::selection,
-  code::selection,
+  pre::selection {
+    background: #6C0C78;
+    color: var(--mdc-theme-on-primary);
+  }
+
+  pre code::selection {
+    background: #6C0C78;
+    color: var(--mdc-theme-on-primary);
+  }
+
+  code::selection {
+    background: var(--mdc-theme-primary);
+    color: var(--mdc-theme-on-primary);
+  }
+
   code span::selection {
-    color: var(--mdc-theme-background);
-    background: var(--mdc-theme-background);
+    background: #6C0C78;
+    color: var(--mdc-theme-on-primary);
   }
 
   blockquote {

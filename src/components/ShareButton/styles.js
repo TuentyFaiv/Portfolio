@@ -2,36 +2,43 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   position: relative;
-  height: 40px;
   button {
     display: flex;
     width: 150px;
     height: 45px;
     margin: 0;
-    padding: 0;
+    padding: 1px;
     background-color: transparent;
     border: none;
-    border-bottom: 1px solid transparent;
+    border-radius: 4px;
+    border: 2px solid black;
     outline: 0;
     align-items: center;
     &:hover {
       cursor: pointer;
-      border-bottom: 1px solid var(--mdc-theme-secondary);
+      border: 2px solid var(--mdc-theme-secondary);
       p {
         color: var(--mdc-theme-secondary);
       }
+      img {
+        margin: 0 5px 0 0;
+      }
+    }
+    &:active {
+      transform: scale(.95);
     }
   }
   img {
     width: 45px;
     height: 45px;
-    margin: 0 10px 0 0;
+    margin: 0 5px 0 0;
     padding: 5px;
     object-fit: cover;
   }
   p {
     margin: 0;
     font-size: 18px;
+    font-weight: bold;
   }
 
   @media screen and (min-width: 801px) {
@@ -58,11 +65,12 @@ export const Modal = styled.div`
   padding: 5px;
   border-radius: 8px;
   background-color: var(--mdc-theme-secondary);
+  border: 2px solid #222222;
   align-items: center;
   justify-content: space-between;
   top: -47px;
-  left: 10px;
-  z-index: 999;
+  left: -5px;
+  z-index: 99;
   &:hover {
     cursor: default;
   }
@@ -87,8 +95,12 @@ export const Square = styled.span`
   width: 20px;
   height: 20px;
   background-color: var(--mdc-theme-secondary);
+  border-top-left-radius: 20px;
+  border-bottom: 2px solid #222222;
+  border-right: 2px solid #222222;
   transform: rotateZ(45deg);
   z-index: 99;
-  top: -17px;
-  left: 80px;
+  top: -18px;
+  left: 65px;
+  z-index: 9999;
 `;

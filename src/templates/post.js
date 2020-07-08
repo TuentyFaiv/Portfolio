@@ -1,8 +1,8 @@
 import React from "react";
 import { graphql } from "gatsby";
-import Img from "gatsby-image";
+
 import { GlobalStyles } from "../styles/GlobalStyles";
-import { HeaderPost, Content, NavList, Link } from "./styles";
+import { HeaderPost, Cover, Content, NavList, Link, URL } from "./styles";
 
 import CenteredLayout from "../components/CenteredLayout/CenteredLayout";
 import SEO from "../components/SEO/SEO";
@@ -23,10 +23,19 @@ class BlogPostTemplate extends React.Component {
           <h1>{post.frontmatter.title}</h1>
           <HeaderPost>
             <p>{post.frontmatter.date}</p>
-            <p><a href={`https://twitter.com/${post.frontmatter.twitterUser}`} target="_blank" rel="noopener noreferrer">{post.frontmatter.author}</a></p>
+            <p><a href={`https://twitter.com/${post.frontmatter.twitterUser}`} target="_blank" rel="noopener noreferrer">{post.frontmatter.twitterUser}</a></p>
           </HeaderPost>
-          <Img fluid={post.frontmatter.banner.childImageSharp.fluid} />
+          <Cover fluid={post.frontmatter.banner.childImageSharp.fluid} />
+          {
+            post.frontmatter.url &&
+            <URL>
+              Enlace del proyecto:
+                {' '}
+              <a href={post.frontmatter.url} target="_blank" rel="noopener noreferrer">{post.frontmatter.url}</a>
+            </URL>
+          }
           <Content
+            mt={post.frontmatter.url ? '0' : '45px'}
             dangerouslySetInnerHTML={{ __html: post.html }}
           />
           <ShareButton
@@ -76,6 +85,7 @@ export const pageQuery = graphql`
         description
         author
         twitterUser
+        url
         banner {
           childImageSharp {
             fluid(maxWidth: 1200, quality: 92) {

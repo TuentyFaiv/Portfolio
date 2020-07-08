@@ -31,7 +31,7 @@ export const Content = styled.div`
   }
   p {
     display: -webkit-box;
-    -webkit-line-clamp: 5;
+    -webkit-line-clamp: 6;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }

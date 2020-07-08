@@ -12,10 +12,10 @@ rl.question('Title: ', answer1 => {
   postData['title'] = answer1;
   rl.question('Description: ', answer2 => {
     postData['description'] = answer2;
-    rl.question('Twitter user: ', answer3 => {
-      postData['twitterUser'] = answer3;
-      rl.question('Author: ', answer4 => {
-        postData['author'] = answer4;
+    rl.question('Author: ', answer3 => {
+      postData['author'] = answer3;
+      rl.question('URL:', answer4 => {
+        postData['url'] = answer4;
         rl.close();
       });
     });
@@ -45,9 +45,10 @@ title: '${postData.title}'
 date: ${postData.date}
 description: '${postData.description}'
 author: '${postData.author}'
-twitterUser: '${postData.twitterUser}'
-banner: ''
+twitterUser: 'TuentyFaiv'
+banner: ./cover.png
 color: ''
+url: '${postData.url}'
 ---`);
     console.log(`Success!!: content/posts/projects/${slug}/${postData.fileName} was created`);
   }
