@@ -1,7 +1,7 @@
-/**
- * Implement Gatsby's Browser APIs in this file.
- *
- * See: https://www.gatsbyjs.org/docs/browser-apis/
- */
+import React from "react";
+import { Provider } from "./src/context/Context";
+import { reducer } from "./src/context/reducer";
 
-// You can delete this file if you're not using it
+export const wrapRootElement = ({ element }) => (
+  <Provider reducer={reducer}>{element}</Provider>
+);
