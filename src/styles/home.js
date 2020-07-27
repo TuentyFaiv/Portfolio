@@ -153,14 +153,8 @@ export const SectionTwo = styled.section`
   min-height: 90vh;
   display: flex;
   flex-direction: column;
-  background: var(--mdc-theme-primary);
-  background: linear-gradient(
-    130deg,
-    rgba(150, 30, 30, 1) 0%,
-    rgba(170, 60, 60, 1) 100%,
-    rgba(255, 255, 255, 1) 100%
-  );
-  color: var(--mdc-theme-on-primary);
+  background: ${({ dark }) => dark ? 'linear-gradient(130deg, var(--theme-dark) 0%, rgb(0, 99, 66) 100%)' : 'linear-gradient(130deg, rgb(150, 30, 30) 0%, rgb(170, 60, 60) 100%)'};
+  color: var(--content);
   padding: 1rem;
   justify-content: center;
   h2 {
@@ -220,8 +214,8 @@ export const SectionThree = styled.section`
 
 export const Button = styled.button`
   border-radius: 25px;
-  color: var(--mdc-theme-on-primary, #fff);
-  background-color: var(--mdc-theme-primary, #6200ee);
+  background-color: var(--theme);
+  color: var(--content);
   will-change: transform, opacity;
   box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
   transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);

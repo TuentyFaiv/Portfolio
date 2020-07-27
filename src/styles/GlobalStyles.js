@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle, css } from 'styled-components';
 
 export const GlobalStyles = createGlobalStyle`
   html {
@@ -149,13 +149,16 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   :root {
-    --mdc-theme-primary: #961E1E;
-    --mdc-theme-on-primary: #ffffff;
-    --mdc-theme-secondary: #5A1E96;
-    --mdc-theme-on-secondary: #ffffff;
-    --mdc-theme-surface: #fefefe;
-    --mdc-theme-background: #ffffff;
-    --mdc-theme-on-background: #000000;
+    --theme: #961E1E;
+    --content: #ffffff;
+    --theme-secondary: #5A1E96;
+    --content-secondary: #ffffff;
+    --theme-dark: #21C08B;
+    --content-dark: #111111;
+    --background: #ffffff;
+    --background-dark: #222831;
+    --background-dark-two: #39414D;
+    --content-bg-dark: #2E3642;
   }
 
   * {
@@ -172,19 +175,19 @@ export const GlobalStyles = createGlobalStyle`
     padding: 0;
     height: 100%;
     position: relative;
-    background-color: var(--mdc-theme-background);
-    color: var(--mdc-theme-on-background);
+    ${({ dark }) => dark ? css`background: var(--background-dark);` : css`background: var(--background);`}
+    ${({ dark }) => dark ? css`color: var(--content);` : css`color: var(--content-dark);`};
     line-height: 1.5rem;
   }
 
   ::-webkit-scrollbar {
     width: 10px;
-    background-color: #DDDDDD;
+    ${({ dark }) => dark ? css`background-color: var(--background-dark-two);` : css`background-color: #DDDDDD;`}
   }
 
   ::-webkit-scrollbar-thumb {
     width: 10px;
-    background-color: var(--mdc-theme-primary);
+    ${({ dark }) => dark ? css`background-color: var(--theme-dark);` : css`background-color: var(--theme);`}
   }
 
   p {
@@ -197,26 +200,20 @@ export const GlobalStyles = createGlobalStyle`
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   }
 
-  .underlined__link {
-    text-decoration: underline;
-    color: inherit;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  }
-
   ::-moz-selection {
     /* Code for Firefox */
-    background: var(--mdc-theme-primary);
-    color: var(--mdc-theme-on-primary);
+    background: var(--theme);
+    color: var(--content);
   }
 
   ::selection {
-    background: var(--mdc-theme-primary);
-    color: var(--mdc-theme-on-primary);
+    background: var(--theme);
+    color: var(--content);
   }
 
   pre {
-    background-color: var(--mdc-theme-primary);
-    color: var(--mdc-theme-on-primary);
+    ${({ dark }) => dark ? css`background-color: var(--theme-dark);` : css`background-color: var(--theme);`}
+    ${({ dark }) => dark ? css`color: var(--content-dark);` : css`color: var(--content);`}
     border-radius: 4px;
     font-size: 85%;
     line-height: 1.45;
@@ -224,40 +221,38 @@ export const GlobalStyles = createGlobalStyle`
     padding: 16px;
     code {
       background: transparent;
+      ${({ dark }) => dark ? css`color: var(--content-dark);` : css`color: var(--content); font-weight: bold;`}
       padding: 0;
+      &::selection {
+        background: #6C0C78;
+        color: var(--content);
+      }
     }
-  }
-
-  pre::-moz-selection {
-    background-color: var(--mdc-theme-primary);
-    color: var(--mdc-theme-on-primary);
+    &::-moz-selection {
+      background-color: var(--theme);
+      color: var(--content);
+    }
+    &::selection {
+      background: #6C0C78;
+      color: var(--content);
+    }
   }
 
   code {
     background-color: #666666;
-    color: var(--mdc-theme-on-primary);
+    color: var(--content);
     padding: 5px 10px;
     border-radius: 3px;
-  }
-
-  pre::selection {
-    background: #6C0C78;
-    color: var(--mdc-theme-on-primary);
-  }
-
-  pre code::selection {
-    background: #6C0C78;
-    color: var(--mdc-theme-on-primary);
-  }
-
-  code::selection {
-    background: var(--mdc-theme-primary);
-    color: var(--mdc-theme-on-primary);
-  }
-
-  code span::selection {
-    background: #6C0C78;
-    color: var(--mdc-theme-on-primary);
+    span {
+      &::selection {
+        background: #6C0C78;
+        color: var(--content);
+      }
+    }
+    &::selection {
+      background: var(--theme);
+      color: var(--content);
+    }
   }
 
   blockquote {

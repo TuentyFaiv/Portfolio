@@ -1,14 +1,19 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-export const Footer = styled.footer`
+export const Container = styled.footer`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   width: 100%;
   margin-top: 220px;
   padding: 1.5rem;
-  background-color: var(--mdc-theme-primary);
-  color: var(--mdc-theme-on-primary);
+  ${({ dark }) => dark ? css`background-color: var(--theme-dark);` : css`background-color: var(--theme);`}
+  color: var(--content);
+
+  a {
+    ${({ dark }) => dark ? css`color: black;` : css`color: white;`}
+    font-weight: bold;
+  }
 
   @media screen and (min-width: 650px) {
     flex-direction: row;
@@ -82,8 +87,4 @@ export const FooterNavTwo = styled.nav`
   @media screen and (max-width: 425px) {
     margin-top: 20px;
   }
-`;
-
-export const FooterIcon = styled.img`
-  vertical-align: middle;
 `;

@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import swal from 'sweetalert';
+import { FaTwitter, FaFacebook } from 'react-icons/fa';
+import { MdShare, MdLink } from 'react-icons/md';
+
 import { Wrapper, Modal, Square } from './styles';
 
-import shareTwitter from '../../images/icons/shareTwitter.svg';
-import shareFacebook from '../../images/icons/shareFacebook.svg';
-import shareIcon from '../../images/icons/master-share.png';
-import shareCopyLink from '../../images/icons/copyLink.svg';
-
-const ShareButton = ({ title, description, url }) => {
+const ShareButton = ({ title, description, url, dark }) => {
   const [modal, setModal] = useState(false);
 
   const handleShare = () => {
@@ -33,23 +31,23 @@ const ShareButton = ({ title, description, url }) => {
   };
 
   return (
-    <Wrapper>
+    <Wrapper dark={dark}>
       <button onClick={handleShare}>
-        <img src={shareIcon} alt="Share Icon" />
+        <MdShare size={45} />
         <p>Compartir</p>
       </button>
       {
         modal &&
         <>
-          <Modal>
+          <Modal dark={dark}>
             <a
               href={`https://twitter.com/intent/tweet?url=${url}&text=${title}`}
               target="_blank"
               rel="noopener noreferrer"
             >
-              <img
-                src={shareTwitter}
-                alt="Share for Twitter"
+              <FaTwitter
+                title="Compartir por Twitter"
+                size={28}
                 onClick={() => setModal(!modal)}
               />
             </a>
@@ -58,19 +56,20 @@ const ShareButton = ({ title, description, url }) => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <img
-                src={shareFacebook}
-                alt="Share for Facebook"
+              <FaFacebook
+                title="Compartir por Facebook"
+                size={28}
                 onClick={() => setModal(!modal)}
               />
             </a>
-            <img
-              src={shareCopyLink}
-              alt="Copy Link"
+            <MdLink
+              title="Copiar enlace"
+              className="copy"
+              size={30}
               onClick={() => { copyLink(); setModal(!modal); }}
             />
           </Modal>
-          <Square />
+          <Square dark={dark} />
         </>
       }
     </Wrapper>

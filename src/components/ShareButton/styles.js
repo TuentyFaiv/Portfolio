@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const Wrapper = styled.div`
   position: relative;
@@ -9,18 +9,17 @@ export const Wrapper = styled.div`
     margin: 0;
     padding: 1px;
     background-color: transparent;
+    ${({ dark }) => dark ? css`color: white;` : css`color: black;`}
     border: none;
     border-radius: 4px;
-    border: 2px solid black;
+    border: 2px solid ${({ dark }) => dark ? 'white' : 'black'};
     outline: 0;
     align-items: center;
     &:hover {
       cursor: pointer;
-      border: 2px solid var(--mdc-theme-secondary);
-      p {
-        color: var(--mdc-theme-secondary);
-      }
-      img {
+      color: ${({ dark }) => dark ? '#D81717' : 'var(--theme-secondary)'};
+      border: 2px solid ${({ dark }) => dark ? '#D81717' : 'var(--theme-secondary)'};
+      svg {
         margin: 0 5px 0 0;
       }
     }
@@ -28,12 +27,9 @@ export const Wrapper = styled.div`
       transform: scale(.95);
     }
   }
-  img {
-    width: 45px;
-    height: 45px;
+  svg {
     margin: 0 5px 0 0;
     padding: 5px;
-    object-fit: cover;
   }
   p {
     margin: 0;
@@ -64,8 +60,9 @@ export const Modal = styled.div`
   height: 40px;
   padding: 5px;
   border-radius: 8px;
-  background-color: var(--mdc-theme-secondary);
-  border: 2px solid #222222;
+  background-color: ${({ dark }) => dark ? '#D81717' : 'var(--theme-secondary)'};
+  color: white;
+  border: 2px solid ${({ dark }) => dark ? '#CCCCCC' : '#222222'};
   align-items: center;
   justify-content: space-between;
   top: -47px;
@@ -75,18 +72,18 @@ export const Modal = styled.div`
     cursor: default;
   }
   a {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
   }
-  img {
-    width: 32px;
-    height: 32px;
-    object-fit: cover;
+  svg {
     margin: 0;
     padding: 0;
     &:hover {
       cursor: pointer;
     }
+  }
+  .copy {
+    transform: rotateZ(-45deg);
   }
 `;
 
@@ -94,10 +91,10 @@ export const Square = styled.span`
   position: absolute;
   width: 20px;
   height: 20px;
-  background-color: var(--mdc-theme-secondary);
+  background-color: ${({ dark }) => dark ? '#D81717' : 'var(--theme-secondary)'};
   border-top-left-radius: 20px;
-  border-bottom: 2px solid #222222;
-  border-right: 2px solid #222222;
+  border-bottom: 2px solid ${({ dark }) => dark ? '#CCCCCC' : '#222222'};
+  border-right: 2px solid ${({ dark }) => dark ? '#CCCCCC' : '#222222'};
   transform: rotateZ(45deg);
   z-index: 99;
   top: -18px;

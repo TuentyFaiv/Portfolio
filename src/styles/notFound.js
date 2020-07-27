@@ -11,8 +11,8 @@ export const Button = styled.button`
   display: block;
   margin: 0 auto;
   padding: 0 16px;
-  color: var(--mdc-theme-on-primary, #fff);
-  background-color: var(--mdc-theme-primary, #6200ee);
+  background-color: var(--theme);
+  color: var(--content);
   box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
   transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
   font-family: 'Roboto', sans-serif;
