@@ -10,7 +10,7 @@ export const reducer = (state, action) => {
       window.localStorage.setItem('view', action.payload ? 'native' : 'no-native');
       return {
         ...state,
-        native: !state.native,
+        native: action.payload,
       }
     default:
       return state;

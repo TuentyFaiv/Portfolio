@@ -7,6 +7,8 @@ module.exports = {
   siteUrl: "https://tuentyfaiv.com/", // Domain of your site. No trailing slash!
   image: "src/images/logo@3x.png", // Used for SEO Share Image
 
+  shareImageWidth: 1000,
+  shareImageHeight: 523,
   // Manifest
   icon: "src/images/maskable_icon.png", // Used for manifest favicon generation
   short_name: "TF web", // shortname for manifest. MUST be shorter than 12 characters

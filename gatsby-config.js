@@ -69,12 +69,80 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-plugin-google-analytics`,
+      resolve: `gatsby-source-ghost`,
       options: {
-        trackingId: process.env.GAID,
-        head: true,
-        anonymize: true,
-        cookieDomain: "tuentyfaiv.com",
+        apiUrl: process.env.API_GHOST,
+        contentApiKey: process.env.CONTENT_KEY_GHOST
+      }
+    },
+    {
+      resolve: `gatsby-plugin-advanced-sitemap`,
+      options: {
+        query: `
+          {
+            allGhostPost {
+              edges {
+                node {
+                  id
+                  slug
+                  updated_at
+                  created_at
+                  feature_image
+                }
+              }
+            }
+            allGhostPage {
+              edges {
+                node {
+                  id
+                  slug
+                  updated_at
+                  created_at
+                  feature_image
+                }
+              }
+            }
+            allGhostTag {
+              edges {
+                node {
+                  id
+                  slug
+                  feature_image
+                }
+              }
+            }
+            allGhostAuthor {
+              edges {
+                node {
+                  id
+                  slug
+                  profile_image
+                }
+              }
+            }
+          }`,
+        mapping: {
+          allGhostPost: {
+            sitemap: `posts`,
+          },
+          allGhostTag: {
+            sitemap: `tags`,
+          },
+          allGhostAuthor: {
+            sitemap: `authors`,
+          },
+          allGhostPage: {
+            sitemap: `pages`,
+          },
+        },
+        exclude: [
+          `/dev-404-page`,
+          `/404`,
+          `/404.html`,
+          `/offline-plugin-app-shell-fallback`,
+        ],
+        createLinkInHead: true,
+        addUncaughtPages: true,
       },
     },
     `gatsby-plugin-react-helmet`,

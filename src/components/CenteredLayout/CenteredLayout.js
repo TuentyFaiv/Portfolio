@@ -8,16 +8,16 @@ import Footer from "../Footer/Footer";
 import MetaLinks from "../MetaLinks/MetaLinks";
 
 const CenteredLayout = ({ children }) => {
-  const [{ dark }] = useGlobalState();
+  const [{ dark, native }] = useGlobalState();
 
   return (
     <>
       <GlobalStyles dark={dark} />
-      <Container>
+      <Container native={native}>
         <MetaLinks />
-        <Header />
+        <Header dark={dark} />
         <Main>{children}</Main>
-        <Footer />
+        <Footer dark={dark} />
       </Container>
     </>
   );
