@@ -59,6 +59,12 @@ export const Navmobile = styled(Nav)`
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     li {
+      padding: 0;
+      a {
+        width: 30px;
+        height: 30px;
+        padding: .15em calc(50% - 1.1em);
+      }
       &:hover {
         color: ${({ dark }) => dark ? 'var(--theme-dark)' : 'var(--theme)'};
       }
@@ -66,6 +72,7 @@ export const Navmobile = styled(Nav)`
   }
 
   .activeLink {
+    padding: .15em calc(50% - 1.1em);
     color: ${({ dark }) => dark ? 'var(--theme-dark)' : 'var(--theme)'};
   }
 `;

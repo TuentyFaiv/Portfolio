@@ -1,19 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "gatsby";
-import { MdBrightness2, MdBrightness5, MdHome, MdEdit, MdDashboard, MdMenu } from "react-icons/md";
+import { MdHome, MdEdit, MdDashboard, MdMenu } from "react-icons/md";
 import { useGlobalState } from "../../context/Context";
 
-import { Container, Navweb, Navmobile, Home, ThemeBtn, BMenu, Overlay, Nav } from './styles';
+import { Container, Navweb, Navmobile, Home, BMenu, Overlay, Nav } from "./styles";
+import NavLink from "./NavLink";
+import ThemeBtn from "./ThemeBtn";
 
 import logo from "../../images/logo@3x.png";
-
-const NavLink = (props) => (
-  <li>
-    <Link to={props.to} activeClassName="activeLink">
-      {props.children}
-    </Link>
-  </li>
-);
 
 const Header = ({ dark }) => {
   const [menu, setMenu] = useState(false);
@@ -28,26 +22,15 @@ const Header = ({ dark }) => {
 
   const handleBMenu = () => {
     const bMenu = document.getElementById('bmenu');
-    if (menu) {
-      bMenu.style.left = '120vw';
-    } else {
-      bMenu.style.left = '0';
-    }
+    bMenu.style.left = menu ? '120vw' : '0';
     setMenu(!menu);
   };
 
   useEffect(() => {
-    if (navigator.appVersion.match(/(Android|iPad|iPhone)/)) {
-      dispatch({
-        type: 'NATIVE',
-        payload: true
-      });
-    } else {
-      dispatch({
-        type: 'NATIVE',
-        payload: false
-      });
-    }
+    dispatch({
+      type: 'NATIVE',
+      payload: navigator.appVersion.match(/(Android|iPad|iPhone)/) ? true : false,
+    });
   }, []);
 
   return (
@@ -59,11 +42,7 @@ const Header = ({ dark }) => {
               <Link to="/">
                 <img src={logo} alt="Logo" />
               </Link>
-              <ThemeBtn onClick={changeTheme} dark={dark}>
-                <div className={!dark ? 'moveLeft' : 'moveRight'}>
-                  {!dark ? <MdBrightness5 color="#961E1E" size={25} /> : <MdBrightness2 color="#006342" size={25} />}
-                </div>
-              </ThemeBtn>
+              <ThemeBtn func={changeTheme} dark={dark} />
             </Home>
             <Navweb dark={dark}>
               <ul>
@@ -77,7 +56,7 @@ const Header = ({ dark }) => {
           <>
             <Navmobile dark={dark}>
               <ul>
-                <NavLink to={`/`}><MdHome size={30} /></NavLink>
+                <NavLink to={`/#home`}><MdHome size={30} /></NavLink>
                 <NavLink to={`/#projects`}><MdDashboard size={30} /></NavLink>
                 <NavLink to={`/blog/`}><MdEdit size={30} /></NavLink>
                 <li>
@@ -88,11 +67,7 @@ const Header = ({ dark }) => {
             <BMenu id="bmenu" dark={dark}>
               <Overlay onClick={handleBMenu} />
               <Nav dark={dark}>
-                <ThemeBtn onClick={changeTheme} dark={dark}>
-                  <div className={!dark ? 'moveLeft' : 'moveRight'}>
-                    {!dark ? <MdBrightness5 color="#961E1E" size={25} /> : <MdBrightness2 color="#006342" size={25} />}
-                  </div>
-                </ThemeBtn>
+                <ThemeBtn func={changeTheme} dark={dark} />
                 <ul onClick={handleBMenu}>
                   <NavLink to={`/about/`}>About</NavLink>
                   <NavLink to={`/mentoring/`}>Tech me</NavLink>

@@ -17,7 +17,7 @@ const IndexPage = ({ data }) => {
   return (
     <Layout>
       <SEO title="Home" />
-      <SectionOne>
+      <SectionOne id="home">
         <SectionOneOverlay>
           <img src={hero} alt="hero" />
           <Overlay />
