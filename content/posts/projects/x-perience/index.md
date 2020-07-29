@@ -7,4 +7,5 @@ twitterUser: 'TuentyFaiv'
 banner: ./cover.png
 color: '#BA9B6B'
 url: 'https://xperience.now.sh/'
+fav: true
 ---

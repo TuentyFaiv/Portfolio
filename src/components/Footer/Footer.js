@@ -17,16 +17,16 @@ const Footer = ({ dark }) => (
       </Link>
       <ul>
         <li>
-          <Link to="/#projects">Projects</Link>
+          <Link to="/projects/">Proyectos</Link>
         </li>
         <li>
           <Link to="/blog/">Blog</Link>
         </li>
         <li>
-          <Link to="/about/">About</Link>
+          <Link to="/about/">Acerca de mí</Link>
         </li>
         <li>
-          <Link to="/mentoring/">Tech me</Link>
+          <Link to="/mentoring/">Mentorías</Link>
         </li>
       </ul>
     </FooterNav>

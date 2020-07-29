@@ -7,4 +7,5 @@ twitterUser: TuentyFaiv
 banner: ./petgram.png
 color: '#F5576C'
 url: 'https://www.npmjs.com/package/@tuentyfaiv/mediaplayer'
+fav: true
 ---

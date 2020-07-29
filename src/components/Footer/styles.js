@@ -5,7 +5,7 @@ export const Container = styled.footer`
   flex-direction: column;
   justify-content: space-between;
   width: 100%;
-  margin-top: 220px;
+  margin-top: 10em;
   padding: 1.5rem;
   ${({ dark }) => dark ? css`background-color: var(--theme-dark);` : css`background-color: var(--theme);`}
   color: var(--content);

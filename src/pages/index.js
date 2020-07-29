@@ -17,14 +17,14 @@ const IndexPage = ({ data }) => {
   return (
     <Layout>
       <SEO title="Home" />
-      <SectionOne id="home">
+      <SectionOne>
         <SectionOneOverlay>
           <img src={hero} alt="hero" />
           <Overlay />
           <h1>Recuerda tener siempre la mente sana y el cuerpo sano.</h1>
           <p><span role="img" aria-label="icon">💪🏻</span></p>
-          <Link to="/#projects">
-            <Button>Ver proyectos</Button>
+          <Link to="/#favs">
+            <Button>Proyectos destacados</Button>
           </Link>
         </SectionOneOverlay>
       </SectionOne>
@@ -42,26 +42,29 @@ const IndexPage = ({ data }) => {
           <span role="img" aria-label="icon">💬.</span>
         </h2>
       </SectionTwo>
-      <SectionThree id="projects">
-        <h2>Projects</h2>
+      <SectionThree id="favs">
+        <h2>Proyectos destacados</h2>
         {
           projects.length > 0 ?
             <GridPosts>
-              {projects.map(({ node }) => (
+              {projects.map(({ node: { fields, frontmatter } }) => frontmatter.fav && (
                 <Card
-                  key={node.fields.slug}
-                  slug={node.fields.slug}
-                  image={node.frontmatter.banner.childImageSharp.fluid}
-                  title={node.frontmatter.title}
-                  date={node.frontmatter.date}
-                  description={node.frontmatter.description}
-                  author={node.frontmatter.author}
-                  color={node.frontmatter.color}
-                />
-              ))}
+                  key={fields.slug}
+                  slug={fields.slug}
+                  image={frontmatter.banner.childImageSharp.fluid}
+                  title={frontmatter.title}
+                  date={frontmatter.date}
+                  description={frontmatter.description}
+                  author={frontmatter.author}
+                  color={frontmatter.color}
+                />)
+              )}
             </GridPosts> :
             <NoContent>Aún no hay contenido vuelve en unos días <span role="img" aria-label="icon">😉</span></NoContent>
         }
+        <Link to="/projects">
+          <Button>Ver más proyectos</Button>
+        </Link>
       </SectionThree>
     </Layout>
   );
@@ -94,6 +97,7 @@ export const indexQuery = graphql`
               }
             }
             color
+            fav
           }
         }
       }

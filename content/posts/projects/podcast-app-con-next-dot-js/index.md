@@ -7,4 +7,5 @@ twitterUser: 'TuentyFaiv'
 banner: ./cover.png 
 color: '#8756CA'
 url: 'https://podcasts-tf.now.sh/'
+fav: true
 ---

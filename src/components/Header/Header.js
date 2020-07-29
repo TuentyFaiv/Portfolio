@@ -28,8 +28,13 @@ const Header = ({ dark }) => {
 
   useEffect(() => {
     dispatch({
+      type: 'THEME',
+      payload: localStorage.getItem('theme') === 'dark' ? true : false
+    });
+
+    dispatch({
       type: 'NATIVE',
-      payload: navigator.appVersion.match(/(Android|iPad|iPhone)/) ? true : false,
+      payload: (navigator.appVersion.match(/(Android|iPad|iPhone)/) || localStorage.getItem('view') === 'native') ? true : false,
     });
   }, []);
 
@@ -46,18 +51,18 @@ const Header = ({ dark }) => {
             </Home>
             <Navweb dark={dark}>
               <ul>
-                <NavLink to={`/#projects`}>Projects</NavLink>
+                <NavLink to={`/projects/`}>Proyectos</NavLink>
                 <NavLink to={`/blog/`}>Blog</NavLink>
-                <NavLink to={`/about/`}>About</NavLink>
-                <NavLink to={`/mentoring/`}>Tech me</NavLink>
+                <NavLink to={`/about/`}>Acerca de mí</NavLink>
+                <NavLink to={`/mentoring/`}>Mentorías</NavLink>
               </ul>
             </Navweb>
           </> :
           <>
             <Navmobile dark={dark}>
               <ul>
-                <NavLink to={`/#home`}><MdHome size={30} /></NavLink>
-                <NavLink to={`/#projects`}><MdDashboard size={30} /></NavLink>
+                <NavLink to={`/`}><MdHome size={30} /></NavLink>
+                <NavLink to={`/projects/`}><MdDashboard size={30} /></NavLink>
                 <NavLink to={`/blog/`}><MdEdit size={30} /></NavLink>
                 <li>
                   <MdMenu size={30} onClick={handleBMenu} />
