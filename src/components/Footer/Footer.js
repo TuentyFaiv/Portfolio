@@ -3,14 +3,15 @@ import { Link } from "gatsby";
 import { FaFacebook, FaTwitter, FaGithub, FaLinkedin, FaInstagram, FaYoutube } from "react-icons/fa";
 import { Container, FooterLogo, FooterNav, FooterNavTwo } from './styles';
 
-import footerLogo from "../../images/logo@3x.png";
+import logo from "../../images/logo.svg";
+import logoDark from "../../images/logo_dark.svg";
 
 const Footer = ({ dark }) => (
   <Container dark={dark}>
     <FooterNav >
       <Link to="/">
         <FooterLogo
-          src={footerLogo}
+          src={dark ? logoDark : logo}
           width="100px"
           alt="TuentyFaiv-logo"
         />

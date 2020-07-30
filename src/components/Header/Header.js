@@ -7,7 +7,8 @@ import { Container, Navweb, Navmobile, Home, BMenu, Overlay, Nav } from "./style
 import NavLink from "./NavLink";
 import ThemeBtn from "./ThemeBtn";
 
-import logo from "../../images/logo@3x.png";
+import logo from "../../images/logo.svg";
+import logoDark from "../../images/logo_dark.svg";
 
 const Header = ({ dark }) => {
   const [menu, setMenu] = useState(false);
@@ -45,7 +46,7 @@ const Header = ({ dark }) => {
           <>
             <Home>
               <Link to="/">
-                <img src={logo} alt="Logo" />
+                <img src={dark ? logoDark : logo} alt="Logo" />
               </Link>
               <ThemeBtn func={changeTheme} dark={dark} />
             </Home>
@@ -74,8 +75,8 @@ const Header = ({ dark }) => {
               <Nav dark={dark}>
                 <ThemeBtn func={changeTheme} dark={dark} />
                 <ul onClick={handleBMenu}>
-                  <NavLink to={`/about/`}>About</NavLink>
-                  <NavLink to={`/mentoring/`}>Tech me</NavLink>
+                  <NavLink to={`/about/`}>Acerca de mí</NavLink>
+                  <NavLink to={`/mentoring/`}>Mentorías</NavLink>
                 </ul>
               </Nav>
             </BMenu>

@@ -8,40 +8,41 @@ import CenteredLayout from "../components/CenteredLayout/CenteredLayout";
 import SEO from "../components/SEO/SEO";
 import ShareButton from "../components/ShareButton/shareButton";
 
-const PostTemplate = (props) => {
+const PostTemplate = ({ data: { markdownRemark }, pageContext, location }) => {
   const [{ dark }] = useGlobalState();
-  const post = props.data.markdownRemark;
-  const { previous, next } = props.pageContext;
+  const { frontmatter: { title, description, date, twitterUser, banner, url }, html } = markdownRemark;
+  const { previous, next } = pageContext;
 
   return (
-    <CenteredLayout location={props.location}>
+    <CenteredLayout location={location}>
       <SEO
-        title={post.frontmatter.title}
-        description={post.frontmatter.description}
+        title={title}
+        description={description}
       />
       <ContentHeader dark={dark}>
-        <h1>{post.frontmatter.title}</h1>
+        <h1>{title}</h1>
         <div>
-          <p>{post.frontmatter.date}</p>
-          <p><a href={`https://twitter.com/${post.frontmatter.twitterUser}`} target="_blank" rel="noopener noreferrer">{post.frontmatter.twitterUser}</a></p>
+          <p>{date}</p>
+          <p><a href={`https://twitter.com/${twitterUser}`} target="_blank" rel="noopener noreferrer">{twitterUser}</a></p>
         </div>
-        <Cover fluid={post.frontmatter.banner.childImageSharp.fluid} />
+        <Cover fluid={banner.childImageSharp.fluid} />
+        <p>{description}</p>
         {
-          post.frontmatter.url &&
+          url &&
           <h2>
-            Enlace del proyecto: <a href={post.frontmatter.url} target="_blank" rel="noopener noreferrer">{post.frontmatter.url}</a>
+            Enlace del proyecto: <a href={url} target="_blank" rel="noopener noreferrer">{url}</a>
           </h2>
         }
       </ContentHeader>
       <Content
-        mt={post.frontmatter.url ? '0' : '45px'}
-        dangerouslySetInnerHTML={{ __html: post.html }}
+        mt={url ? '0' : '45px'}
+        dangerouslySetInnerHTML={{ __html: html }}
         dark={dark}
       />
       <ShareButton
-        title={post.frontmatter.title}
-        description={post.frontmatter.description}
-        url={props.location.href}
+        title={title}
+        description={description}
+        url={location.href}
         dark={dark}
       />
       <NavList dark={dark}>
@@ -82,7 +83,6 @@ export const pageQuery = graphql`
         title
         date(formatString: "MMMM DD, YYYY")
         description
-        author
         twitterUser
         url
         banner {
