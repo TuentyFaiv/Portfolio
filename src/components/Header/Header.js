@@ -35,7 +35,7 @@ const Header = ({ dark }) => {
 
     dispatch({
       type: 'NATIVE',
-      payload: (navigator.appVersion.match(/(Android|iPad|iPhone)/) || localStorage.getItem('view') === 'native') ? true : false,
+      payload: navigator.appVersion.match(/(Android|iPad|iPhone)/) ? true : false,
     });
   }, []);
 

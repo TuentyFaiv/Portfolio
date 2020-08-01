@@ -3,7 +3,7 @@ import { Link as LinkG } from "gatsby";
 import Img from "gatsby-image";
 
 export const ContentHeader = styled.div`
-  div {
+  div:first-of-type {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -17,7 +17,14 @@ export const ContentHeader = styled.div`
       }
     }
   }
+  div:last-of-type {
+    margin: 10px 15%;
+    p {
+      text-align: center;
+    }
+  }
   h2 {
+    width: 100%;
     font-family: 'Roboto', sans-serif;
     font-size: 1.5rem;
     text-align: center;
@@ -35,23 +42,31 @@ export const ContentHeader = styled.div`
   }
 
   @media screen and (min-width: 801px) {
+    div:last-of-type {
+      margin: 10px 10%;
+    }
     h2 {
-      width: 54%;
-      margin: 25px 23%;
+      margin: 25px 0;
     }
   }
 
   @media screen and (max-width: 800px) {
+    div:last-of-type {
+      margin: 10px 5%;
+    }
     h2 {
-      margin: 15px 15%;
-      width: 70%;
+      margin: 15px 0;
+      font-size: 1.2rem;
     }
   }
 
   @media screen and (max-width: 510px) {
+    div:last-of-type {
+      margin: 10px 0;
+    }
     h2 {
       margin: 10px 0;
-      width: 100%;
+      font-size: 1rem;
     }
   }
 `;
@@ -61,7 +76,8 @@ export const Cover = styled(Img)`
 `;
 
 export const Content = styled.div`
-  padding-bottom: 10px;
+  padding: 10px 0;
+  border-top: 2px solid #676767;
   border-bottom: 2px solid #676767;
   h2,
   h3 {
@@ -83,17 +99,17 @@ export const Content = styled.div`
   }
   
   @media screen and (min-width: 801px) {
-    margin: ${({ mt }) => mt} 23% 0;
+    margin: 0 23%;
     width: 54%;
   }
 
   @media screen and (max-width: 800px) {
-    margin: ${({ mt }) => mt} 15% 0;
+    margin: 0 15%;
     width: 70%;
   }
 
   @media screen and (max-width: 510px) {
-    margin: ${({ mt }) => mt} 0 0;
+    margin: 0;
     width: 100%;
   }
 `;

@@ -7,6 +7,5 @@ twitterUser: 'TuentyFaiv'
 banner: ./petgram.png
 color: '#142850'
 url: ''
+withoutUrl: La url del proyecto será publicada dentro de poco 😁
 ---
-
-# La url del proyecto será publicada dentro de poco 😁

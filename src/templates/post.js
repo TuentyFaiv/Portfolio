@@ -10,7 +10,7 @@ import ShareButton from "../components/ShareButton/shareButton";
 
 const PostTemplate = ({ data: { markdownRemark }, pageContext, location }) => {
   const [{ dark }] = useGlobalState();
-  const { frontmatter: { title, description, date, twitterUser, banner, url }, html } = markdownRemark;
+  const { frontmatter: { title, description, date, twitterUser, banner, url, withoutUrl }, html } = markdownRemark;
   const { previous, next } = pageContext;
 
   return (
@@ -26,16 +26,20 @@ const PostTemplate = ({ data: { markdownRemark }, pageContext, location }) => {
           <p><a href={`https://twitter.com/${twitterUser}`} target="_blank" rel="noopener noreferrer">{twitterUser}</a></p>
         </div>
         <Cover fluid={banner.childImageSharp.fluid} />
-        <p>{description}</p>
-        {
-          url &&
+        <div>
+          <p>{description}</p>
           <h2>
-            Enlace del proyecto: <a href={url} target="_blank" rel="noopener noreferrer">{url}</a>
+            {
+              url &&
+              <>Enlace del proyecto: <a href={url} target="_blank" rel="noopener noreferrer">{url}</a></>
+            }
+            {
+              withoutUrl && withoutUrl
+            }
           </h2>
-        }
+        </div>
       </ContentHeader>
       <Content
-        mt={url ? '0' : '45px'}
         dangerouslySetInnerHTML={{ __html: html }}
         dark={dark}
       />
@@ -85,6 +89,7 @@ export const pageQuery = graphql`
         description
         twitterUser
         url
+        withoutUrl
         banner {
           childImageSharp {
             fluid(maxWidth: 1200, quality: 92) {

@@ -7,6 +7,5 @@ twitterUser: 'TuentyFaiv'
 banner: ./cover.png
 color: '#533030'
 url: ''
+withoutUrl: La url del proyecto no esta disponible ya que es un proyecto semi privado 😅
 ---
-
-# La url del proyecto no esta disponible ya que es un proyecto semi privado 😅

@@ -7,7 +7,6 @@ export const reducer = (state, action) => {
         dark: action.payload,
       };
     case 'NATIVE':
-      typeof window !== 'undefined' && localStorage.setItem('view', action.payload ? 'native' : 'no-native');
       return {
         ...state,
         native: action.payload,

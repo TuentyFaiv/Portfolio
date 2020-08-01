@@ -7,6 +7,5 @@ twitterUser: 'TuentyFaiv'
 banner: ./cover.png
 color: '#21C08B'
 url: ''
+withoutUrl: La url del proyecto será publicada dentro de poco 😁
 ---
-
-# La url del proyecto será publicada dentro de poco 😁
