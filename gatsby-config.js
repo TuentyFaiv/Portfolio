@@ -74,7 +74,7 @@ module.exports = {
       options: {
         name: website.title,
         short_name: website.short_name,
-        start_url: `/`,
+        start_url: `/?source=pwa`,
         background_color: website.background_color,
         theme_color: website.theme_color,
         display: `standalone`,
@@ -82,6 +82,22 @@ module.exports = {
         icon_options: {
           purpose: "any maskable",
         },
+        shortcuts: [
+          {
+            "name": "Proyectos",
+            "short_name": "Proyectos",
+            "description": "Ve todos los proyectos que he hecho y en los que he trabajo.",
+            "url": "/projects?source=pwa",
+            "icons": [{ "src": website.shorcutIcon1, "sizes": "192x192" }]
+          },
+          {
+            "name": "Blog",
+            "short_name": "Blog",
+            "description": "Mira los blogs que he escrito.",
+            "url": "/blog?source=pwa",
+            "icons": [{ "src": website.shorcutIcon2, "sizes": "192x192" }]
+          }
+        ],
       },
     },
     {

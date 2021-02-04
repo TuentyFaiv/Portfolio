@@ -1,11 +1,11 @@
 # About
 
-Actualmente estoy estudiando en línea en Platzi.com y he completado algunos cursos de desarrollo de software.
+Actualmente estoy estudiando en línea en Platzi.com y formo parte del programa Platzi Master, he completado algunos cursos de desarrollo de software y me enfoco en profundizar en las tecnologías del Frontend.
 
-Me estoy esforzando por ser un buen desarrollador Frontend con buenas prácticas en la escritura de código y el trabajo en equipo, también quiero centrarme un poco en el desarrollo móvil y muy ligeramente en el backend.
+Me estoy esforzando por ser un buen desarrollador con buenas prácticas en la escritura de código y el trabajo en equipo. También quiero centrarme medianamente en el desarrollo móvil y aplicaciones de escritorio, estoy empezando por lo básico en cuando a tecnologías como React Native o Electron, aún soy muy nuevo es esa área pero me interesa así que estoy aprendiendo.
 
-Me gusta jugar videojuegos, practico deporte, veo anime y me gustan los gatos.
+Uso React.js como mi librería principal de desarrollo Frontend. Sé sobre preprocesadores de estilos como Less, Sass y Stylus, el que más me gustó es Sass y estoy empezando a aprender GraphQL. 
 
-Uso React.js como mi librería principal de desarrollo Frontend, sé un poco sobre preprocesadores de estilos, el que más me gustó es SASS, también uso webpack para empaquetar algunos de mis proyectos y estoy empezando a aprender GraphQL. 
+Y por último para complementar mis conocimientos y no quedarme solo en una área me interesa muy ligeramente el Backend, bases de datos relacionales y no relacionales. Así que estoy aprendiendo un poco de ello, empezando por Node.js y MongoDB para empezar a entender los conceptos fundamentales y base del Backend.
 
-Así como fundamentos de bases de datos relacionales y no relacionales para complementar mis conocimientos. Y para el desarrollo móvil estoy aprendiendo varias tecnologías/lenguajes como Flutter, React Native, Dart, Kotlin y Java, todavía no sé mucho sobre el desarrollo móvil, pero todos los días estoy aprendiendo algo nuevo.
+Algo super random que ni al caso: Me gusta jugar videojuegos, hago ejercicio, veo anime y me gustan los gatos. 😁

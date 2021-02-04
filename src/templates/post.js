@@ -18,6 +18,8 @@ const PostTemplate = ({ data: { markdownRemark }, pageContext, location }) => {
       <SEO
         title={title}
         description={description}
+        article={true}
+        // image={banner}
       />
       <ContentHeader dark={dark}>
         <h1>{title}</h1>

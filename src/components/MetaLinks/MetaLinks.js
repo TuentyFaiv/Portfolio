@@ -5,17 +5,13 @@ const MetaLinks = () => {
   return (
     <>
       <Helmet>
-        <html lang="en" />
-        {/* added refresh meta suggested by Lighthouse */}
+        <html lang="es" />
         <meta http-equiv="refresh" />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/icon?family=Material+Icons"
-        />
-        <link href="https://fonts.googleapis.com/css?family=Lora|Playfair+Display:900&display=swap" rel="stylesheet"/>
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Playfair+Display:wght@900&display=swap" rel="stylesheet" />
       </Helmet>
     </>
-  )
-}
+  );
+};
 
-export default MetaLinks
+export default MetaLinks;
