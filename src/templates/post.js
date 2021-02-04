@@ -19,7 +19,7 @@ const PostTemplate = ({ data: { markdownRemark }, pageContext, location }) => {
         title={title}
         description={description}
         article={true}
-        // image={banner}
+        image={banner.childImageSharp.fluid.src}
       />
       <ContentHeader dark={dark}>
         <h1>{title}</h1>

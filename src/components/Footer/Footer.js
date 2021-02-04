@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "gatsby";
-import { FaFacebook, FaTwitter, FaGithub, FaLinkedin, FaInstagram, FaYoutube } from "react-icons/fa";
+import { FaTwitter, FaGithub, FaLinkedin } from "react-icons/fa";
 import { Container, FooterLogo, FooterNav, FooterNavTwo } from './styles';
 
 import logo from "../../images/logo.svg";
@@ -26,22 +26,9 @@ const Footer = ({ dark }) => (
         <li>
           <Link to="/about/">Acerca de mí</Link>
         </li>
-        <li>
-          <Link to="/mentoring/">Mentorías</Link>
-        </li>
       </ul>
     </FooterNav>
     <FooterNavTwo>
-      <a
-        href="https://www.facebook.com/tuentyfaivpage/"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <FaFacebook
-          color={dark ? '#111111' : 'white'}
-          size={24}
-        />
-      </a>
       <a
         href="https://twitter.com/TuentyFaiv"
         target="_blank"
@@ -68,26 +55,6 @@ const Footer = ({ dark }) => (
         rel="noopener noreferrer"
       >
         <FaLinkedin
-          color={dark ? '#111111' : 'white'}
-          size={24}
-        />
-      </a>
-      <a
-        href="https://www.instagram.com/tuenty_faiv"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <FaInstagram
-          color={dark ? '#111111' : 'white'}
-          size={24}
-        />
-      </a>
-      <a
-        href="https://www.youtube.com/channel/UCh2M1HBuV-SiBPEcBG6iQaQ"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <FaYoutube
           color={dark ? '#111111' : 'white'}
           size={24}
         />

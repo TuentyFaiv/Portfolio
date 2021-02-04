@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "gatsby";
 import { MdHome, MdEdit, MdDashboard, MdMenu } from "react-icons/md";
 import { useGlobalState } from "../../context/Context";
@@ -13,6 +13,7 @@ import logoDark from "../../images/logo_dark.svg";
 const Header = ({ dark }) => {
   const [menu, setMenu] = useState(false);
   const [{ native }, dispatch] = useGlobalState();
+  const burgerMenuRef = useRef(null);
 
   const changeTheme = () => {
     dispatch({
@@ -22,8 +23,7 @@ const Header = ({ dark }) => {
   };
 
   const handleBMenu = () => {
-    const bMenu = document.getElementById('bmenu');
-    bMenu.style.left = menu ? '120vw' : '0';
+    burgerMenuRef.current.style.left = menu ? '120vw' : '0';
     setMenu(!menu);
   };
 
@@ -55,7 +55,6 @@ const Header = ({ dark }) => {
                 <NavLink to={`/projects/`}>Proyectos</NavLink>
                 <NavLink to={`/blog/`}>Blog</NavLink>
                 <NavLink to={`/about/`}>Acerca de mí</NavLink>
-                <NavLink to={`/mentoring/`}>Mentorías</NavLink>
               </ul>
             </Navweb>
           </> :
@@ -70,13 +69,12 @@ const Header = ({ dark }) => {
                 </li>
               </ul>
             </Navmobile>
-            <BMenu id="bmenu" dark={dark}>
+            <BMenu ref={burgerMenuRef} dark={dark}>
               <Overlay onClick={handleBMenu} />
               <Nav dark={dark}>
                 <ThemeBtn func={changeTheme} dark={dark} />
                 <ul onClick={handleBMenu}>
                   <NavLink to={`/about/`}>Acerca de mí</NavLink>
-                  <NavLink to={`/mentoring/`}>Mentorías</NavLink>
                 </ul>
               </Nav>
             </BMenu>
