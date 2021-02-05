@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { graphql } from "gatsby";
+import { useGlobalState } from "../context/Context";
+
 import { GridPosts, NoContent } from "../styles/content";
 
 import SEO from "../components/SEO/SEO";
@@ -7,8 +9,15 @@ import CenteredLayout from "../components/CenteredLayout/CenteredLayout";
 import Card from "../components/Card/Card";
 
 const ProjectsPage = ({ data, location }) => {
+  const [_, dispatch] = useGlobalState();
+  const mainRef = useRef(null);
   const projects = data.favs.edges || [];
   const siteTitle = data.site.siteMetadata.title;
+
+  useEffect(() => {
+    dispatch({ type: 'MAIN_REF', payload: mainRef.current });
+  }, [mainRef.current]);
+
   return (
     <CenteredLayout location={location} title={siteTitle}>
       <SEO
@@ -20,7 +29,7 @@ const ProjectsPage = ({ data, location }) => {
       </h1>
       {
         projects.length > 0 ?
-          <GridPosts>
+          <GridPosts ref={mainRef}>
             {projects.map(({ node }) => (
               <Card
                 key={node.fields.slug}

@@ -8,6 +8,7 @@ export const Provider = ({ reducer, children }) => {
   const initialState = {
     dark: false,
     native: false,
+    mainRef: null,
   };
 
   return (

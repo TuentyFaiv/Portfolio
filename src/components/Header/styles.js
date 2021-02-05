@@ -8,14 +8,40 @@ export const Container = styled.header`
   font-weight: 900;
   justify-content: space-between;
   align-items: center;
-  ${({ native }) => native && css`
-    position: fixed;
-    height: 8.5vh;
-    background: ${({ dark }) => dark ? 'var(--content-bg-dark)' : '#EEEEEE'};
-    box-shadow: 0 1px 7px 0 rgba(0, 0, 0, .5);
-    bottom: 0;
-    z-index: 9999;
- `}
+  ${({ native }) => native ?
+    css`
+      position: fixed;
+      height: 8.5vh;
+      background: ${({ dark }) => dark ? 'var(--content-bg-dark)' : '#EEEEEE'};
+      box-shadow: 0 1px 7px 0 rgba(0, 0, 0, .5);
+      bottom: 0;
+      z-index: 9999;
+    ` :
+    css`
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      &.isFixed {
+        position: fixed;
+        background: ${({ dark }) => dark ? 'var(--background-dark)' : 'var(--background)'};
+        z-index: 9999;
+        nav ul li,
+        div .bmenu {
+          color: currentColor;
+          fill: currentColor;
+          &:hover {
+            color: ${({ dark }) => dark ? 'var(--theme-dark)' : 'var(--theme)'};
+            fill: ${({ dark }) => dark ? 'var(--theme-dark)' : 'var(--theme)'};
+          }
+        }
+      }
+
+      @media screen and (min-width: 650px) {
+        height: 90px;
+      }
+    `
+  }
   img {
     width: 50px;
     height: 50px;
@@ -33,13 +59,13 @@ export const Nav = styled.nav`
     list-style-type: none;
     li {
       margin: 0 .7em;
-      padding: .2em 0;
+      padding: .5em 0;
       font-family: "Segoe UI", sans-serif;
       font-size: 18px;
-      border-bottom: 2px solid transparent;
+      border-bottom: 3px solid transparent;
       &:hover {
         cursor: pointer;
-        border-bottom: 2px solid ${({ dark }) => dark ? 'var(--theme-dark)' : 'var(--theme)'};
+        border-bottom: 3px solid ${({ dark }) => dark ? 'var(--theme-dark)' : 'var(--theme)'};
       }
       a {
         text-decoration: none;
@@ -48,8 +74,8 @@ export const Nav = styled.nav`
   }
 
   .activeLink {
-    padding: .2em 0;
-    border-bottom: 2px solid ${({ dark }) => dark ? 'var(--theme-dark)' : 'var(--theme)'};
+    padding: .5em 0;
+    border-bottom: 3px solid ${({ dark }) => dark ? 'var(--theme-dark)' : 'var(--theme)'};
   }
 `;
 
@@ -82,6 +108,12 @@ export const Navweb = styled(Nav)`
   ul {
     li {
       display: inline;
+      ${({ isHome }) => isHome && css`color: var(--content);`}
+      font-size: 22px;
+      letter-spacing: .05rem;
+      &:hover {
+        color: ${({ dark }) => dark ? 'var(--theme-dark)' : 'var(--theme)'};
+      }
     }
   }
 
@@ -96,6 +128,9 @@ export const Home = styled.div`
   align-items: center;
   .bmenu {
     display: none;
+    &.white {
+      fill: var(--content);
+    }
   }
 
   @media screen and (max-width: 649px) {
@@ -117,7 +152,6 @@ export const ThemeBtn = styled.button`
   ${({ dark }) => dark ? css`background: var(--background-dark-two);` : css`background: ghostwhite;`}
   border: none;
   box-shadow: inset 0 0 5px rgba(0, 0, 0, .25);
-  outline: 0;
   div {
     position: absolute;
     height: 29px;

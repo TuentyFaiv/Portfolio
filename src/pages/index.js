@@ -1,7 +1,8 @@
-import React from "react";
-import { Link, graphql } from "gatsby";
+import React, { useEffect, useRef } from "react";
+import { graphql } from "gatsby";
 import { useGlobalState } from "../context/Context";
-import { SectionOne, SectionOneOverlay, Overlay, SectionTwo, SectionThree, Button } from "../styles/home";
+
+import { SectionOne, SectionTwo, SectionThree, Button } from "../styles/home";
 import { GridPosts, NoContent } from "../styles/content";
 
 import SEO from "../components/SEO/SEO";
@@ -11,22 +12,21 @@ import Card from "../components/Card/Card";
 import hero from "../images/hero.jpg";
 
 const IndexPage = ({ data }) => {
-  const [{ dark }] = useGlobalState();
+  const [{ dark }, dispatch] = useGlobalState();
+  const mainRef = useRef(null);
   const projects = data.allMarkdownRemark.edges || [];
+
+  useEffect(() => {
+    dispatch({ type: 'MAIN_REF', payload: mainRef.current });
+  }, [mainRef.current]);
 
   return (
     <Layout>
       <SEO title="Home" />
-      <SectionOne>
-        <SectionOneOverlay>
-          <img src={hero} alt="hero" />
-          <Overlay />
-          <h1>Recuerda tener siempre la mente sana y el cuerpo sano.</h1>
-          <p><span role="img" aria-label="icon">💪🏻</span></p>
-          <Link to="/#favs">
-            <Button>Proyectos destacados</Button>
-          </Link>
-        </SectionOneOverlay>
+      <SectionOne ref={mainRef} bg={hero}>
+        <h1>Recuerda tener siempre la mente sana y el cuerpo sano.</h1>
+        <p><span role="img" aria-label="icon">💪🏻</span></p>
+        <Button to="/#favs" dark={dark}>Proyectos destacados</Button>
       </SectionOne>
       <SectionTwo dark={dark}>
         <h2>Piensa fuera de la caja, y no veas todo desde el miso angulo. <span role="img" aria-label="icon">👌🏻</span></h2>
@@ -62,9 +62,7 @@ const IndexPage = ({ data }) => {
             </GridPosts> :
             <NoContent>Aún no hay contenido vuelve en unos días <span role="img" aria-label="icon">😉</span></NoContent>
         }
-        <Link to="/projects">
-          <Button>Ver más proyectos</Button>
-        </Link>
+        <Button to="/projects" dark={dark}>Ver más proyectos</Button>
       </SectionThree>
     </Layout>
   );

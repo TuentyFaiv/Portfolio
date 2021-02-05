@@ -1,162 +1,43 @@
-import styled from 'styled-components';
+import styled, { css } from "styled-components";
+import { Link } from "gatsby";
 
 export const SectionOne = styled.section`
-  min-height: 80vh;
+  min-height: 90vh;
   display: flex;
-  flex-direction: column;
+  text-align: left;
   align-items: center;
   justify-content: center;
-  text-align: left;
-  & > h3 {
-    margin: 0 auto;
-    text-align: center;
-  }
-  & > img {
-    max-width: 336px;
-    object-fit: cover;
-  }
-  @media screen and (min-width: 1024px) {
-    & > img {
-      max-width: 800px;
-      height: 450px;
-    }
-  }
-
-  @media screen and (max-width: 1023px) {
-    & > img {
-      max-width: 700px;
-      height: 400px;
-    }
-  }
-
-  @media screen and (max-width: 800px) {
-    & > img {
-      max-width: 600px;
-      height: 350px;
-    }
-  }
-
-  @media screen and (max-width: 768px) {
-    min-height: 90vh;
-  }
-
-  @media screen and (max-width: 610px) {
-    & > img {
-      max-width: 500px;
-      height: 300px;
-    }
-  }
-
-  @media screen and (max-width: 510px) {
-    & > img {
-      width: 450px;
-      height: 250px;
-    }
-  }
-
-  @media screen and (max-width: 460px) {
-    & > img {
-      width: 375px;
-      height: 225px;
-    }
-  }
-
-  @media screen and (max-width: 375px) {
-    & > img {
-      width: 320px;
-      height: 190px;
-    }
-  }
-
-  @media screen and (max-width: 320px) {
-    & > img {
-      min-width: 300px;
-      max-width: 250px;
-      height: 180px;
-    }
-  }
-`;
-
-export const SectionOneOverlay = styled.div`
-  position: relative;
-  display: flex;
-  max-width: 800px;
-  height: 450px;
   flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
-  img {
-    position: absolute;
-  }
   h1 {
-    position: relative;
-    color: white;
-    font-family: 'Roboto', sans-serif;
-    text-align: center;
+    margin: 70px 0 0 0;
+    padding: 0 16px;
+    color: var(--content);
   }
-  p {
-    position: relative;
-    text-align: center;
-  }
-
-  @media screen and (max-width: 1023px) {
-    max-width: 700px;
-    height: 400px;
-  }
-
-  @media screen and (max-width: 800px) {
-    max-width: 600px;
-    height: 350px;
+  ${({ bg }) => bg &&
+    css`
+      background-image: url(${bg});
+      background-position: top;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    `
   }
 
-  @media screen and (max-width: 610px) {
-    max-width: 500px;
-    height: 300px;
-  }
-
-  @media screen and (max-width: 510px) {
-    max-width: 450px;
-    height: 250px;
-  }
-
-  @media screen and (max-width: 460px) {
-    max-width: 375px;
-    height: 225px;
+  @media screen and (min-width: 650px) {
     h1 {
-      font-size: 30px;
+      margin: 90px 0 0 0;
     }
   }
-
-  @media screen and (max-width: 375px) {
-    max-width: 320px;
-    height: 190px;
-    h1 {
-      font-size: 20px;
-    }
-  }
-
-  @media screen and (max-width: 320px) {
-    max-width: 300px;
-    height: 180px;
-  }
-`;
-
-export const Overlay = styled.span`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,.3);
 `;
 
 export const SectionTwo = styled.section`
-  width: 100%;
-  min-height: 90vh;
   display: flex;
-  flex-direction: column;
+  width: 100%;
+  padding: 2.5rem 1rem;
   background: ${({ dark }) => dark ? 'linear-gradient(130deg, var(--theme-dark) 0%, rgb(0, 99, 66) 100%)' : 'linear-gradient(130deg, rgb(150, 30, 30) 0%, rgb(170, 60, 60) 100%)'};
   color: var(--content);
-  padding: 1rem;
   justify-content: center;
+  flex-direction: column;
   h2 {
     margin: 1.75rem;
     a {
@@ -212,9 +93,9 @@ export const SectionThree = styled.section`
   }
 `;
 
-export const Button = styled.button`
+export const Button = styled(Link)`
   border-radius: 25px;
-  background-color: var(--theme);
+  background-color: ${({ dark }) => dark ? 'rgb(0, 99, 66)' : 'var(--theme)'};
   color: var(--content);
   will-change: transform, opacity;
   box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
@@ -234,7 +115,6 @@ export const Button = styled.button`
   min-width: 64px;
   height: 36px;
   border: none;
-  outline: none;
   line-height: inherit;
   user-select: none;
   overflow: hidden;

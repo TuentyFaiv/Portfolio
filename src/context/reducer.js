@@ -11,6 +11,11 @@ export const reducer = (state, action) => {
         ...state,
         native: action.payload,
       }
+    case 'MAIN_REF':
+      return {
+        ...state,
+        mainRef: action.payload,
+      }
     default:
       return state;
   }
