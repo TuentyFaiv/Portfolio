@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "gatsby";
 
-const NavLink = (props) => (
+const NavLink = ({ to, children }) => (
   <li>
-    <Link to={props.to} activeClassName="activeLink">
-      {props.children}
+    <Link to={to} activeClassName="activeLink">
+      {children}
     </Link>
   </li>
 );

@@ -16,10 +16,7 @@ const Header = ({ dark }) => {
   const burgerMenuRef = useRef(null);
 
   const changeTheme = () => {
-    dispatch({
-      type: 'THEME',
-      payload: !dark
-    });
+    dispatch({ type: 'THEME', payload: !dark });
   };
 
   const handleBMenu = () => {
@@ -49,6 +46,7 @@ const Header = ({ dark }) => {
                 <img src={dark ? logoDark : logo} alt="Logo" />
               </Link>
               <ThemeBtn func={changeTheme} dark={dark} />
+              <MdMenu className="bmenu" size={30} onClick={handleBMenu} />
             </Home>
             <Navweb dark={dark}>
               <ul>
@@ -57,6 +55,16 @@ const Header = ({ dark }) => {
                 <NavLink to={`/about/`}>Acerca de mí</NavLink>
               </ul>
             </Navweb>
+            <BMenu ref={burgerMenuRef} dark={dark} native={native}>
+              <Overlay onClick={handleBMenu} />
+              <Nav dark={dark}>
+                <ul onClick={handleBMenu}>
+                  <NavLink to={`/projects/`}>Proyectos</NavLink>
+                  <NavLink to={`/blog/`}>Blog</NavLink>
+                  <NavLink to={`/about/`}>Acerca de mí</NavLink>
+                </ul>
+              </Nav>
+            </BMenu>
           </> :
           <>
             <Navmobile dark={dark}>
@@ -69,7 +77,7 @@ const Header = ({ dark }) => {
                 </li>
               </ul>
             </Navmobile>
-            <BMenu ref={burgerMenuRef} dark={dark}>
+            <BMenu ref={burgerMenuRef} dark={dark} native={native}>
               <Overlay onClick={handleBMenu} />
               <Nav dark={dark}>
                 <ThemeBtn func={changeTheme} dark={dark} />

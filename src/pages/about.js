@@ -28,7 +28,7 @@ const About = (props) => {
           <li>
             <a href="https://www.linkedin.com/in/tuentyfaiv/" target="_blank" rel="noopener noreferrer" >
               <FaLinkedin size={32} />
-              <h4>Linked In</h4>
+              <h4>LinkedIn</h4>
             </a>
           </li>
           <li>

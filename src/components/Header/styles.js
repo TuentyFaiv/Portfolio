@@ -4,13 +4,13 @@ export const Container = styled.header`
   display: flex;
   width: 100%;
   height: 70px;
-  font-weight: 900;
   padding: 10px;
+  font-weight: 900;
   justify-content: space-between;
   align-items: center;
   ${({ native }) => native && css`
     position: fixed;
-    height: 8vh;
+    height: 8.5vh;
     background: ${({ dark }) => dark ? 'var(--content-bg-dark)' : '#EEEEEE'};
     box-shadow: 0 1px 7px 0 rgba(0, 0, 0, .5);
     bottom: 0;
@@ -27,10 +27,10 @@ export const Container = styled.header`
 
 export const Nav = styled.nav`
   ul {
-    text-align: center;
-    list-style-type: none;
     margin: 0;
     padding: 0;
+    text-align: center;
+    list-style-type: none;
     li {
       margin: 0 .7em;
       padding: .2em 0;
@@ -78,26 +78,33 @@ export const Navmobile = styled(Nav)`
 `;
 
 export const Navweb = styled(Nav)`
+  display: none;
   ul {
     li {
       display: inline;
     }
   }
 
-  @media screen and (max-width: 420px) {
-    width: 90%;
-    ul {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      flex-wrap: wrap;
-    }
+  @media screen and (min-width: 650px) {
+    display: flex;
+    align-items: center;
   }
 `;
 
 export const Home = styled.div`
   display: flex;
   align-items: center;
+  .bmenu {
+    display: none;
+  }
+
+  @media screen and (max-width: 649px) {
+    width: 100%;
+    justify-content: space-between;
+    .bmenu {
+      display: block;
+    }
+  }
 `;
 
 export const ThemeBtn = styled.button`
@@ -162,6 +169,18 @@ export const BMenu = styled.div`
     button {
       margin: 1em .7em;
     }
+  }
+
+  ${({ native }) => !native &&
+    css`
+      position: fixed;
+      height: 100vh;
+      top: 0;
+      z-index: 9999;
+      @media screen and (min-width: 650px) {
+        display: none;
+      }
+    `
   }
 `;
 
