@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 export const Container = styled.footer`
   display: flex;
   width: 100%;
-  margin-top: 10em;
+  margin-top: 5em;
   padding: 1.5rem;
   ${({ dark }) => dark ? css`background-color: var(--theme-dark);` : css`background-color: var(--theme);`}
   color: var(--content);
@@ -16,6 +16,10 @@ export const Container = styled.footer`
 
   @media screen and (min-width: 650px) {
     flex-direction: row;
+  }
+
+  @media screen and (min-width: 768px) {
+    margin-top: 10em;
   }
 `;
 

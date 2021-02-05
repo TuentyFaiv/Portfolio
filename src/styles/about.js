@@ -1,19 +1,17 @@
 import styled from 'styled-components';
 
 export const Content = styled.div`
-  @media screen and (min-width: 801px) {
-    margin: 0 22%;
-    width: 56%;
-  }
+  width: 100%;
+  margin: 0;
 
-  @media screen and (max-width: 800px) {
+  @media screen and (min-width: 510px) {
     margin: 0 15%;
     width: 70%;
   }
 
-  @media screen and (max-width: 510px) {
-    margin: 0;
-    width: 100%;
+  @media screen and (min-width: 801px) {
+    margin: 0 22%;
+    width: 56%;
   }
 `;
 
@@ -44,15 +42,16 @@ export const SubTitle = styled.h3`
 `;
 
 export const Socials = styled.ul`
-  width: 90%;
+  width: 100%;
   margin: 20px auto;
   list-style: none;
   display: flex;
   align-items: center;
   justify-content: space-around;
+  flex-direction: column;
   flex-wrap: wrap;
   li {
-    margin: 20px 0;
+    margin: 15px 0;
     a {
       display: flex;
       align-items: center;
@@ -60,6 +59,10 @@ export const Socials = styled.ul`
       border-bottom: 1px solid transparent;
       svg {
         margin-right: 10px;
+      }
+      img {
+        width: 28px;
+        height: 28px;
       }
       h4 {
         font-family: 'Segoe UI', sans-serif;
@@ -72,16 +75,20 @@ export const Socials = styled.ul`
     }
   }
 
-  @media screen and (max-width: 510px) {
-    width: 100%;
+  @media screen and (min-width: 510px) {
+    width: 90%;
     li {
-      margin: 10px 0;
+      margin: 20px 0;
       a {
         img {
-          width: 28px;
-          height: 28px;
+          width: 32px;
+          height: 32px;
         }
       }
     }
+  }
+
+  @media screen and (min-width: 650px) {
+    flex-direction: row;
   }
 `;

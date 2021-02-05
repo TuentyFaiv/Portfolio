@@ -1,6 +1,6 @@
 import React from "react";
 import { graphql } from "gatsby";
-import { FaFacebook, FaTwitter, FaLinkedin, FaInstagram } from "react-icons/fa";
+import { FaTwitter, FaLinkedin, FaTelegramPlane } from "react-icons/fa";
 import { useGlobalState } from "../context/Context";
 import { Content, Info, SubTitle, Socials } from "../styles/about";
 
@@ -17,14 +17,8 @@ const About = (props) => {
       <Content dangerouslySetInnerHTML={{ __html: html }} />
       <SubTitle>¿Quieres colaborar conmigo?</SubTitle>
       <Info>
-        Puedes contactarme por redes sociales:
+        Puedes contactarme por Twitter, LinkedIn ó Telegram:
         <Socials dark={dark}>
-          <li>
-            <a href="https://www.facebook.com/tuentyfaivpage/" target="_blank" rel="noopener noreferrer" >
-              <FaFacebook size={32} />
-              <h4>Facebook</h4>
-            </a>
-          </li>
           <li>
             <a href="https://twitter.com/TuentyFaiv" target="_blank" rel="noopener noreferrer" >
               <FaTwitter size={32} />
@@ -38,9 +32,9 @@ const About = (props) => {
             </a>
           </li>
           <li>
-            <a href="https://www.instagram.com/tuenty_faiv" target="_blank" rel="noopener noreferrer" >
-              <FaInstagram size={32} />
-              <h4>Instagram</h4>
+            <a href="https://t.me/TuentyFaiv/" target="_blank" rel="noopener noreferrer" >
+              <FaTelegramPlane size={32} />
+              <h4>Telegram</h4>
             </a>
           </li>
         </Socials>
