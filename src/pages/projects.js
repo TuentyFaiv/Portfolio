@@ -2,50 +2,46 @@ import React, { useEffect, useRef } from "react";
 import { graphql } from "gatsby";
 import { useGlobalState } from "../context/Context";
 
-import { GridPosts, NoContent } from "../styles/content";
+import { Title, GridPosts, MainSection, NoContent } from "../styles/content";
 
 import SEO from "../components/SEO/SEO";
-import CenteredLayout from "../components/CenteredLayout/CenteredLayout";
+import Layout from "../components/Layout/Layout";
 import Card from "../components/Card/Card";
 
-const ProjectsPage = ({ data, location }) => {
-  const [_, dispatch] = useGlobalState();
+const ProjectsPage = ({ data }) => {
+  const [{ native }, dispatch] = useGlobalState();
   const mainRef = useRef(null);
-  const projects = data.favs.edges || [];
-  const siteTitle = data.site.siteMetadata.title;
+  const projects = data.projects.edges || [];
 
   useEffect(() => {
     dispatch({ type: 'MAIN_REF', payload: mainRef.current });
   }, [mainRef.current]);
 
   return (
-    <CenteredLayout location={location} title={siteTitle}>
-      <SEO
-        title="Projects"
-        keywords={[`projects`, `gatsby`, `javascript`, `react`, `TuentyFaiv`]}
-      />
-      <h1>
-        Projects
-      </h1>
-      {
-        projects.length > 0 ?
-          <GridPosts ref={mainRef}>
-            {projects.map(({ node }) => (
-              <Card
-                key={node.fields.slug}
-                slug={node.fields.slug}
-                image={node.frontmatter.banner.childImageSharp.fluid}
-                title={node.frontmatter.title}
-                date={node.frontmatter.date}
-                description={node.frontmatter.description}
-                author={node.frontmatter.author}
-                color={node.frontmatter.color}
-              />
-            ))}
-          </GridPosts> :
-          <NoContent>Aún no hay contenido vuelve en unos días <span role="img" aria-label="icon">😉</span></NoContent>
-      }
-    </CenteredLayout>
+    <Layout centered>
+      <SEO title="Proyectos" keywords={['projects', 'proyectos']} />
+      <Title ref={mainRef} margin={!native}>Proyectos</Title>
+      <MainSection>
+        {
+          projects.length > 0 ?
+            <GridPosts>
+              {projects.map(({ node }) => (
+                <Card
+                  key={node.fields.slug}
+                  slug={node.fields.slug}
+                  image={node.frontmatter.banner.childImageSharp.fluid}
+                  title={node.frontmatter.title}
+                  date={node.frontmatter.date}
+                  description={node.frontmatter.description}
+                  author={node.frontmatter.author}
+                  color={node.frontmatter.color}
+                />
+              ))}
+            </GridPosts> :
+            <NoContent>Aún no hay contenido vuelve en unos días <span role="img" aria-label="icon">😉</span></NoContent>
+        }
+      </MainSection>
+    </Layout>
   );
 };
 
@@ -53,12 +49,7 @@ export default ProjectsPage;
 
 export const indexQuery = graphql`
   query {
-    site {
-      siteMetadata {
-        title
-      }
-    }
-    favs: allMarkdownRemark(
+    projects: allMarkdownRemark(
       filter: { fileAbsolutePath: { regex: "/posts/projects/" } }
       sort: { fields: [frontmatter___date], order: DESC }
     ) {

@@ -5,11 +5,12 @@ export const Widget = styled.div`
   min-width: 280px;
   min-height: 800px;
   height: 800px;
-  margin: 40px 0;
+  margin: 0 0 40px;
   overflow-y: none;
 `;
 
 export const Button = styled(Btn)`
-  display: block;
+  display: flex;
+  width: 310px;
   margin: 5px auto;
 `;

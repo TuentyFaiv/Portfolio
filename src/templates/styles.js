@@ -1,8 +1,9 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Link as LinkG } from "gatsby";
 import Img from "gatsby-image";
 
-export const ContentHeader = styled.div`
+export const ContentHeader = styled.section`
+  ${({ padding }) => padding ? css`padding: 100px 0 1em;` : css`padding: 1em 0;`}
   div:first-of-type {
     display: flex;
     align-items: center;
@@ -71,11 +72,18 @@ export const ContentHeader = styled.div`
   }
 `;
 
+export const Title = styled.h1`
+  margin-top: 1em;
+  margin-bottom: 1em;
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+`;
+
 export const Cover = styled(Img)`
   box-shadow: 1px 1px 6px 0 rgba(0, 0, 0, .2);
 `;
 
-export const Content = styled.div`
+export const Content = styled.section`
   padding: 10px 0;
   border-top: 2px solid #676767;
   border-bottom: 2px solid #676767;
@@ -125,7 +133,7 @@ export const NavList = styled.ul`
     text-decoration: none;
     padding: 1px 0;
     border-bottom: 1px solid ${({ dark }) => dark ? 'white' : 'black'};
-    :hover {
+    &:hover {
       padding: 1px 0;
       color: ${({ dark }) => dark ? '#D81717' : 'var(--theme-secondary)'};
       border-bottom: 1px solid ${({ dark }) => dark ? '#D81717' : 'var(--theme-secondary)'};

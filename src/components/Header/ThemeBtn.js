@@ -4,7 +4,7 @@ import { ThemeBtn as Container } from './styles';
 
 const ThemeBtn = ({ dark, func }) => {
   return (
-    <Container onClick={func} dark={dark}>
+    <Container onClick={func} dark={dark} aria-label="Cambiar tema" title="Cambiar tema">
       <div className={!dark ? 'moveLeft' : 'moveRight'}>
         {!dark ? <MdBrightness5 color="#961E1E" size={25} /> : <MdBrightness2 color="#006342" size={25} />}
       </div>

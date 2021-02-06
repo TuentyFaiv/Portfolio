@@ -1,4 +1,13 @@
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
+
+const headerAnimation = keyframes`
+  from {
+    top: -90px;
+  }
+  to {
+    top: 0px;
+  }
+`;
 
 export const Container = styled.header`
   display: flex;
@@ -24,7 +33,9 @@ export const Container = styled.header`
       top: 0;
       &.isFixed {
         position: fixed;
+        animation: ${headerAnimation} .45s ease-in 1 normal;
         background: ${({ dark }) => dark ? 'var(--background-dark)' : 'var(--background)'};
+        box-shadow: 0px 5px 10px ${({ dark }) => dark ? 'rgba(1, 1, 1, .25)' : 'rgba(1, 1, 1, .15)'};
         z-index: 9999;
         nav ul li,
         div .bmenu {
@@ -59,7 +70,7 @@ export const Nav = styled.nav`
     list-style-type: none;
     li {
       margin: 0 .7em;
-      padding: .5em 0;
+      padding: 0 0 .5em;
       font-family: "Segoe UI", sans-serif;
       font-size: 18px;
       border-bottom: 3px solid transparent;
@@ -74,7 +85,7 @@ export const Nav = styled.nav`
   }
 
   .activeLink {
-    padding: .5em 0;
+    padding: 0 0 .5em;
     border-bottom: 3px solid ${({ dark }) => dark ? 'var(--theme-dark)' : 'var(--theme)'};
   }
 `;
@@ -152,6 +163,7 @@ export const ThemeBtn = styled.button`
   ${({ dark }) => dark ? css`background: var(--background-dark-two);` : css`background: ghostwhite;`}
   border: none;
   box-shadow: inset 0 0 5px rgba(0, 0, 0, .25);
+  outline: 0;
   div {
     position: absolute;
     height: 29px;
@@ -168,7 +180,7 @@ export const ThemeBtn = styled.button`
       margin: 2px;
     }
     &:hover {
-      box-shadow: 0 0 5px 0 rgba(0, 0, 0, .5);
+      box-shadow: 0 0 5px 0 ${({ dark }) => dark ? 'rgba(255, 255, 255, .35)' : 'rgba(0, 0, 0, .5)'};
     }
   }
   .moveLeft {

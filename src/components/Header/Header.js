@@ -41,12 +41,12 @@ const Header = ({ dark }) => {
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
-      console.log(entries);
-      console.log(entries[0].isIntersecting);
-      if (!entries[0].isIntersecting && !headerRef.current?.classList.contains('isFixed')) {
+      if (!entries[0].isIntersecting && headerRef.current) {
         headerRef.current.classList.add('isFixed');
       } else {
-        headerRef.current.classList.remove('isFixed');
+        if (headerRef.current) {
+          headerRef.current.classList.remove('isFixed');
+        } 
       }
     }, { threshold });
     if (mainRef) {

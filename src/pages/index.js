@@ -14,7 +14,7 @@ import hero from "../images/hero.jpg";
 const IndexPage = ({ data }) => {
   const [{ dark }, dispatch] = useGlobalState();
   const mainRef = useRef(null);
-  const projects = data.allMarkdownRemark.edges || [];
+  const favProjects = data.favs.edges || [];
 
   useEffect(() => {
     dispatch({ type: 'MAIN_REF', payload: mainRef.current });
@@ -22,7 +22,7 @@ const IndexPage = ({ data }) => {
 
   return (
     <Layout>
-      <SEO title="Home" />
+      <SEO title="Inicio" />
       <SectionOne ref={mainRef} bg={hero}>
         <h1>Recuerda tener siempre la mente sana y el cuerpo sano.</h1>
         <p><span role="img" aria-label="icon">💪🏻</span></p>
@@ -35,9 +35,7 @@ const IndexPage = ({ data }) => {
         <h2>
           ¿Te gustaría compartir algo aquí? Mandame un mensaje a
           {" "}
-          <a href="http://twitter.com/TuentyFaiv" target="_blank" rel="noopener noreferrer">
-            Twitter
-          </a>
+          <a href="http://twitter.com/TuentyFaiv" target="_blank" rel="noopener noreferrer">Twitter</a>
           {" "}
           <span role="img" aria-label="icon">💬.</span>
         </h2>
@@ -45,9 +43,9 @@ const IndexPage = ({ data }) => {
       <SectionThree id="favs">
         <h2>Proyectos destacados</h2>
         {
-          projects.length > 0 ?
+          favProjects.length > 0 ?
             <GridPosts>
-              {projects.map(({ node: { fields, frontmatter } }) => frontmatter.fav && (
+              {favProjects.map(({ node: { fields, frontmatter } }) => frontmatter.fav && (
                 <Card
                   key={fields.slug}
                   slug={fields.slug}
@@ -72,7 +70,7 @@ export default IndexPage;
 
 export const indexQuery = graphql`
   query {
-    allMarkdownRemark(
+    favs: allMarkdownRemark(
       filter: { fileAbsolutePath: { regex: "/posts/projects/" } }
       sort: { fields: [frontmatter___date], order: DESC }
     ) {

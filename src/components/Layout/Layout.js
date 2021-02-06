@@ -7,7 +7,7 @@ import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import MetaLinks from "../MetaLinks/MetaLinks";
 
-const Layout = ({ children }) => {
+const Layout = ({ children, centered }) => {
   const [{ dark, native }] = useGlobalState();
 
   return (
@@ -16,7 +16,7 @@ const Layout = ({ children }) => {
       <Container native={native}>
         <MetaLinks />
         <Header dark={dark} />
-        <Main>{children}</Main>
+        <Main centered={centered}>{children}</Main>
         <Footer dark={dark} />
       </Container>
     </>

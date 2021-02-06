@@ -1,28 +1,35 @@
-import React from "react";
-import { Link } from "gatsby";
-import { Image, Button } from "../styles/notFound";
+import React, { useEffect, useRef } from "react";
+import { useGlobalState } from "../context/Context";
+
+import { Image, Button, Text } from "../styles/notFound";
+import { Title } from "../styles/content";
 
 import SEO from "../components/SEO/SEO";
-import CenteredLayout from "../components/CenteredLayout/CenteredLayout";
+import Layout from "../components/Layout/Layout";
 
 import awkwardKidGif from "../images/awkward-kid.gif";
 
-const NotFoundPage = () => (
-  <CenteredLayout>
-    <SEO title="404: Not Found" />
-    <Image src={awkwardKidGif} alt="awkward kid gif" />
-    <h1>Uh...this is awkward</h1>
-    <p>
-      Uh oh! It looks like the place you were looking for is no longer here or
-      there's a typo. Please check the URL for mistakes and try again.{" "}
-      <span role="img" aria-label="wink">
-        😉
-      </span>
-    </p>
-    <Link to="/">
-      <Button>Go Back Home</Button>
-    </Link>
-  </CenteredLayout>
-);
+const NotFoundPage = () => {
+  const [{ dark, native }, dispatch] = useGlobalState();
+  const mainRef = useRef(null);
+
+  useEffect(() => {
+    dispatch({ type: 'MAIN_REF', payload: mainRef.current });
+  }, [mainRef.current]);
+
+  return (
+    <Layout>
+      <SEO title="404: Página no encontrada" />
+      <Title ref={mainRef} margin={!native}>Oh... esto es incómodo</Title>
+      <Image src={awkwardKidGif} alt="awkward kid gif" />
+      <Text>
+        ¡Mmmm! Parece que el lugar que buscaba ya no está aquí o
+        hay un error tipográfico. Verifique que no haya errores en la URL y vuelva a intentarlo.{" "}
+        <span role="img" aria-label="wink">😉</span>
+      </Text>
+      <Button to="/" dark={dark}>Ir al inicio</Button>
+    </Layout>
+  );
+};
 
 export default NotFoundPage;

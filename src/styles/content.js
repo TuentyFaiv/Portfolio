@@ -1,5 +1,12 @@
 import styled from 'styled-components';
 
+export const Title = styled.h1`
+  margin-top: ${({ margin }) => margin ? '100px' : '1em'};
+  margin-bottom: 1em;
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+`;
+
 export const GridPosts = styled.div`
   width: 100%;
   display: grid;

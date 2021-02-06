@@ -9,6 +9,7 @@ export const Container = styled.div`
 `;
 
 export const Main = styled.main`
+  ${({ centered }) => centered && css`width: 90%;`}
   min-height: 100%;
   margin: 0 auto;
 `;

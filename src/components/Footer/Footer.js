@@ -33,6 +33,8 @@ const Footer = ({ dark }) => (
         href="https://twitter.com/TuentyFaiv"
         target="_blank"
         rel="noopener noreferrer"
+        aria-label="Twitter"
+        title="Twitter"
       >
         <FaTwitter
           color={dark ? '#111111' : 'white'}
@@ -43,6 +45,8 @@ const Footer = ({ dark }) => (
         href="https://github.com/TuentyFaiv"
         target="_blank"
         rel="noopener noreferrer"
+        aria-label="GitHub"
+        title="GitHub"
       >
         <FaGithub
           color={dark ? '#111111' : 'white'}
@@ -53,6 +57,8 @@ const Footer = ({ dark }) => (
         href="https://www.linkedin.com/in/tuentyfaiv/"
         target="_blank"
         rel="noopener noreferrer"
+        aria-label="LinkedIn"
+        title="LinkedIn"
       >
         <FaLinkedin
           color={dark ? '#111111' : 'white'}

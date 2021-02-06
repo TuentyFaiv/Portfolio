@@ -15,7 +15,8 @@ export const Wrapper = styled.div`
     border: 2px solid ${({ dark }) => dark ? 'white' : 'black'};
     outline: 0;
     align-items: center;
-    &:hover {
+    &:hover,
+    &:focus-visible {
       cursor: pointer;
       color: ${({ dark }) => dark ? '#D81717' : 'var(--theme-secondary)'};
       border: 2px solid ${({ dark }) => dark ? '#D81717' : 'var(--theme-secondary)'};
@@ -99,5 +100,5 @@ export const Square = styled.span`
   z-index: 99;
   top: -18px;
   left: 65px;
-  z-index: 9999;
+  z-index: 999;
 `;
