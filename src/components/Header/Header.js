@@ -16,7 +16,7 @@ const Header = ({ dark }) => {
   const burgerMenuRef = useRef(null);
   const headerRef = useRef(null);
   const threshold = .5;
-  const isHome = !window.location.href.match(/(projects|blog|about)/g);
+  const isHome = typeof window !== 'undefined' && !window.location.href.match(/(projects|blog|about)/g);
 
   const changeTheme = () => {
     dispatch({ type: 'THEME', payload: !dark });
