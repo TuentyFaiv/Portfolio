@@ -1,7 +1,7 @@
 ---
-title: 'Simon Dice'
+title: 'Simon dice'
 date: 2018-11-28T19:20:35.777Z
-description: 'Este es el clasico juego de seguir los patrones de colores creado con JavaScript Vanilla, le agregue la opción de configurarlo en cuanto a su velocidad y sus niveles.'
+description: 'Este es el clásico juego de seguir los patrones de colores creado con JavaScript Vanilla, le agregue la opción de configurarlo en cuanto a su velocidad y sus niveles.'
 author: 'Tonalli'
 twitterUser: 'TuentyFaiv'
 banner: ./cover.png

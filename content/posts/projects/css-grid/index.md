@@ -1,7 +1,7 @@
 ---
 title: 'CSS Grid'
 date: 2019-12-09T20:02:01.872Z
-description: 'Una impletacion básica de CSS Grid usado para un layout de un blog y poder manejar más facilmente los diferentes tamaños de pantalla.'
+description: 'Una impletación básica de CSS Grid usado para un layout de un blog y poder manejar más fácilmente los diferentes tamaños de pantalla.'
 author: 'Tonalli'
 twitterUser: TuentyFaiv
 banner: ./cover.png
