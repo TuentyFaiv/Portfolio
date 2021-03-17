@@ -1,7 +1,7 @@
 ### Website where I show the projects that I have done and participated in, and sometimes I write publications or "tutorials" on web development.
 <br/>
 
-![screenshot](./static_readme/screenshot.png)
+![screenshot](./static_readme/Screenshot.png)
 
 # You can publish a blog post on my website if you want
 
