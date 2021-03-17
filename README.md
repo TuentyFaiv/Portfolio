@@ -1,15 +1,17 @@
-# ¿Quieres publicar un blog en mi página?
+### Website where I show the projects that I have done and participated in, and sometimes I write publications or "tutorials" on web development.
+<br/>
 
-## Requisitos:
-- Saber Git
-- Saber utilizar GitHub
-- Saber escribir en markdown
-- Saber [Node.js](https://nodejs.org/) y npm
+![screenshot](./static_readme/screenshot.png)
 
-## Pasos a seguir
+# You can publish a blog post on my website if you want
 
-1. Hacer fork al repositorio
-2. Crear una rama llamada newposts
-3. Instalar el proyecto: `npm install`
-4. Generar un newpost: `npm run newpost`
-5. Hacer un pullrequest
+## Steps to follow
+
+- Fork the repository
+- Create a new branch called newposts
+- Install the project: `npm install`
+- Generate a new post: `npm run newpost`
+- Make a pull request
+
+## License
+TuentyFaiv Website is released under the [MIT License](https://opensource.org/licenses/MIT).
