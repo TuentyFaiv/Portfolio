@@ -8,6 +8,6 @@ import vercel from "@astrojs/vercel/serverless";
 
 export default defineConfig({
   integrations: [react(), svelte(), lit(), vue()],
-  output: "server",
-  adapter: vercel()
+  // output: "server",
+  // adapter: vercel()
 });
