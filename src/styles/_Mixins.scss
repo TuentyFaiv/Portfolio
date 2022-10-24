@@ -1,0 +1,38 @@
+
+@mixin flex($justify, $gap: false, $align: center) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+  @if $gap {
+    gap: $gap;
+  }
+}
+@mixin grid($columns, $gap) {
+  display: grid;
+  grid-template-columns: $columns;
+  gap: $gap;
+}
+@mixin text($size, $weight: initial, $line-height: initial, $align: initial) {
+  font-style: normal;
+  font-size: $size;
+  font-weight: $weight;
+  line-height: $line-height;
+  text-align: $align;
+}
+@mixin content($width: 1500px, $padding: 0 16px) {
+  display: block;
+  width: 100%;
+  max-width: $width;
+  margin: 0 auto;
+  padding: $padding;
+}
+@mixin background-img($image, $color: false) {
+  @if $color {
+    background: $image, $color;
+  } @else {
+    background-image: $image;
+  }
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}

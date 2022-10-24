@@ -1,0 +1,158 @@
+---
+import "@fontsource/lora";
+import "@fontsource/lora/500.css";
+// import "@fontsource/lora/600.css";
+// import "@fontsource/lora/700.css";
+import "@fontsource/lato";
+// import "@fontsource/lato/100.css";
+// import "@fontsource/lato/300.css";
+// import "@fontsource/lato/700.css";
+import "@fontsource/lato/900.css";
+
+import { Header } from "@components/react";
+import dark from "@stores/theme/dark";
+import ligth from "@stores/theme/ligth";
+
+export interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+	</head>
+	<body>
+		<Header home={Astro.url.pathname === "/"} client:load />
+		<slot />
+	</body>
+</html>
+
+<style is:global define:vars={{ ...dark, ...ligth }}>
+	:root {
+		--theme: var(--ligthTheme);
+		--theme-secondary: var(--ligthThemeSecondary);
+		--background: var(--ligthBackground);
+		--background-two: var(--ligthBackgroundTwo);
+		--background-content: var(--ligthBackgroundContent);
+		--background-scrollbar: var(--ligthBackgroundScrollbar);
+		--content-color: var(--ligthContentColor);
+		--content-color-secondary: var(--ligthContentColorSecondary);
+		--button-shadow: var(--ligthButtonShadow);
+		--fixed-shadow: var(--ligthFixedShadow);
+		--gradient: var(--ligthGradient);
+		
+		--primary-font: "Lato", sans-serif;
+		--secondary-font: "Lora", serif;
+	}
+	:root[data-theme="dark"] {
+		--theme: var(--darkTheme);
+		--theme-secondary: var(--darkThemeSecondary);
+		--background: var(--darkBackground);
+		--background-two: var(--darkBackgroundTwo);
+		--background-content: var(--darkBackgroundContent);
+		--background-scrollbar: var(--darkBackgroundScrollbar);
+		--content-color: var(--darkContentColor);
+		--content-color-secondary: var(--darkContentColorSecondary);
+		--button-shadow: var(--darkButtonShadow);
+		--fixed-shadow: var(--darkFixedShadow);
+		--gradient: var(--darkGradient);
+	}
+	* {
+		box-sizing: border-box;
+		padding: 0;
+		margin: 0;
+		outline: 0;
+		transition: background-color .5s ease;
+	}
+	*:before,
+  *:after {
+    box-sizing: border-box;
+  }
+	*::-webkit-scrollbar {
+    width: 10px;
+		background-color: var(--background-scrollbar);
+  }
+  *::-webkit-scrollbar-thumb {
+    width: 10px;
+    background-color: var(--theme);
+  }
+	*::-moz-selection {
+    background: var(--theme);
+    color: var(--content-color);
+  }
+  *::selection {
+    background: var(--theme);
+    color: var(--content-color);
+  }
+	
+	html {
+		font-size: 62.5%;
+		font-family: var(--primary-font);
+		background: var(--background);
+		-webkit-text-size-adjust: 100%;
+	}
+	body {
+		font-size: 1.6rem;
+	}
+
+	input,
+	textarea,
+	a,
+	button {
+		font-family: inherit;
+		color: inherit;
+		border: 0;
+		background-color: transparent;
+	}
+
+	pre {
+		background-color: var(--theme);
+		color: var(--content-color);
+    border-radius: 4px;
+    font-size: 85%;
+    line-height: 1.45;
+    overflow: auto;
+    padding: 16px;
+    code {
+      background: transparent;
+			color: var(--content-color);
+      padding: 0;
+    }
+  }
+
+	code {
+    background-color: #666666;
+    color: var(--content-color);
+    padding: 5px 10px;
+    border-radius: 3px;
+    span {
+      &::selection {
+        background-color: #6C0C78;
+      }
+    }
+  }
+
+	blockquote {
+    margin-left: -1.75rem;
+    margin-right: 1.75rem;
+    margin-top: 0;
+    padding-bottom: 0;
+    padding-left: 1.42188rem;
+    padding-right: 0;
+    padding-top: 0;
+    margin-bottom: 1.75rem;
+    font-size: 1.20112rem;
+    line-height: 1.75rem;
+    color: hsla(0,0%,0%,0.59);
+    font-style: italic;
+    border-left: 0.32813rem solid hsla(0,0%,0%,0.9);
+  }
+</style>
