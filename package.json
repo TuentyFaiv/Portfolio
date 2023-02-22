@@ -1,38 +1,35 @@
 {
-  "name": "@example/basics",
-  "type": "module",
-  "version": "0.0.1",
-  "private": true,
-  "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build:check": "astro check && tsc --noEmit && astro build",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro"
-  },
-  "dependencies": {
-    "@astrojs/lit": "^1.2.0",
-    "@astrojs/react": "^2.0.2",
-    "@astrojs/svelte": "^2.0.2",
-    "@astrojs/vercel": "^3.1.2",
-    "@astrojs/vue": "^2.0.1",
-    "@fontsource/lato": "^4.5.10",
-    "@fontsource/lora": "^4.5.13",
-    "@nanostores/react": "^0.4.1",
-    "@nanostores/vue": "^0.7.0",
-    "@types/react": "^18.0.28",
-    "@types/react-dom": "^18.0.11",
-    "@webcomponents/template-shadowroot": "^0.1.0",
-    "astro": "^2.0.14",
-    "lit": "^2.6.1",
-    "nanostores": "^0.7.4",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "svelte": "^3.55.1",
-    "vue": "^3.2.47"
-  },
-  "devDependencies": {
-    "sass": "^1.58.3"
-  }
+	"name": "portfolio",
+	"type": "module",
+	"version": "0.0.1",
+	"private": true,
+	"scripts": {
+		"dev": "astro dev",
+		"start": "astro dev",
+		"build:check": "astro check && tsc --noEmit && astro build",
+		"build": "astro build",
+		"preview": "astro preview",
+		"astro": "astro"
+	},
+	"dependencies": {
+		"@astrojs/react": "^2.0.2",
+		"@astrojs/svelte": "^2.0.2",
+		"@astrojs/vercel": "^3.1.2",
+		"@astrojs/vue": "^2.0.1",
+		"@fontsource/lato": "^4.5.10",
+		"@fontsource/lora": "^4.5.13",
+		"@nanostores/react": "^0.4.1",
+		"@nanostores/vue": "^0.7.0",
+		"@types/react": "^18.0.21",
+		"@types/react-dom": "^18.0.6",
+		"astro": "^2.0.14",
+		"nanostores": "^0.7.4",
+		"react": "^18.0.0",
+		"react-dom": "^18.0.0",
+		"svelte": "^3.54.0",
+		"vue": "^3.2.30"
+	},
+	"devDependencies": {
+		"sass": "^1.58.3"
+	}
 }

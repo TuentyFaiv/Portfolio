@@ -1,11 +1,14 @@
 import { atom } from "nanostores";
 
-const storagedTheme = localStorage.getItem("theme") as "dark" | "ligth";
+const hasWindow = true;
+
+const storagedTheme = hasWindow ? localStorage.getItem("theme") as "dark" | "ligth" : "dark";
 
 export const theme = atom<"dark" | "ligth">(storagedTheme ?? "dark");
 
 export const changeTheme = () => {
   const changedTheme = (theme.get() === "dark" ? "ligth" : "dark");
-  localStorage.setItem("theme", changedTheme);
+
+  if (hasWindow) localStorage.setItem("theme", changedTheme);
   theme.set(changedTheme);
 }
