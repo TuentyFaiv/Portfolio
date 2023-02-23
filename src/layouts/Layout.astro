@@ -9,9 +9,8 @@ import "@fontsource/lato";
 // import "@fontsource/lato/700.css";
 import "@fontsource/lato/900.css";
 
-import { Header } from "@components/react";
-import dark from "@stores/theme/dark";
-import ligth from "@stores/theme/ligth";
+import { Header } from "@atoms";
+import { themes } from "@stores/theme";
 
 export interface Props {
 	title: string;
@@ -35,8 +34,21 @@ const { title } = Astro.props;
 	</body>
 </html>
 
-<style is:global define:vars={{ ...dark, ...ligth }}>
+<style is:global define:vars={{ ...themes.dark, ...themes.ligth }}>
 	:root {
+		--theme: var(--darkTheme);
+		--theme-secondary: var(--darkThemeSecondary);
+		--background: var(--darkBackground);
+		--background-two: var(--darkBackgroundTwo);
+		--background-content: var(--darkBackgroundContent);
+		--background-scrollbar: var(--darkBackgroundScrollbar);
+		--content-color: var(--darkContentColor);
+		--content-color-secondary: var(--darkContentColorSecondary);
+		--button-shadow: var(--darkButtonShadow);
+		--fixed-shadow: var(--darkFixedShadow);
+		--gradient: var(--darkGradient);
+	}
+	:root[data-theme="ligth"] {
 		--theme: var(--ligthTheme);
 		--theme-secondary: var(--ligthThemeSecondary);
 		--background: var(--ligthBackground);
@@ -51,19 +63,6 @@ const { title } = Astro.props;
 		
 		--primary-font: "Lato", sans-serif;
 		--secondary-font: "Lora", serif;
-	}
-	:root[data-theme="dark"] {
-		--theme: var(--darkTheme);
-		--theme-secondary: var(--darkThemeSecondary);
-		--background: var(--darkBackground);
-		--background-two: var(--darkBackgroundTwo);
-		--background-content: var(--darkBackgroundContent);
-		--background-scrollbar: var(--darkBackgroundScrollbar);
-		--content-color: var(--darkContentColor);
-		--content-color-secondary: var(--darkContentColorSecondary);
-		--button-shadow: var(--darkButtonShadow);
-		--fixed-shadow: var(--darkFixedShadow);
-		--gradient: var(--darkGradient);
 	}
 	* {
 		box-sizing: border-box;

@@ -1,20 +1,19 @@
 import { useEffect, useRef, useState } from "react"
+import { useStore } from "@nanostores/react";
 import { refs } from "@stores/refs";
 
-import type { HeaderProps } from "@typing/react/proptypes";
+import type { Props } from "./Header.proptypes";
 
-import "@stylescomp/Header.scss";
-import "@stylescomp/responsive/_Header.scss";
+import "./Header.scss";
 
 import IconMenu from "@icons/menu.svg?raw";
 import IconHome from "@icons/home.svg";
 import IconProjects from "@icons/projects.svg";
 import IconBlog from "@icons/blogs.svg";
 
-import { Theme, NavLink } from "@components/react";
-import { useStore } from "@nanostores/react";
+import { Theme, NavLink } from "..";
 
-export default function Header({ home }: HeaderProps) {
+export default function Header({ home }: Props) {
   const [native, setNative] = useState(true);
   const [menu, setMenu] = useState(true);
   const headerRef = useRef<HTMLElement| null>(null);

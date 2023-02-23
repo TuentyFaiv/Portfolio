@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useStore } from "@nanostores/react";
 import { changeTheme, theme } from "@stores/theme";
 
-import "@stylescomp/Theme.scss";
+import "./Theme.scss";
 
 import IconDark from "@icons/moon.svg";
 import IconLigth from "@icons/sun.svg";

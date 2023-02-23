@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 
-import type { NavLinkProps } from "@typing/react/proptypes";
+import type { Props } from "./NavLink.proptypes";
 
-const NavLink = ({ to, children }: NavLinkProps) => {
-  const [active, setActive] = useState(false);
+const NavLink = ({ to, children }: Props) => {
+  const [active, setActive] = useState<boolean>(false);
 
   useEffect(() => {
     const { pathname } = new URL(location.href, location.origin);
@@ -12,7 +12,7 @@ const NavLink = ({ to, children }: NavLinkProps) => {
     const pathnameFormatted = pathname.replace("/", pathname.length === 1 ? " " : "");
     const linkPathnameFormatted = linkPathname.replace("/", linkPathname.length === 1 ? " " : "");
 
-    setActive(pathnameFormatted.includes(linkPathnameFormatted));
+    setActive(pathnameFormatted.includes(linkPathnameFormatted))
   }, [to]);
 
   return (

@@ -1,10 +1,9 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { updateRefs } from "@stores/refs";
+  import { updateRefs } from "src/logic/stores/refs";
 
-  import "@stylescomp/Hero.scss";
-  import "@stylescomp/responsive/_Hero.scss";
-  import "@stylescomp/Button.scss";
+  import "./Hero.scss";
+  import "./Button.scss";
 
   let ref: HTMLElement;
 
@@ -20,8 +19,3 @@
   <p><span role="img" aria-label="icon">💪🏻</span></p>
   <a class="button" href="/#favs">Proyectos destacados</a>
 </section>
-
-<!-- <style lang="scss">
-  @import "../styles/components/Hero.scss";
-  @import "../styles/components/responsive/_Hero.css";
-</style> -->

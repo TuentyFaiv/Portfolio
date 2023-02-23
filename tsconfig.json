@@ -5,29 +5,31 @@
     "jsxImportSource": "react",
     "baseUrl": "./",
     "paths": {
+      // Logic
       "@typing/*": [
-        "src/typing/*"
-      ],
-      "@components/*": [
-        "src/components/*"
+        "src/logic/typing/*"
       ],
       "@stores/*": [
-        "src/stores/*"
+        "src/logic/stores/*"
       ],
       "@icons/*": [
         "src/assets/icons/*"
       ],
-      "@stylescomp/*": [
-        "src/styles/components/*"
+      // UI
+      "@atoms/astro/*": [
+        "src/ui/atoms/astro/*"
       ],
-      "@styleslay/*": [
-        "src/styles/layouts/*"
+      "@atoms": [
+        "src/ui/atoms/index.ts"
       ],
-      "@stylespag/*": [
-        "src/styles/pages/*"
+      "@lstyles/*": [
+        "src/ui/styles/layouts/*"
+      ],
+      "@pstyles/*": [
+        "src/ui/styles/pages/*"
       ],
       "@styles": [
-        "src/styles/Globals.scss"
+        "src/ui/styles/Globals.scss"
       ],
     }
   }
