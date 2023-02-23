@@ -1,5 +1,4 @@
 // React
-export { default as Header } from "./Header/Header";
 export { default as NavLink } from "./NavLink/NavLink";
 export { default as Theme } from "./Theme/Theme";
 // Svelte

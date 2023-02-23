@@ -15,12 +15,21 @@
       "@icons/*": [
         "src/assets/icons/*"
       ],
+      "@images/*": [
+        "src/assets/images/*"
+      ],
       // UI
       "@atoms/astro/*": [
         "src/ui/atoms/astro/*"
       ],
       "@atoms": [
         "src/ui/atoms/index.ts"
+      ],
+      "@molecules": [
+        "src/ui/molecules/index.ts"
+      ],
+      "@organisms": [
+        "src/ui/organisms/index.ts"
       ],
       "@lstyles/*": [
         "src/ui/styles/layouts/*"

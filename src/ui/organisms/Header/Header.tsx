@@ -11,10 +11,10 @@ import IconHome from "@icons/home.svg";
 import IconProjects from "@icons/projects.svg";
 import IconBlog from "@icons/blogs.svg";
 
-import { Theme, NavLink } from "..";
+import { Theme, NavLink } from "../../atoms";
 
 export default function Header({ home }: Props) {
-  const [native, setNative] = useState(true);
+  const [native, setNative] = useState(false);
   const [menu, setMenu] = useState(true);
   const headerRef = useRef<HTMLElement| null>(null);
   const burgerMenuRef = useRef<HTMLDivElement| null>(null);
