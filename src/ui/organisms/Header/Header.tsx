@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import { useStore } from "@nanostores/react";
-import { refs } from "@stores/refs";
+import { refs, theme } from "@stores";
 
 import type { Props } from "./Header.proptypes";
 
@@ -19,6 +19,7 @@ export default function Header({ home }: Props) {
   const headerRef = useRef<HTMLElement| null>(null);
   const burgerMenuRef = useRef<HTMLDivElement| null>(null);
   const $refs = useStore(refs);
+  const $theme = useStore(theme);
   const mainRef = $refs["main"];
 
   const handleBurgerMenu = () => {
@@ -54,7 +55,7 @@ export default function Header({ home }: Props) {
         <>
           <div className="header__home">
             <a href="/" className="header__logo-link">
-              <img src={"dark ? logoDark : logo"} alt="Logo" className="header__logo" />
+              <img src={$theme === "dark" ? "/images/logo_dark@3x.webp" : "/images/logo@3x.webp"} alt="Logo" className="header__logo" />
             </a>
             <Theme />
             <button

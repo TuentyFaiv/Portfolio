@@ -9,8 +9,8 @@
       "@typing/*": [
         "src/logic/typing/*"
       ],
-      "@stores/*": [
-        "src/logic/stores/*"
+      "@stores": [
+        "src/logic/stores/index.ts"
       ],
       "@icons/*": [
         "src/assets/icons/*"
