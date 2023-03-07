@@ -55,7 +55,7 @@ export default function Header({ home }: Props) {
         <>
           <div className="header__home">
             <a href="/" className="header__logo-link">
-              <img src={$theme === "dark" ? "/images/logo_dark@3x.webp" : "/images/logo@3x.webp"} alt="Logo" className="header__logo" />
+              <img src={`/images/logo${$theme === "dark" ? "_dark" : ""}@3x.webp`} alt="Logo" className="header__logo" />
             </a>
             <Theme />
             <button
