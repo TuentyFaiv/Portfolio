@@ -1,45 +1,17 @@
 {
-  "extends": "astro/tsconfigs/strictest",
-  "compilerOptions": {
-    "jsx": "react-jsx",
-    "jsxImportSource": "react",
-    "baseUrl": "./",
-    "paths": {
-      // Logic
-      "@typing/*": [
-        "src/logic/typing/*"
-      ],
-      "@stores": [
-        "src/logic/stores/index.ts"
-      ],
-      "@icons/*": [
-        "src/assets/icons/*"
-      ],
-      "@images/*": [
-        "src/assets/images/*"
-      ],
-      // UI
-      "@atoms/astro/*": [
-        "src/ui/atoms/astro/*"
-      ],
-      "@atoms": [
-        "src/ui/atoms/index.ts"
-      ],
-      "@molecules": [
-        "src/ui/molecules/index.ts"
-      ],
-      "@organisms": [
-        "src/ui/organisms/index.ts"
-      ],
-      "@lstyles/*": [
-        "src/ui/styles/layouts/*"
-      ],
-      "@pstyles/*": [
-        "src/ui/styles/pages/*"
-      ],
-      "@styles": [
-        "src/ui/styles/Globals.scss"
-      ],
-    }
-  }
+	"extends": "./.svelte-kit/tsconfig.json",
+	"compilerOptions": {
+		"allowJs": true,
+		"checkJs": true,
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"resolveJsonModule": true,
+		"skipLibCheck": true,
+		"sourceMap": true,
+		"strict": true
+	}
+	// Path aliases are handled by https://kit.svelte.dev/docs/configuration#alias
+	//
+	// If you want to overwrite includes/excludes, make sure to copy over the relevant includes/excludes
+	// from the referenced tsconfig.json - TypeScript does not merge them in
 }
