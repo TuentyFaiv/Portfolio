@@ -1,17 +1,14 @@
 <script lang="ts">
-  // import '@skeletonlabs/skeleton/themes/theme-skeleton.css';
-  import "../theme.postcss";
-
-  import "@skeletonlabs/skeleton/styles/skeleton.css";
+  import "@fontsource-variable/mulish/wght.css";
+  import "@fontsource-variable/mulish/wght-italic.css";
+  import "@fontsource-variable/orbitron";
 
   import "../app.postcss";
   import { AppShell, AppBar, LightSwitch } from "@skeletonlabs/skeleton";
 </script>
 
-<!-- App Shell -->
 <AppShell>
   <svelte:fragment slot="header">
-    <!-- App Bar -->
     <AppBar>
       <svelte:fragment slot="lead">
         <strong class="text-xl uppercase">Skeleton</strong>
@@ -45,6 +42,5 @@
       </svelte:fragment>
     </AppBar>
   </svelte:fragment>
-  <!-- Page Route Content -->
   <slot />
 </AppShell>
