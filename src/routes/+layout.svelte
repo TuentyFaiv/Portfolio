@@ -3,7 +3,7 @@
   import "@fontsource-variable/mulish/wght-italic.css";
   import "@fontsource-variable/orbitron";
 
-  import "../app.postcss";
+  import "@styles";
   import { AppShell, AppBar, LightSwitch } from "@skeletonlabs/skeleton";
 </script>
 

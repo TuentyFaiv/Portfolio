@@ -5,7 +5,7 @@ import { skeleton } from '@skeletonlabs/tw-plugin';
 
 import type { Config } from "tailwindcss";
 
-import { theme } from "./tf.theme";
+import { theme } from "./theme";
 
 const config = {
 	darkMode: "class",
@@ -18,7 +18,10 @@ const config = {
 	},
 	plugins: [forms, typography, skeleton({
 		themes: {
-			preset: ["skeleton"],
+			preset: [{
+				name: "skeleton",
+				enhancements: true,
+			}],
 			custom: [theme]
 		}
 	})],

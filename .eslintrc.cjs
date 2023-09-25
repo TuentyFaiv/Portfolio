@@ -9,16 +9,7 @@ module.exports = {
 		"plugin:svelte/recommended",
 	],
 	plugins: ["@typescript-eslint"],
-	parserOptions: {
-		sourceType: "module",
-		ecmaVersion: 2020,
-		extraFileExtensions: ['.svelte'],
-	},
-	env: {
-		browser: true,
-		es2017: true,
-		node: true
-	},
+	ignorePatterns: ["*.cjs"],
 	overrides: [
 		{
 			files: ['*.svelte'],
@@ -28,6 +19,17 @@ module.exports = {
 			},
 		}
 	],
+	parserOptions: {
+		sourceType: "module",
+		ecmaVersion: 2020,
+		project: "./tsconfig.json",
+		extraFileExtensions: ['.svelte'],
+	},
+	env: {
+		browser: true,
+		es2017: true,
+		node: true
+	},
 	rules: {
 		"import/extensions": 0,
 		"import/no-extraneous-dependencies": 0,
