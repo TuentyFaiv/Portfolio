@@ -9,6 +9,19 @@ const config = {
 	},
 	kit: {
 		adapter: adapter(),
+		csp: {
+			mode: "auto",
+			directives: {
+				"script-src": ["self", "unsafe-inline"],
+				"style-src": ["self", "unsafe-inline"],
+			},
+			reportOnly: {
+				"script-src": ["self", "unsafe-inline"],
+				"style-src": ["self", "unsafe-inline"],
+				"report-to": ["self"],
+				"report-uri": ["self"],
+			}
+		},
 		alias: {
 			// Assets
 			"@images/*": "src/assets/images/*",
