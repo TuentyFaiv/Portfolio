@@ -1,0 +1,85 @@
+@import "./ThemeSwitch.responsive.postcss";
+
+.themeswitch {
+  @apply relative
+  block
+  w-[70px]
+  h-[30px]
+  z-0
+  rounded-full
+  bg-surface-100-800-token
+  overflow-hidden;
+  &[aria-checked="true"] {
+    box-shadow: 0 0 10px 0 #E5C7C7;
+    & .themeswitch__star {
+      @apply bg-primary-600;
+      &::before {
+        @apply bg-surface-100
+        translate-x-full;
+      }
+    }
+  }
+  &[aria-checked="false"] {
+    box-shadow: 0 0 10px 0 #C8EFE2;
+    & .themeswitch__star {
+      @apply bg-secondary-600 translate-x-[38px];
+      &::before {
+        @apply bg-surface-800
+        -translate-x-1/2;
+      }
+    }
+    & .themeswitch__clouds {
+      @apply -translate-x-[45px];
+      transition: transform .3s .25s ease-in-out;
+      &::before {
+        @apply -translate-x-[16px];
+        transition: transform .3s ease-in;
+      }
+      &::after {
+        @apply -translate-x-[24px];
+        transition: transform .3s .15s ease-out;
+      }
+    }
+  }
+  &__litte-stars,
+  &__star,
+  &__clouds {
+    @apply block absolute z-0;
+  }
+  &__litte-stars {}
+  &__star {
+    @apply w-[24px] h-[24px] rounded-full top-1/2 -translate-y-1/2 left-1;
+    transition: transform .3s linear, background-color .4s linear;
+    &::before {
+      @apply w-full
+      h-full
+      rounded-full
+      content-[""]
+      block
+      absolute
+      z-0
+      top-2/4
+      left-0
+      -translate-y-1/2;
+      transition: transform .3s linear;
+    }
+  }
+  &__clouds {
+    @apply w-[18px] h-[8px] top-[58%] rounded-full left-[28%];
+    background-color: rgba(244, 244, 244, .65);
+    transition: transform .3s .075s ease-in-out;
+    &::before,
+    &::after {
+      @apply h-[8px] block absolute z-0 content-[""] rounded-full;
+      background-color: rgba(244, 244, 244, .65);
+    }
+    &::before {
+      @apply w-[24px] top-[-14px] left-[10px];
+      transition: transform .3s .15s ease-in;
+    }
+    &::after {
+      @apply w-[14px] top-[-4px] left-[32px];
+      transition: transform .3s .25s ease-out;
+    }
+  }
+}
