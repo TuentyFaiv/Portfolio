@@ -1,15 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { updateRefs } from "src/logic/stores/refs";
-
-  import "./Hero.scss";
-  import "./Button.scss";
 
   let ref: HTMLElement;
-
-  onMount(() => {
-    updateRefs(ref, "main");
-  });
 </script>
 
 <section class="hero" bind:this={ref}>
