@@ -5,19 +5,23 @@ import { vitePreprocess } from '@sveltejs/kit/vite';
 const config = {
 	preprocess: [vitePreprocess()],
 	vitePlugin: {
-		inspector: true,   
+		inspector: true,
 	},
 	kit: {
 		adapter: adapter(),
 		csp: {
 			mode: "auto",
 			directives: {
-				"script-src": ["self", "unsafe-inline"],
+				"script-src": ["self", "strict-dynamic", "unsafe-inline", "https:"],
 				"style-src": ["self", "unsafe-inline"],
+				"object-src": ["none"],
+				"base-uri": ["self"],
 			},
 			reportOnly: {
-				"script-src": ["self", "unsafe-inline"],
+				"script-src": ["self", "strict-dynamic", "unsafe-inline", "https:"],
 				"style-src": ["self", "unsafe-inline"],
+				"object-src": ["none"],
+				"base-uri": ["self"],
 				"report-to": ["self"],
 				"report-uri": ["self"],
 			}
