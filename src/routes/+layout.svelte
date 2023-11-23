@@ -6,7 +6,8 @@
   import "@fontsource-variable/orbitron";
 
   import "@styles";
-  import { ThemeSwitch } from "@sharing/atoms";
+
+  import { Header } from "@sharing/organisms";
 
   const LogoBlack = "/logo_dark@3x.webp";
   const LogoWhite = "/logo@3x.webp";
@@ -14,6 +15,11 @@
 
 <svelte:head>
   <link rel="icon" href={$modeCurrent ? LogoWhite : LogoBlack} />
+  <meta name="theme-color" content={$modeCurrent ? "#961E1E" : "#21C08B"} />
 </svelte:head>
-<ThemeSwitch />
-<slot />
+
+<Header />
+
+<main>
+  <slot />
+</main>

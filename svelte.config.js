@@ -29,7 +29,7 @@ const config = {
 		alias: {
 			// Assets
 			"@images/*": "src/assets/images/*",
-			"@icons/*": "src/assets/images/icons/*",
+			"@icons/*": "src/assets/icons/*",
 			// Logic
 			"@config": "src/logic/config.ts",
 			"@stores": "src/logic/stores/index.ts",
