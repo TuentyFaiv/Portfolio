@@ -29,6 +29,14 @@
   }
   &__item {
     @apply w-max;
+    &--rounded {
+      & > .header__link {
+        @apply md:pl-1;
+      }
+      & .header__icon {
+        @apply rounded-full;
+      }
+    }
   }
   &__link {
     @apply block

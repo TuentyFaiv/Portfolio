@@ -1,3 +1,14 @@
+@media (prefers-reduced-motion: reduce) {
+  .themeswitch {
+    @apply transition-none;
+    &__star,
+    &__little-star,
+    &__cloud {
+      @apply transition-none animate-none;
+    }
+  }
+}
+
 .themeswitch {
   @media (min-width: 1024px) {
   }

@@ -1,12 +1,12 @@
 <script lang="ts">
   import { faivmodal } from "@tuentyfaiv/svelte-modal";
+  import { modeCurrent } from "@skeletonlabs/skeleton";
   import { page } from "$app/stores";
 
   import "./Header.postcss";
 
   import IconBlog from "@icons/icon-blog.png";
-  import IconProjects from "@icons/icon-projects.png";
-  import IconHome from "@icons/icon-home.png";
+  import IconProjects from "@icons/icon-home.png";
   import IconGitHub from "@icons/icon-github.png";
   import IconLinkedIn from "@icons/icon-linkedin.png";
 
@@ -17,7 +17,9 @@
   });
   const { device } = $desktop;
 
-  const links = [
+  $: IconHome = !$modeCurrent ? "/logo_dark@3x.webp" : "/logo@3x.webp";
+
+  $: links = [
     {
       icon: IconHome,
       content: "Home",
@@ -80,10 +82,12 @@
     {/if}
     <ul class="header__list">
       {#each links as { href, content, icon }}
-        <li class="header__item">
+        <li
+          class="header__item{href !== '/blog' ? ' header__item--rounded' : ''}"
+        >
           <a
             {href}
-            class={"header__link"}
+            class="header__link"
             class:header__link--active={href === $page.url.pathname}
             on:focus={$device ? showOverlink : undefined}
             on:mouseenter|stopPropagation={$device ? showOverlink : undefined}

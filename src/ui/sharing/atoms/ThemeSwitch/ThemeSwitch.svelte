@@ -31,7 +31,13 @@
   aria-label="Theme switch"
   aria-checked={$modeCurrent}
 >
-  <span class="themeswitch__litte-stars" />
   <span class="themeswitch__star" />
-  <span class="themeswitch__clouds" />
+  <span class="themeswitch__decoration">
+    <span class="themeswitch__cloud" />
+    <span class="themeswitch__cloud" />
+    <span class="themeswitch__cloud" />
+    <span class="themeswitch__litte-star" />
+    <span class="themeswitch__litte-star" />
+    <span class="themeswitch__litte-star" />
+  </span>
 </button>
