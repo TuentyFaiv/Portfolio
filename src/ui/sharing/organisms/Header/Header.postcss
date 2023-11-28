@@ -1,7 +1,19 @@
 @import "./Header.responsive.postcss";
 
 .header {
-  @apply w-full flex px-4 py-6 justify-between items-center gap-4 sm:gap-6 md:p-6 lg:p-8;
+  @apply w-full
+  fixed
+  z-10
+  flex
+  px-4
+  py-6
+  bg-surface-50-900-token
+  justify-between
+  items-center
+  gap-4
+  sm:gap-6
+  md:p-6
+  lg:p-8;
   &__nav {
     @apply w-full relative z-0;
   }

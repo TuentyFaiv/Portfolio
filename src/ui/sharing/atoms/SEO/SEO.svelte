@@ -15,7 +15,7 @@
   $: titleSeo = !title ? config.brand : `${title} | ${config.brand}`;
   $: descriptionSeo = !description ? config.description : description;
   $: defaulCover = !$modeCurrent ? "/logo_dark@3x.webp" : "/logo@3x.webp";
-  $: coverSeo = !cover ? defaulCover : cover;
+  $: coverSeo = !cover ? `${$page.url.origin}${defaulCover}` : cover;
 </script>
 
 <svelte:head>
