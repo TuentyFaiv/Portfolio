@@ -2,6 +2,11 @@
 
 .hero {
   @apply w-full
+  flex
+  flex-col
+  items-center
+  justify-center
+  gap-5
   px-4
   pt-24
   pb-10
@@ -15,5 +20,11 @@
   min-h-screen;
   &__title {
     @apply text-center h1;
+  }
+  &__subtitle {
+    @apply text-center h4 max-w-[500px] mx-auto font-token;
+  }
+  &__link {
+    @apply text-primary-500 hover:border-b border-primary-500 dark:text-secondary-500 dark:border-secondary-500;
   }
 }

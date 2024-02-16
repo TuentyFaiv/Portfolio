@@ -6,4 +6,3 @@
 <SEO />
 
 <Hero />
-<section style:min-height="100vh">other content</section>

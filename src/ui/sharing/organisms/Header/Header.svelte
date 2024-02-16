@@ -45,7 +45,8 @@
       href: "https://github.com/TuentyFaiv",
     },
     {
-      onlyDesktop: true,
+      // onlyDesktop: true,
+      onlyDesktop: false,
       icon: IconLinkedIn,
       content: "LinkedIn",
       href: "https://www.linkedin.com/in/tuentyfaiv",
@@ -70,7 +71,7 @@
 </script>
 
 <header class="header">
-  <nav class="header__nav">
+  <!-- <nav class="header__nav">
     {#if $device}
       <span
         class="header__overlink"
@@ -104,7 +105,7 @@
         </li>
       {/each}
     </ul>
-  </nav>
+  </nav> -->
   <div class="header__actions">
     <ThemeSwitch />
     {#each socials as { href, content, icon, onlyDesktop }}
