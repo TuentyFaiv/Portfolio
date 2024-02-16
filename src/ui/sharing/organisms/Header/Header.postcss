@@ -1,0 +1,115 @@
+@import "./Header.responsive.postcss";
+
+.header {
+  @apply w-full
+  fixed
+  z-10
+  flex
+  px-4
+  py-6
+  bg-surface-50-900-token
+  /* justify-between */
+  justify-end
+  items-center
+  gap-4
+  sm:gap-6
+  md:p-6
+  lg:p-8;
+  &__nav {
+    @apply w-full relative z-0;
+  }
+  &__overlink {
+    @apply absolute
+    block
+    -z-[1]
+    h-8
+    md:h-11
+    top-0
+    -left-4
+    md:-left-6
+    lg:-left-8
+    bg-primary-500
+    dark:bg-secondary-500
+    bg-opacity-30
+    dark:bg-opacity-30
+    rounded-full
+    transition-all
+    duration-200
+    will-change-auto;
+  }
+  &__list {
+    @apply flex justify-start items-center gap-2 sm:gap-4 md:gap-5 lg:gap-6;
+  }
+  &__item {
+    @apply w-max;
+    &--rounded {
+      & > .header__link {
+        @apply md:pl-1;
+      }
+      & .header__icon {
+        @apply rounded-full;
+      }
+    }
+  }
+  &__link {
+    @apply block
+    min-w-max
+    rounded-full
+    md:flex
+    md:justify-center
+    md:items-center
+    md:py-1
+    md:pl-2
+    md:pr-5
+    md:gap-1
+    lg:gap-2
+    focus-visible:border-none
+    focus-visible:outline-double
+    focus-visible:outline-primary-900
+    dark:focus-visible:outline-secondary-900
+    md:transition-opacity
+    md:duration-200
+    md:opacity-70
+    md:hover:opacity-100;
+    &--active {
+      @apply bg-primary-500
+      dark:bg-secondary-500
+      bg-opacity-30
+      dark:bg-opacity-30
+      md:opacity-100
+      md:bg-transparent
+      md:dark:bg-transparent;
+      &:not(:hover) > .header__link-text::before {
+        @apply w-full;
+      }
+    }
+  }
+  &__icon-wrapper {
+    @apply block w-9 h-9 p-1 md:p-0;
+  }
+  &__link-text {
+    @apply hidden md:block text-lg relative z-0;
+    &::before {
+      @apply block
+      content-[""]
+      absolute
+      w-0
+      z-0
+      h-0.5
+      top-full
+      left-0
+      bg-primary-500
+      dark:bg-secondary-500
+      rounded-full
+      transition-all
+      duration-200
+      will-change-auto;
+    }
+  }
+  &__icon {
+    @apply block w-full h-full object-contain max-w-[2.25rem] max-h-[2.25rem];
+  }
+  &__actions {
+    @apply flex justify-center items-center gap-2 sm:gap-4 md:gap-5;
+  }
+}
