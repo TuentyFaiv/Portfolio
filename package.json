@@ -16,7 +16,9 @@
 	"dependencies": {
 		"@fontsource-variable/mulish": "^5.0.9",
 		"@fontsource-variable/orbitron": "^5.0.12",
-		"@tuentyfaiv/svelte-modal": "^0.0.5"
+		"@tuentyfaiv/svelte-modal": "^0.0.5",
+		"@vercel/analytics": "^1.2.0",
+		"@vercel/speed-insights": "^1.0.10"
 	},
 	"devDependencies": {
 		"@floating-ui/dom": "^1.5.3",
