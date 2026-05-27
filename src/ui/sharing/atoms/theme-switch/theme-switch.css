@@ -1,0 +1,277 @@
+@reference "~styles/app.css";
+
+@import "./theme-switch.responsive.css";
+
+.themeswitch {
+	@apply relative block w-17.5 min-w-17.5 h-7.5 z-0 rounded-full bg-background focus-visible:border-none focus-visible:outline-double focus-visible:outline-primary-900 transition-shadow duration-250 overflow-hidden hover:shadow-primary-100;
+	&:hover {
+		box-shadow:
+			0 0 13px -2px var(--tw-shadow-color, rgb(0 0 0 / 0.1)),
+			0 0 6px -3px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
+	}
+	&[aria-checked="false"] {
+		.themeswitch__star::before {
+			@apply translate-x-full;
+		}
+	}
+	&[aria-checked="true"] {
+		.themeswitch__star {
+			@apply translate-x-9.5;
+		}
+		.themeswitch__star::before {
+			@apply -translate-x-1/2;
+		}
+		.themeswitch__cloud {
+			animation: none;
+			&:nth-child(2) {
+				@apply -translate-x-full delay-50;
+			}
+			&:nth-child(3) {
+				@apply -translate-x-full delay-85;
+			}
+			&:nth-child(4) {
+				@apply -translate-x-full delay-125;
+			}
+		}
+		.themeswitch__litte-star {
+			&:nth-child(5) {
+				@apply -translate-x-9.5 delay-125;
+			}
+			&:nth-child(6) {
+				@apply -translate-x-12.5 delay-85;
+			}
+			&:nth-child(7) {
+				@apply -translate-x-10.75 delay-50;
+			}
+		}
+	}
+}
+
+.themeswitch:not(:hover):not(:focus-visible):not([aria-checked="true"]) {
+	.themeswitch__cloud {
+		&:nth-child(2) {
+			animation: floatingOne 10s linear infinite alternate;
+		}
+		&:nth-child(3) {
+			animation: floatingTwo 12s 0.5s linear infinite alternate;
+		}
+		&:nth-child(4) {
+			animation: floatingThree 8s 1s linear infinite alternate;
+		}
+	}
+}
+.themeswitch:not(:hover):not(:focus-visible):not([aria-checked="false"]) {
+	.themeswitch__litte-star {
+		&:nth-child(5) {
+			animation: shiningOne 10s linear infinite alternate;
+		}
+		&:nth-child(6) {
+			animation: shiningTwo 12s 0.5s linear infinite alternate;
+		}
+		&:nth-child(7) {
+			animation: shiningThree 8s 1s linear infinite alternate;
+		}
+	}
+}
+
+.themeswitch__star,
+.themeswitch__litte-star,
+.themeswitch__cloud {
+	@apply block absolute z-0;
+}
+.themeswitch__star {
+	@apply size-6 rounded-full top-1/2 left-1 bg-primary-600 -translate-y-1/2;
+	transition:
+		translate 0.2s linear,
+		background-color 0.4s linear;
+}
+.themeswitch__star::before {
+	@apply size-full rounded-full content-[""] block absolute bg-background z-0 top-2/4 left-0 -translate-y-1/2;
+	transition: translate 0.2s linear;
+}
+
+.themeswitch__cloud {
+	@apply h-[8px] left-0 rounded-full bg-background-950/10 dark:bg-background-50/50 duration-200 ease-in-out;
+	transition-property: transform, translate, scale, rotate, background-color;
+	&:nth-child(2) {
+		@apply w-5 top-[59%] translate-x-[19px] delay-125;
+	}
+	&:nth-child(3) {
+		@apply w-6 top-[15%] translate-x-7.5 delay-65;
+	}
+	&:nth-child(4) {
+		@apply w-4 top-[48%] translate-x-12 delay-50;
+	}
+}
+.themeswitch__litte-star {
+	@apply bg-warning-400 right-0 shadow-warning-400 transition-transform duration-200 ease-in-out;
+	&:nth-child(5) {
+		@apply size-1.5 top-[18%] translate-x-full skew-x-[-35deg] skew-y-[45deg] -rotate-[13deg] delay-50;
+	}
+	&:nth-child(6) {
+		@apply size-2.5 top-[50%] -translate-y-1/2 translate-x-full skew-x-[-35deg] skew-y-[45deg] -rotate-[13deg] delay-85;
+	}
+	&:nth-child(7) {
+		@apply size-1 top-[68%] translate-x-full skew-x-[-35deg] skew-y-[45deg] -rotate-[13deg] delay-125;
+	}
+}
+
+/* For clouds */
+@keyframes floatingOne {
+	0% {
+		translate: 19px 0;
+	}
+	15% {
+		translate: 17px 14%;
+	}
+	30% {
+		translate: 15px -14%;
+	}
+	45% {
+		translate: 17px 0;
+	}
+	55% {
+		translate: 19px 14%;
+	}
+	70% {
+		translate: 21px 0;
+	}
+	85% {
+		translate: 23px -14%;
+	}
+	100% {
+		translate: 21px 0;
+	}
+}
+@keyframes floatingTwo {
+	0% {
+		translate: 30px 0;
+	}
+	15% {
+		translate: 32px -14%;
+	}
+	30% {
+		translate: 34px 14%;
+	}
+	45% {
+		translate: 32px 0;
+	}
+	55% {
+		translate: 30px -14%;
+	}
+	70% {
+		translate: 28px 0;
+	}
+	85% {
+		translate: 26px 14%;
+	}
+	100% {
+		translate: 28px 0;
+	}
+}
+@keyframes floatingThree {
+	0% {
+		translate: 48px 0;
+	}
+	15% {
+		translate: 48px 0;
+	}
+	30% {
+		translate: 44px -14%;
+	}
+	45% {
+		translate: 46px 14%;
+	}
+	55% {
+		translate: 48px 0;
+	}
+	70% {
+		translate: 48px -14%;
+	}
+	85% {
+		translate: 52px 14%;
+	}
+	100% {
+		translate: 50px 0;
+	}
+}
+
+/* For stars */
+@keyframes shiningOne {
+	0% {
+		opacity: 1;
+	}
+	15% {
+		opacity: 1;
+	}
+	30% {
+		opacity: 0.25;
+	}
+	45% {
+		opacity: 0.25;
+	}
+	55% {
+		opacity: 0.25;
+	}
+	70% {
+		opacity: 1;
+	}
+	85% {
+		opacity: 0.25;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+@keyframes shiningTwo {
+	0% {
+		opacity: 1;
+	}
+	15% {
+		opacity: 0.5;
+	}
+	30% {
+		opacity: 0.5;
+	}
+	45% {
+		opacity: 1;
+	}
+	55% {
+		opacity: 1;
+	}
+	70% {
+		opacity: 1;
+	}
+	85% {
+		opacity: 0.5;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+@keyframes shiningThree {
+	0% {
+		opacity: 1;
+	}
+	15% {
+		opacity: 0;
+	}
+	30% {
+		opacity: 1;
+	}
+	45% {
+		opacity: 0.25;
+	}
+	55% {
+		opacity: 0.5;
+	}
+	70% {
+		opacity: 1;
+	}
+	85% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}

@@ -1,31 +1,34 @@
 <script lang="ts">
-  import { dev } from "$app/environment";
-  import { inject } from "@vercel/analytics";
-  import { injectSpeedInsights } from "@vercel/speed-insights/sveltekit";
-  import { modeCurrent } from "@skeletonlabs/skeleton";
+	import { ModeWatcher, mode } from "mode-watcher";
 
-  import "@fontsource-variable/mulish/wght.css";
-  import "@fontsource-variable/mulish/wght-italic.css";
-  import "@fontsource-variable/orbitron";
+	import "~styles";
 
-  import "@styles";
+	import type { LayoutProps } from "./$types";
 
-  import { Header } from "@sharing/organisms";
+	import { Header } from "~sharing/organisms/header";
 
-  inject({ mode: dev ? "development" : "production" });
-  injectSpeedInsights();
+	let { children }: LayoutProps = $props();
 
-  const LogoBlack = "/logo_dark@3x.webp";
-  const LogoWhite = "/logo@3x.webp";
+	$effect(() => {
+		const href = mode.current === "dark" ? "/logo_dark@3x.webp" : "/logo@3x.webp";
+		const link = document.querySelector<HTMLLinkElement>('link[rel="icon"]');
+		if (link) link.href = href;
+	});
 </script>
 
+<ModeWatcher
+	defaultMode="dark"
+	disableTransitions={false}
+	themeColors={{ dark: "#21C08B", light: "#961E1E" }}
+	disableHeadScriptInjection
+/>
+
 <svelte:head>
-  <link rel="icon" href={$modeCurrent ? LogoWhite : LogoBlack} />
-  <meta name="theme-color" content={$modeCurrent ? "#961E1E" : "#21C08B"} />
+	<link rel="icon" href="/logo@3x.webp">
 </svelte:head>
 
 <Header />
 
 <main>
-  <slot />
+	{@render children()}
 </main>

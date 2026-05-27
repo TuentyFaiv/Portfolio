@@ -1,1 +1,1 @@
-import "./app.postcss";
+import "./app.css";

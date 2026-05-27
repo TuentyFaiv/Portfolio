@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { SEO } from "@sharing/atoms";
-  import { Hero } from "@home/organisms";
+	import { Hero } from "~home/organisms/hero";
+	import { SEO } from "~sharing/atoms/seo";
 </script>
 
 <SEO />

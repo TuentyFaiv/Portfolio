@@ -1,55 +1,58 @@
-import adapter from "@sveltejs/adapter-vercel";
-import { vitePreprocess } from '@sveltejs/kit/vite';
+import adapter from "@sveltejs/adapter-cloudflare";
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-	preprocess: [vitePreprocess()],
-	vitePlugin: {
-		inspector: true,
+	compilerOptions: {
+		// Force runes mode for the project, except for libraries. Can be removed in svelte 6.
+		runes: ({ filename }) => (filename.split(/[/\\]/).includes("node_modules") ? undefined : true),
 	},
+	vitePlugin: { inspector: true },
 	kit: {
 		adapter: adapter(),
+		files: { lib: "src/logic" },
 		csp: {
 			mode: "auto",
 			directives: {
-				"script-src": ["self", "strict-dynamic", "unsafe-inline", "https:"],
+				"default-src": ["self"],
+				"script-src": ["self", "strict-dynamic", "unsafe-inline", "https:", "https://static.cloudflareinsights.com/beacon.min.js"],
+				"img-src": ["self", "data:", "https:"],
 				"style-src": ["self", "unsafe-inline"],
+				"frame-ancestors": ["none"],
+				"form-action": ["self"],
+				"connect-src": ["self"],
 				"object-src": ["none"],
 				"base-uri": ["self"],
 			},
 			reportOnly: {
-				"script-src": ["self", "strict-dynamic", "unsafe-inline", "https:"],
+				"default-src": ["self"],
+				"script-src": ["self", "strict-dynamic", "unsafe-inline", "https:", "https://static.cloudflareinsights.com/beacon.min.js"],
+				"img-src": ["self", "data:", "https:"],
 				"style-src": ["self", "unsafe-inline"],
+				"frame-ancestors": ["none"],
+				"form-action": ["self"],
+				"connect-src": ["self"],
 				"object-src": ["none"],
 				"base-uri": ["self"],
-				"report-to": ["self"],
-				"report-uri": ["self"],
-			}
+				"report-to": ["csp-endpoint"],
+				"report-uri": ["/api/csp-report"],
+			},
 		},
 		alias: {
-			// Assets
-			"@images/*": "src/assets/images/*",
-			"@icons/*": "src/assets/icons/*",
-			// Logic
-			"@config": "src/logic/config.ts",
-			"@stores": "src/logic/stores/index.ts",
-			"@actions": "src/logic/actions/index.ts",
-			"@schemas/*": "src/logic/schemas/*",
-			"@services/*": "src/logic/services/*",
-			"@typing/*": "src/logic/typing/*",
-			"@utils/*": "src/logic/utils/*",
-			// UI Home
-			"@home/atoms": "src/ui/home/atoms/index.ts",
-			"@home/molecules": "src/ui/home/molecules/index.ts",
-			"@home/organisms": "src/ui/home/organisms/index.ts",
-			"@home/styles": "src/ui/home/styles/index.ts",
-			/* NEXT_ALIAS */
-			// UI Sharing
-			"@sharing/atoms": "src/ui/sharing/atoms/index.ts",
-			"@sharing/molecules": "src/ui/sharing/molecules/index.ts",
-			"@sharing/organisms": "src/ui/sharing/organisms/index.ts",
-			"@styles": "src/ui/sharing/styles/index.ts",
-		}
-	}
+			"~images/*": "src/assets/images/*",
+			"~icons/*": "src/assets/icons/*",
+			"~config": "src/logic/config.ts",
+			"~contexts/*": "src/logic/contexts/*",
+			"~attach/*": "src/logic/attachments/*",
+			"~schemas/*": "src/logic/schemas/*",
+			"~services/*": "src/logic/services/*",
+			"~typing/*": "src/logic/typing/*",
+			"~utils/*": "src/logic/utils/*",
+			"~home/*": "src/ui/home/*",
+			"~sharing/*": "src/ui/sharing/*",
+			"~styles": "src/ui/sharing/styles/index.ts",
+			"~styles/*": "src/ui/sharing/styles/*",
+		},
+	},
 };
+
 export default config;

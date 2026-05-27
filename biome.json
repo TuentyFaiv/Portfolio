@@ -1,0 +1,283 @@
+{
+	"$schema": "https://biomejs.dev/schemas/2.4.15/schema.json",
+	"vcs": {
+		"enabled": true,
+		"clientKind": "git",
+		"useIgnoreFile": false,
+		"defaultBranch": "main"
+	},
+	"files": {
+		"ignoreUnknown": false,
+		"includes": [
+			"**",
+			"!!**/test-results",
+			"!!**/node_modules",
+			"!!**/.output",
+			"!!**/.vercel",
+			"!!**/.netlify",
+			"!!**/.wrangler",
+			"!!**/build",
+			"!!**/dist",
+			"!!**/.svelte-kit",
+			"!!**/project.inlang/cache",
+			"!!**/project.inlang/.meta.json",
+			"!!**/src/logic/paraglide",
+			"!!**/.DS_Store",
+			"!!**/Thumbs.db",
+			"!!**/.env",
+			"!!**/.env.*",
+			"!!**/vite.config.js.timestamp-*",
+			"!!**/vite.config.ts.timestamp-*",
+			"!!**/package-lock.json",
+			"!!**/pnpm-lock.yaml",
+			"!!**/yarn.lock",
+			"!!**/bun.lock",
+			"!!**/bun.lockb",
+			"!!**/worker-configuration.d.ts"
+		]
+	},
+	"formatter": {
+		"enabled": true,
+		"formatWithErrors": false,
+		"indentStyle": "tab",
+		"indentWidth": 2,
+		"lineEnding": "lf",
+		"lineWidth": 100,
+		"attributePosition": "auto",
+		"bracketSpacing": true
+	},
+	"assist": {
+		"actions": {
+			"source": {
+				"organizeImports": {
+					"level": "on",
+					"options": {
+						"groups": [
+							{
+								"type": false,
+								"source": [":BUN:", ":NODE:"]
+							},
+							{
+								"type": false,
+								"source": [
+									"@sveltejs/kit",
+									"svelte",
+									"svelte/*",
+									"$env/**",
+									"$app/*",
+									"$lib/**",
+									"svelte-*"
+								]
+							},
+							{
+								"type": false,
+								"source": [":PACKAGE:", "!**/*.css*"]
+							},
+							{
+								"type": false,
+								"source": [
+									"~config",
+									"~utils/*",
+									"~schemas/*",
+									"~services/*",
+									"~contexts/*",
+									"~attach/*"
+								]
+							},
+							":BLANK_LINE:",
+							{
+								"type": true,
+								"source": [
+									":BUN:",
+									":NODE:",
+									"@sveltejs/kit",
+									"svelte",
+									"svelte/*",
+									"$env/**",
+									"$app/*",
+									"$lib/**",
+									"svelte-*",
+									":PACKAGE:",
+									"~config",
+									"~utils/*",
+									"~schemas/*",
+									"~services/*",
+									"~contexts/*",
+									"~attach/*",
+									"~typing/**",
+									":ALIAS:",
+									":PATH:"
+								]
+							},
+							":BLANK_LINE:",
+							["**/*.css*", "~styles", "~styles/**", "~*/styles/**", "**/*.css"],
+							":BLANK_LINE:",
+							["~images/**", "~icons/**"],
+							":BLANK_LINE:",
+							{
+								"type": false,
+								"source": [":ALIAS:", ":PATH:"]
+							}
+						]
+					}
+				}
+			}
+		}
+	},
+	"html": {
+		"experimentalFullSupportEnabled": true,
+		"formatter": {
+			"enabled": true,
+			"indentScriptAndStyle": true,
+			"indentWidth": 2,
+			"indentStyle": "tab"
+		}
+	},
+	"css": {
+		"parser": {
+			"tailwindDirectives": true,
+			"cssModules": true
+		}
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": false,
+			"a11y": {
+				"recommended": true
+			},
+			"complexity": {
+				"noExtraBooleanCast": "error",
+				"noUselessCatch": "error",
+				"noUselessTypeConstraint": "error",
+				"noForEach": "error",
+				"noUselessFragments": "error",
+				"noUselessRename": "error",
+				"noUselessStringConcat": "error",
+				"noUselessTernary": "error",
+				"useFlatMap": "error",
+				"noAdjacentSpacesInRegex": "error",
+				"noUselessContinue": "error",
+				"useWhile": "error"
+			},
+			"correctness": {
+				"noConstAssign": "error",
+				"noConstantCondition": "error",
+				"noEmptyCharacterClassInRegex": "error",
+				"noEmptyPattern": "error",
+				"noGlobalObjectCalls": "error",
+				"noInvalidBuiltinInstantiation": "error",
+				"noInvalidConstructorSuper": "error",
+				"noNonoctalDecimalEscape": "error",
+				"noPrecisionLoss": "error",
+				"noSelfAssign": "error",
+				"noSetterReturn": "error",
+				"noSwitchDeclarations": "error",
+				"noUndeclaredVariables": "error",
+				"noUnreachable": "error",
+				"noUnreachableSuper": "error",
+				"noUnsafeFinally": "error",
+				"noUnsafeOptionalChaining": "error",
+				"noUnusedLabels": "error",
+				"noUnusedPrivateClassMembers": "error",
+				"noUnusedVariables": "error",
+				"useIsNan": "error",
+				"useValidForDirection": "error",
+				"useYield": "error",
+				"noInvalidGridAreas": "error",
+				"noInvalidPositionAtImportRule": "off",
+				"noUnusedFunctionParameters": "error",
+				"noUnusedImports": "error",
+				"useExhaustiveDependencies": "error",
+				"useHookAtTopLevel": "error",
+				"useUniqueElementIds": "off"
+			},
+			"performance": {},
+			"security": {},
+			"nursery": {},
+			"style": {
+				"recommended": true,
+				"noDefaultExport": "error",
+				"noNamespace": "error",
+				"noYodaExpression": "error",
+				"useBlockStatements": "off",
+				"useCollapsedElseIf": "error",
+				"useConsistentArrayType": "error",
+				"useConsistentBuiltinInstantiation": "error",
+				"useDefaultSwitchClause": "error",
+				"useEnumInitializers": "off",
+				"useExplicitLengthCheck": "error",
+				"useFilenamingConvention": {
+					"level": "error",
+					"options": {
+						"filenameCases": ["kebab-case"]
+					}
+				},
+				"useFragmentSyntax": "error",
+				"useLiteralEnumMembers": "off",
+				"useThrowNewError": "error",
+				"useArrayLiterals": "off",
+				"noEnum": "error",
+				"useImportType": {
+					"level": "error",
+					"options": {
+						"style": "separatedType"
+					}
+				},
+				"noDescendingSpecificity": "off"
+			},
+			"suspicious": {
+				"recommended": true,
+				"noEmptyBlockStatements": "error",
+				"noWith": "error",
+				"noUnknownAtRules": "off"
+			}
+		}
+	},
+	"javascript": {
+		"formatter": {
+			"jsxQuoteStyle": "double",
+			"quoteProperties": "asNeeded",
+			"trailingCommas": "es5",
+			"semicolons": "always",
+			"arrowParentheses": "always",
+			"bracketSameLine": false,
+			"quoteStyle": "double",
+			"attributePosition": "auto",
+			"bracketSpacing": true
+		}
+	},
+	"overrides": [
+		{
+			"includes": ["**/logic/config.ts", "*.config.ts", "*.config.js", ".storybook/**"],
+			"linter": {
+				"rules": {
+					"style": {
+						"noDefaultExport": "off"
+					}
+				}
+			}
+		},
+		{
+			"includes": ["**/ui/*.ts"],
+			"linter": {
+				"rules": {
+					"performance": {
+						"noReExportAll": "off",
+						"noBarrelFile": "off"
+					}
+				}
+			}
+		},
+		{
+			"includes": ["**/+layout@.svelte", "**/+layout@.svelte"],
+			"linter": {
+				"rules": {
+					"style": {
+						"useFilenamingConvention": "off"
+					}
+				}
+			}
+		}
+	]
+}
