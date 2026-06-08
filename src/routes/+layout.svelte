@@ -16,16 +16,11 @@
 	});
 </script>
 
-<ModeWatcher
-	defaultMode="dark"
-	disableTransitions={false}
-	themeColors={{ dark: "#21C08B", light: "#961E1E" }}
-	disableHeadScriptInjection
-/>
-
 <svelte:head>
-	<link rel="icon" href="/logo@3x.webp">
+	<meta name="theme-color" content={mode.current === "dark" ? "#21C08B" : "#961E1E"}>
 </svelte:head>
+
+<ModeWatcher defaultMode="dark" disableTransitions={false} disableHeadScriptInjection />
 
 <Header />
 

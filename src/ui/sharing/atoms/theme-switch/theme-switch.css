@@ -3,7 +3,7 @@
 @import "./theme-switch.responsive.css";
 
 .themeswitch {
-	@apply relative block w-17.5 min-w-17.5 h-7.5 z-0 rounded-full bg-background focus-visible:border-none focus-visible:outline-double focus-visible:outline-primary-900 transition-shadow duration-250 overflow-hidden hover:shadow-primary-100;
+	@apply relative block w-17.5 min-w-17.5 h-7.5 z-0 rounded-full bg-background transition-shadow duration-250 overflow-hidden hover:shadow-primary-100;
 	&:hover {
 		box-shadow:
 			0 0 13px -2px var(--tw-shadow-color, rgb(0 0 0 / 0.1)),
@@ -106,13 +106,13 @@
 .themeswitch__litte-star {
 	@apply bg-warning-400 right-0 shadow-warning-400 transition-transform duration-200 ease-in-out;
 	&:nth-child(5) {
-		@apply size-1.5 top-[18%] translate-x-full skew-x-[-35deg] skew-y-[45deg] -rotate-[13deg] delay-50;
+		@apply size-1.5 top-[18%] translate-x-full -skew-x-35 skew-y-45 -rotate-13 delay-50;
 	}
 	&:nth-child(6) {
-		@apply size-2.5 top-[50%] -translate-y-1/2 translate-x-full skew-x-[-35deg] skew-y-[45deg] -rotate-[13deg] delay-85;
+		@apply size-2.5 top-[50%] -translate-y-1/2 translate-x-full -skew-x-35 skew-y-45 -rotate-13 delay-85;
 	}
 	&:nth-child(7) {
-		@apply size-1 top-[68%] translate-x-full skew-x-[-35deg] skew-y-[45deg] -rotate-[13deg] delay-125;
+		@apply size-1 top-[68%] translate-x-full -skew-x-35 skew-y-45 -rotate-13 delay-125;
 	}
 }
 

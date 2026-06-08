@@ -3,5 +3,9 @@
 	"hello_world": "Hello, {{name}} from es!",
 	"theme": {
 		"change": "Cambiar tema"
-	}
+	},
+	"home": "Inicio",
+	"story": "Historia",
+	"blog": "Blog",
+	"menu": "Menú"
 }

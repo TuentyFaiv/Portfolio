@@ -22,6 +22,7 @@
 	"dependencies": {
 		"@fontsource-variable/mulish": "5.2.8",
 		"@fontsource-variable/orbitron": "5.2.8",
+		"animejs": "^4.4.1",
 		"mode-watcher": "1.1.0"
 	},
 	"devDependencies": {

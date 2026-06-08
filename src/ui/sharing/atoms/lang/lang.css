@@ -1,0 +1,26 @@
+@reference "~styles/app.css";
+
+.language {
+	@apply size-7.5 p-0;
+
+	span {
+		@apply block size-7.5 p-0 rounded-full overflow-hidden;
+	}
+
+	option span {
+		@apply size-9 p-[3px];
+	}
+	option:checked {
+		@apply rounded-full;
+	}
+}
+
+.language::picker(select) {
+	@apply p-0;
+}
+
+@supports not (appearance: base-select) {
+	.language {
+		@apply h-7.5 size-full max-w-30 pl-2 px-4 bg-position-[100%_55%];
+	}
+}
