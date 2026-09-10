@@ -52,7 +52,7 @@
 		"tailwindcss": "4.3.0",
 		"typescript": "6.0.3",
 		"vite": "8.0.14",
-		"vitest": "4.1.7",
+		"vitest": "4.1.11",
 		"vitest-browser-svelte": "2.1.1",
 		"wrangler": "4.95.0"
 	}
