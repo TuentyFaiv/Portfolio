@@ -9,7 +9,18 @@
 		"directory": ".svelte-kit/cloudflare"
 	},
 	"observability": {
-		"enabled": true
+		"enabled": true,
+		"redact_query_string": true,
+		"logs": {
+			"enabled": true,
+			"invocation_logs": true
+		},
+		"traces": {
+			"enabled": true
+		},
+		"issues": {
+			"enabled": true
+		}
 	},
 	"upload_source_maps": true
 }

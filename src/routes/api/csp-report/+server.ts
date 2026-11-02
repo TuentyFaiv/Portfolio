@@ -1,5 +1,3 @@
-import { dev } from "$app/env";
-
 import type { RequestHandler } from "@sveltejs/kit";
 
 /**
@@ -11,8 +9,7 @@ import type { RequestHandler } from "@sveltejs/kit";
  * - Modern `report-to`:  Content-Type `application/reports+json`
  *   Body shape: `[ { "type": "csp-violation", "body": { ... } }, ... ]`
  *
- * In production you'd forward these to a log aggregator (Sentry, Datadog,
- * Logflare, BetterStack, etc.) instead of just `console.warn`.
+ * Reports are logged as objects so Workers Logs can filter on their fields.
  */
 export const POST: RequestHandler = async ({ request }) => {
 	const contentType = request.headers.get("content-type") ?? "";
@@ -35,17 +32,12 @@ export const POST: RequestHandler = async ({ request }) => {
 			if (text) reports = [JSON.parse(text)];
 		}
 	} catch (err) {
-		console.warn("[csp-report] Failed to parse violation payload", err);
+		console.warn({ message: "invalid csp report", error: String(err) });
 		return Response.json({ ok: false }, { status: 400 });
 	}
 
 	for (const report of reports) {
-		if (dev) {
-			console.warn("[csp-report]", JSON.stringify(report, null, 2));
-		} else {
-			// TODO: forward to your log aggregator of choice.
-			console.warn("[csp-report]", JSON.stringify(report));
-		}
+		console.warn({ message: "csp violation", report });
 	}
 
 	// 204 = accepted, no content. Browsers don't care about the response body.

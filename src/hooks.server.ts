@@ -1,9 +1,10 @@
 import { sequence } from "@sveltejs/kit/hooks";
 
-import type { Handle } from "@sveltejs/kit/hooks";
+import type { Handle, HandleServerError } from "@sveltejs/kit/hooks";
 
 import { getTextDirection } from "#lib/paraglide/runtime.js";
 import { paraglideMiddleware } from "#lib/paraglide/server.js";
+import { logServerError } from "#utils/errors.ts";
 
 const handleParaglide: Handle = ({ event, resolve }) =>
 	paraglideMiddleware(event.request, ({ request, locale }) =>
@@ -31,3 +32,5 @@ const handleReportingEndpoints: Handle = async ({ event, resolve }) => {
 };
 
 export const handle: Handle = sequence(handleParaglide, handleReportingEndpoints);
+
+export const handleError: HandleServerError = logServerError;
