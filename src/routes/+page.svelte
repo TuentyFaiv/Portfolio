@@ -1,12 +1,8 @@
 <script lang="ts">
-	import { getLocale } from "$lib/paraglide/runtime";
-
-	import { Hero } from "~home/organisms/hero";
-	import { SEO } from "~sharing/atoms/seo";
+	import { Hero } from "#home/organisms/hero/index.ts";
+	import { SEO } from "#sharing/atoms/seo/index.ts";
 </script>
 
 <SEO />
 
 <Hero />
-
-{getLocale()}

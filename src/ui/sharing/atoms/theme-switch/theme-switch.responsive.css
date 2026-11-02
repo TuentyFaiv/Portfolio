@@ -1,4 +1,4 @@
-@reference "~styles/app.css";
+@reference "#styles/app.css";
 
 /*@media (prefers-reduced-motion: reduce) {
   .themeswitch {

@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { m } from "$lib/paraglide/messages";
 	import { mode, toggleMode } from "mode-watcher";
+
+	import { m } from "#lib/paraglide/messages.js";
 
 	import "./theme-switch.css";
 </script>

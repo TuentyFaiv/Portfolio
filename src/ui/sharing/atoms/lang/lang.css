@@ -1,4 +1,4 @@
-@reference "~styles/app.css";
+@reference "#styles/app.css";
 
 .language {
 	@apply size-7.5 p-0;

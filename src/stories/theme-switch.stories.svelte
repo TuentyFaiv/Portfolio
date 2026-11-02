@@ -1,7 +1,7 @@
 <script module>
 	import { defineMeta } from "@storybook/addon-svelte-csf";
 
-	import { ThemeSwitch } from "~sharing/atoms/theme-switch";
+	import { ThemeSwitch } from "#sharing/atoms/theme-switch/index.ts";
 
 	const { Story } = defineMeta({
 		title: "Components/ThemeSwitch",

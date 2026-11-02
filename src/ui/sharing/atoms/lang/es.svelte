@@ -1,5 +1,4 @@
-<svg width="30" height="30" viewBox="0 0 512 512">
-	<title>Español</title>
+<svg width="30" height="30" viewBox="0 0 512 512" aria-hidden="true">
 	<mask id="a"><circle cx="256" cy="256" r="256" fill="#fff" /></mask>
 	<g mask="url(#a)">
 		<path fill="#eee" d="M144 0h223l33 256-33 256H144l-32-256z" />

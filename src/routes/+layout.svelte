@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { ModeWatcher, mode } from "mode-watcher";
 
-	import "~styles";
+	import "#styles";
 
 	import type { LayoutProps } from "./$types";
 
-	import { Header } from "~sharing/organisms/header";
+	import { Header } from "#sharing/organisms/header/index.ts";
 
 	let { children }: LayoutProps = $props();
 

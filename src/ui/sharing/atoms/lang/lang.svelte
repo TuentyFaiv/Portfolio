@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getLocale, setLocale } from "$lib/paraglide/runtime";
+	import { getLocale, setLocale } from "#lib/paraglide/runtime.js";
 	import "./lang.css";
 
 	import EnIcon from "./en.svelte";
@@ -15,12 +15,12 @@
 	<button>
 		<selectedcontent></selectedcontent>
 	</button>
-	<option value="en">
+	<option value="en" aria-label="English">
 		<span>
 			<EnIcon />
 		</span>
 	</option>
-	<option value="es">
+	<option value="es" aria-label="Español">
 		<span>
 			<EsIcon />
 		</span>

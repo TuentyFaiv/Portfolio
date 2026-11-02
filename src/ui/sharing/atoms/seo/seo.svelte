@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { page } from "$app/state";
-	import config from "~config";
 
 	import type { Props } from "./seo.proptypes";
+
+	import config from "#config";
 
 	let { title, description, cover, largeDescription, metas = [], metaid = "id" }: Props = $props();
 

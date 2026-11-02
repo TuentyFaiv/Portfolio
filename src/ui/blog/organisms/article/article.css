@@ -1,0 +1,56 @@
+@reference "#styles/app.css";
+
+.article {
+	@apply w-full max-w-300 mx-auto px-6 pt-8 pb-20 md:pt-14 flex gap-24 items-start;
+
+	.article__main {
+		@apply flex flex-col gap-6 flex-1 max-w-190 min-w-0;
+	}
+	.article__back {
+		@apply text-sm opacity-70 transition-opacity hover:opacity-100;
+	}
+	.article__meta {
+		@apply flex flex-wrap items-center gap-3 pt-4 text-sm opacity-90;
+	}
+	.article__tag {
+		@apply rounded-full bg-primary/15 px-3 py-1 font-semibold text-primary;
+	}
+	.article__title {
+		@apply font-heading text-3xl md:text-5xl font-extrabold leading-tight tracking-tight text-balance;
+	}
+	.article__excerpt {
+		@apply text-lg md:text-xl leading-normal opacity-70;
+	}
+	.article__body {
+		@apply prose dark:prose-invert max-w-none md:prose-lg;
+		h2,
+		h3,
+		h4 {
+			@apply font-heading font-bold scroll-mt-8;
+		}
+		a {
+			@apply text-primary;
+		}
+		pre {
+			@apply overflow-x-auto rounded-lg border bg-card/40 text-foreground;
+		}
+	}
+	.article__next {
+		@apply flex flex-col gap-2 border-t pt-8 mt-4;
+	}
+	.article__next-label {
+		@apply font-heading text-xs font-semibold tracking-[0.25em] opacity-60;
+	}
+	.article__next-title {
+		@apply font-heading text-lg md:text-xl font-semibold text-primary;
+	}
+	.article__toc {
+		@apply max-lg:hidden sticky top-8 mt-40 flex flex-col gap-3.5 w-64 shrink-0;
+	}
+	.article__toc-label {
+		@apply font-heading text-xs font-semibold tracking-[0.25em] opacity-60;
+	}
+	.article__toc-link {
+		@apply text-sm opacity-70 transition-[opacity,color] hover:opacity-100 hover:text-primary;
+	}
+}

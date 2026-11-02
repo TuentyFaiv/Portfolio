@@ -1,5 +1,4 @@
-import { json } from "@sveltejs/kit";
-import { dev } from "$app/environment";
+import { dev } from "$app/env";
 
 import type { RequestHandler } from "@sveltejs/kit";
 
@@ -37,7 +36,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		}
 	} catch (err) {
 		console.warn("[csp-report] Failed to parse violation payload", err);
-		return json({ ok: false }, { status: 400 });
+		return Response.json({ ok: false }, { status: 400 });
 	}
 
 	for (const report of reports) {

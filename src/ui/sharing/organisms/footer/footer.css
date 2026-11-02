@@ -1,4 +1,4 @@
-@reference "~styles/app.css";
+@reference "#styles/app.css";
 
 .footer {
 	@apply bg-primary-800;

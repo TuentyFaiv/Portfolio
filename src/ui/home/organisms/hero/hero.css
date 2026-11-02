@@ -1,4 +1,4 @@
-@reference "~styles/app.css";
+@reference "#styles/app.css";
 
 .hero {
 	@apply w-full flex flex-col items-center justify-center gap-5 px-4 pt-24 pb-10 md:px-6 md:pt-40 md:pb-16 lg:px-8 lg:pt-44 lg:pb-32 xl:px-16 min-h-screen;

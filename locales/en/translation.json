@@ -1,11 +1,28 @@
 {
 	"$schema": "https://inlang.com/schema/inlang-message-format",
-	"hello_world": "Hello, {{name}} from en!",
+	"hello-world": "Hello, {{name}} from en!",
 	"theme": {
 		"change": "Change theme"
 	},
 	"home": "Home",
 	"story": "Story",
 	"blog": "Blog",
-	"menu": "Menu"
+	"menu": "Menu",
+	"socials": "Social profiles",
+	"blog-page": {
+		"eyebrow": "BLOG  ·  ALL NOTES",
+		"title": "Things I learned the slow way.",
+		"lede": "Notes on TypeScript, Svelte and Rust, written while the mistakes are still fresh.",
+		"filter": "Filter posts by topic",
+		"all": "All",
+		"min-read": "{{minutes}} min read",
+		"empty-label": "FIRST POST",
+		"empty-title": "Still learning them.",
+		"empty-body": "The first note lands here soon. Until then, the projects are the best thing to read.",
+		"empty-action": "See the projects",
+		"no-results": "Nothing under this topic yet.",
+		"back": "All posts",
+		"toc": "On this page",
+		"next": "NEXT POST"
+	}
 }
