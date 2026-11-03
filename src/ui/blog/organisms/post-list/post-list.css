@@ -1,7 +1,7 @@
 @reference "#styles/app.css";
 
 .posts {
-	@apply w-full max-w-300 mx-auto px-6 pt-8 pb-20 md:pt-16;
+	@apply mx-auto w-full max-w-332 px-6 pt-6 pb-20 sm:px-16 sm:pt-12;
 
 	.posts__hero {
 		@apply flex flex-col gap-5 pb-12;
@@ -11,7 +11,7 @@
 		@apply font-heading text-xs font-semibold tracking-[0.25em] text-primary;
 	}
 	.posts__title {
-		@apply font-heading font-extrabold text-4xl md:text-7xl max-w-4xl leading-none tracking-tight text-balance;
+		@apply font-heading font-extrabold text-4xl md:text-7xl max-w-4xl leading-[1.12] tracking-tight text-balance;
 	}
 	.posts__lede {
 		@apply text-base md:text-xl max-w-2xl opacity-70 leading-normal;
@@ -24,6 +24,10 @@
 		&[aria-current="page"] {
 			@apply border-primary bg-primary text-primary-foreground opacity-100;
 		}
+	}
+
+	.posts__empty-action::after {
+		content: " →" / "";
 	}
 
 	.posts__empty {

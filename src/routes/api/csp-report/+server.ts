@@ -1,5 +1,10 @@
 import type { RequestHandler } from "@sveltejs/kit";
 
+import { env } from "cloudflare:workers";
+
+const MAX_BYTES = 16_384;
+const MAX_REPORTS = 10;
+
 /**
  * CSP violation report endpoint.
  *
@@ -13,6 +18,17 @@ import type { RequestHandler } from "@sveltejs/kit";
  */
 export const POST: RequestHandler = async ({ request }) => {
 	const contentType = request.headers.get("content-type") ?? "";
+
+	// Anyone can post here, so a report can never be bigger than a real browser would send.
+	if (Number(request.headers.get("content-length")) > MAX_BYTES) {
+		return new Response(null, { status: 413 });
+	}
+
+	// One shared counter, as Cloudflare advises against keying on IP addresses: a flood
+	// costs us reports, never a visitor's page.
+	const { success } = await env.CSP_REPORT_LIMIT.limit({ key: "csp-report" });
+
+	if (!success) return new Response(null, { status: 429 });
 
 	let reports: unknown[] = [];
 
@@ -36,7 +52,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		return Response.json({ ok: false }, { status: 400 });
 	}
 
-	for (const report of reports) {
+	for (const report of reports.slice(0, MAX_REPORTS)) {
 		console.warn({ message: "csp violation", report });
 	}
 

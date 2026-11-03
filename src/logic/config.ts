@@ -1,7 +1,7 @@
 const config = {
 	brand: "tuentyfaiv",
-	description:
-		"Hi there! I'm Tonalli and I'm a Frontend Developer. Here you can find my projects and information about me.",
+	url: "https://tuentyfaiv.com",
+	email: "contact@tuentyfaiv.com",
 	socials: [
 		{
 			content: "GitHub",

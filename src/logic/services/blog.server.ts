@@ -2,6 +2,7 @@ import { error } from "@sveltejs/kit";
 
 import type { Post, PostSummary } from "#typing/blog.ts";
 
+import { sanitizePost } from "#utils/sanitize.ts";
 import { CMS_URL } from "$app/env/private";
 
 type Fetch = typeof fetch;
@@ -41,7 +42,7 @@ export async function findPost(fetcher: Fetch, locale: string, slug: string) {
 		`/posts?locale=${locale}&depth=1&limit=1&${query}`
 	);
 
-	return docs[0];
+	return docs[0] && { ...docs[0], html: sanitizePost(docs[0].html) };
 }
 
 export async function findOlderPost(fetcher: Fetch, locale: string, publishedAt: string) {

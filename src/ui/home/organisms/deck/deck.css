@@ -1,0 +1,150 @@
+@reference "#styles/app.css";
+
+/* The page itself scrolls, so Space, arrow keys and swipes work natively. */
+:root:has(.deck) {
+	scroll-snap-type: y mandatory;
+	/* The rail already shows where you are, and a bar would pull the center off screen. */
+	scrollbar-width: none;
+}
+
+:root:has(.deck)::-webkit-scrollbar {
+	display: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	:root:has(.deck) {
+		scroll-behavior: smooth;
+	}
+}
+
+body:has(.deck) .header {
+	@apply fixed inset-x-0 top-0 z-50 isolate;
+
+	/* Content sliding past fades out instead of running under the logo. */
+	&::before {
+		@apply pointer-events-none absolute inset-0 -z-10 bg-linear-to-b from-background from-40% to-transparent content-[""];
+	}
+}
+
+/* The bar along the bottom of the screen, which also holds the rail. */
+.deck {
+	@apply pointer-events-none fixed inset-x-0 bottom-0 z-40 flex items-center justify-between gap-4 bg-linear-to-t from-background from-40% to-transparent px-6 pt-8 pb-11 sm:px-16 sm:pb-12.5;
+
+	.deck__count,
+	.deck__next {
+		/* The scramble rewrites this text every frame: the work stays inside each element. */
+		contain: layout style;
+
+		@apply font-heading text-[0.6875rem] font-semibold tracking-[0.15em] whitespace-nowrap uppercase;
+		color: var(--text-subtle);
+	}
+	.deck__hint {
+		@apply flex items-center gap-2 text-[0.8125rem];
+		color: var(--text-subtle);
+	}
+	/* Positioned against the screen, so long side texts can never push it off center. */
+	.deck__hint--scroll {
+		@apply absolute left-1/2 -translate-x-1/2 whitespace-nowrap;
+	}
+	.deck__hint--swipe {
+		@apply text-xs sm:hidden;
+	}
+	/* Hangs outside the text, so the words themselves are what sits on the screen center. */
+	.deck__chevron {
+		@apply absolute top-1/2 left-full ml-2 size-4 -translate-y-1/2 fill-none stroke-current stroke-2;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}
+	.deck__next {
+		@apply pointer-events-auto hover:text-primary focus-visible:text-primary;
+	}
+	.deck__hint,
+	.deck__next {
+		transition:
+			color 150ms ease,
+			opacity 240ms ease,
+			visibility 240ms allow-discrete;
+
+		&[data-hidden="true"] {
+			@apply invisible opacity-0;
+		}
+	}
+	.deck__name,
+	.deck__next,
+	.deck__hint--scroll {
+		@apply max-sm:hidden;
+	}
+
+	.deck__progress {
+		@apply pointer-events-auto fixed bottom-10 left-1/2 flex -translate-x-1/2 items-center sm:top-1/2 sm:right-14 sm:bottom-auto sm:left-auto sm:translate-x-0 sm:-translate-y-1/2 sm:flex-col;
+	}
+	/*
+	 * 24px cells meet WCAG 2.5.8. The current cell grows by exactly what its mark grows,
+	 * so the gaps stay equal and the visible row is symmetric whichever slide is active.
+	 */
+	.deck__tick {
+		--mark-width: 5px;
+		--mark-height: 5px;
+		--mark-growth: 11px;
+
+		@apply flex items-center justify-center rounded-sm;
+		min-width: 1.5rem;
+		min-height: 1.5rem;
+		transition:
+			min-width 200ms ease,
+			min-height 200ms ease;
+
+		@variant sm {
+			--mark-width: 2px;
+			--mark-height: 12px;
+			--mark-growth: 16px;
+		}
+
+		&[aria-current] {
+			min-width: calc(1.5rem + var(--mark-growth));
+
+			@variant sm {
+				min-width: 1.5rem;
+				min-height: calc(1.5rem + var(--mark-growth));
+			}
+		}
+	}
+	.deck__tick::before {
+		@apply block rounded-sm content-[""];
+		width: var(--mark-width);
+		height: var(--mark-height);
+		background: var(--text-subtle);
+		transition:
+			width 200ms ease,
+			height 200ms ease;
+	}
+	.deck__tick[aria-current]::before {
+		@apply bg-primary;
+		width: calc(var(--mark-width) + var(--mark-growth));
+
+		@variant sm {
+			width: 3px;
+			height: calc(var(--mark-height) + var(--mark-growth));
+		}
+	}
+}
+
+/* Windows high contrast drops backgrounds, which are what draws the ticks. */
+@media (forced-colors: active) {
+	.deck .deck__tick::before {
+		background: CanvasText;
+		forced-color-adjust: none;
+	}
+	.deck .deck__tick[aria-current]::before {
+		background: Highlight;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.deck .deck__hint,
+	.deck .deck__next,
+	.deck .deck__tick,
+	.deck .deck__tick::before {
+		transition: none;
+	}
+}

@@ -4,31 +4,37 @@
 	import type { Props } from "./seo.proptypes";
 
 	import config from "#config";
+	import { m } from "#lib/paraglide/messages.js";
+	import { getLocale } from "#lib/paraglide/runtime.js";
+	import { languages } from "#utils/languages.ts";
 
-	let { title, description, cover, largeDescription, metas = [], metaid = "id" }: Props = $props();
+	let { title, description, cover, metas = [], metaid = "id" }: Props = $props();
 
 	let titleSeo = $derived(!title ? config.brand : `${title} | ${config.brand}`);
-	let descriptionSeo = $derived(!description ? config.description : description);
-	let defaultCover = $derived(!cover ? "/logo_dark@3x.webp" : cover);
-	let coverSeo = $derived(!cover ? `${page.url.origin}${defaultCover}` : cover);
+	let descriptionSeo = $derived(description || m["translation:intro.lede-short"]());
+	// From config, never the request, so a forged Host header cannot end up in the page.
+	let url = $derived(`${config.url}${page.url.pathname}`);
+	let coverSeo = $derived(cover ?? `${config.url}/logo-dark-3x.webp`);
+	let locale = $derived(languages[getLocale()].tag.replace("-", "_"));
 </script>
 
 <svelte:head>
-	<title>
-		{titleSeo}
-	</title>
+	<title>{titleSeo}</title>
 	<meta name="description" content={descriptionSeo}>
+	<link rel="canonical" href={url}>
 
-	<meta property="twitter:title" content={titleSeo}>
-	<meta property="twitter:image" content={coverSeo}>
-	<meta property="twitter:description" content={descriptionSeo}>
-	{#if largeDescription}
-		<meta property="twitter:card" content={largeDescription}>
-	{/if}
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:title" content={titleSeo}>
+	<meta name="twitter:description" content={descriptionSeo}>
+	<meta name="twitter:image" content={coverSeo}>
+
+	<meta property="og:type" content="website">
+	<meta property="og:site_name" content={config.brand}>
 	<meta property="og:title" content={titleSeo}>
-	<meta property="og:image" content={coverSeo}>
 	<meta property="og:description" content={descriptionSeo}>
-	<meta property="og:url" content="{page.url.origin}{page.url.pathname}">
+	<meta property="og:image" content={coverSeo}>
+	<meta property="og:url" content={url}>
+	<meta property="og:locale" content={locale}>
 
 	{#each metas as meta (meta[metaid])}
 		<meta {...meta}>

@@ -1,0 +1,120 @@
+@reference "#styles/app.css";
+
+.intro {
+	--intro-glow: #fd9b8b40, #d68aef1a 55%, transparent;
+	--intro-mark-glow: #971b1c33;
+	--intro-title-from: #090a0e;
+	--intro-title-to: #971b1c;
+	--intro-title-scale: 1;
+
+	@apply relative isolate flex w-full max-w-300 flex-col items-center text-center;
+	gap: clamp(1rem, 3.5dvh, 2rem);
+
+	/* The Spanish line is longer: this keeps the same line breaks as the design. */
+	&:lang(es) {
+		--intro-title-scale: 0.8;
+	}
+
+	.dark & {
+		--intro-glow: #14c18a40, #6e2ab21a 55%, transparent;
+		--intro-mark-glow: #14c18a55;
+		--intro-title-from: #fcfcfc;
+		--intro-title-to: #5ed9b9;
+
+		&::before {
+			background-image: url("/logo-mark-dark.webp");
+		}
+	}
+
+	/* The glow behind everything. */
+	&::after {
+		@apply pointer-events-none absolute top-0 left-1/2 -z-10 -translate-x-1/2 rounded-full content-[""];
+		width: min(43.75rem, 130vw);
+		height: 32.5rem;
+		background: radial-gradient(closest-side, var(--intro-glow));
+	}
+
+	/* The logo: a background, so only the current theme's file downloads. */
+	&::before {
+		@apply block content-[""];
+		aspect-ratio: 1;
+		width: clamp(3.5rem, 10dvh, 5.25rem);
+		background: url("/logo-mark.webp") center / cover;
+		border-radius: 22.7%;
+		box-shadow: 0 1.5rem 5rem var(--intro-mark-glow);
+
+		@variant sm {
+			width: clamp(5.25rem, 14.6dvh, 8.25rem);
+		}
+	}
+
+	.intro__eyebrow {
+		@apply font-heading font-semibold whitespace-pre-wrap uppercase;
+		color: var(--text-muted);
+	}
+	.intro__eyebrow--long {
+		@apply text-[0.8125rem] tracking-[0.27em] max-sm:hidden;
+	}
+	.intro__eyebrow--short {
+		@apply text-[0.625rem] tracking-[0.25em] sm:hidden;
+	}
+
+	.intro__title {
+		@apply w-full font-heading font-extrabold;
+		font-size: calc(min(11.3vw, 2.75rem) * var(--intro-title-scale));
+		line-height: 1.04;
+		letter-spacing: -0.03em;
+		text-wrap: balance;
+		color: transparent;
+		background: linear-gradient(var(--intro-title-from) 35%, var(--intro-title-to));
+		background-clip: text;
+
+		@variant sm {
+			font-size: calc(clamp(2.75rem, min(6vw, 9.6dvh), 5.375rem) * var(--intro-title-scale));
+			line-height: 1.08;
+		}
+	}
+	.intro__punchline {
+		@apply block;
+	}
+
+	.intro__lede {
+		@apply max-w-160 text-base leading-normal sm:text-xl;
+		color: var(--text-muted);
+	}
+	.intro__lede--long {
+		@apply max-sm:hidden;
+	}
+	.intro__lede--short {
+		@apply sm:hidden;
+	}
+}
+
+.intro__actions {
+	@apply flex flex-col items-center gap-2.5 sm:flex-row sm:gap-3;
+	margin-top: clamp(1rem, 3.5dvh, 2rem);
+}
+.intro__action {
+	@apply flex items-center gap-2.5 rounded-full border px-5.5 py-3.5 font-heading text-[0.8125rem] leading-4 font-semibold tracking-widest transition-[background-color,border-color,color,box-shadow] duration-200;
+}
+.intro__action--primary {
+	@apply border-primary bg-primary text-background hover:shadow-[0_0_24px_-4px_var(--primary)];
+}
+.intro__action--ghost {
+	@apply border-foreground/10 text-foreground hover:border-primary hover:text-primary;
+}
+.intro__icon {
+	@apply size-4 fill-current;
+}
+.intro__icon--stroke {
+	@apply fill-none stroke-current stroke-2;
+	stroke-linejoin: round;
+}
+
+/* Gradient text is transparent text over a background that forced colors removes. */
+@media (forced-colors: active) {
+	.intro .intro__title {
+		background: none;
+		color: CanvasText;
+	}
+}

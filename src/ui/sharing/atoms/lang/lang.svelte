@@ -1,28 +1,19 @@
 <script lang="ts">
+	import { m } from "#lib/paraglide/messages.js";
 	import { getLocale, setLocale } from "#lib/paraglide/runtime.js";
+	import { languages } from "#utils/languages.ts";
+
 	import "./lang.css";
 
-	import EnIcon from "./en.svelte";
-	import EsIcon from "./es.svelte";
+	const current = getLocale();
+	const other = current === "en" ? "es" : "en";
 </script>
 
-<select
-	id="language"
-	class="select language "
-	bind:value={() => getLocale(), (value) => setLocale(value)}
+<button
+	type="button"
+	class="language"
+	aria-label={m["translation:language-switch"]()}
+	onclick={() => setLocale(other)}
 >
-	<!-- biome-ignore lint/a11y/useButtonType: Custom select -->
-	<button>
-		<selectedcontent></selectedcontent>
-	</button>
-	<option value="en" aria-label="English">
-		<span>
-			<EnIcon />
-		</span>
-	</option>
-	<option value="es" aria-label="Español">
-		<span>
-			<EsIcon />
-		</span>
-	</option>
-</select>
+	{languages[current].code}
+</button>

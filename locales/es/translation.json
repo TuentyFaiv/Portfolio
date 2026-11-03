@@ -1,13 +1,13 @@
 {
 	"$schema": "https://inlang.com/schema/inlang-message-format",
-	"hello-world": "Hello, {{name}} from es!",
 	"theme": {
-		"change": "Cambiar tema"
+		"change": "Tema oscuro"
 	},
 	"home": "Inicio",
 	"story": "Historia",
 	"blog": "Blog",
 	"menu": "Menú",
+	"language-switch": "ES, cambiar a inglés",
 	"socials": "Redes sociales",
 	"blog-page": {
 		"eyebrow": "BLOG  ·  TODAS LAS NOTAS",
@@ -17,12 +17,58 @@
 		"all": "Todo",
 		"min-read": "{{minutes}} min de lectura",
 		"empty-label": "PRIMERA NOTA",
-		"empty-title": "Sigo aprendiéndolas.",
-		"empty-body": "La primera nota llega pronto. Mientras tanto, lo mejor para leer son los proyectos.",
-		"empty-action": "Ver los proyectos",
+		"empty-title": "Todavía elijo por dónde empezar.",
+		"empty-body": "Estos años me dejaron grandes lecciones. Aún estoy decidiendo cuál compartir primero.",
+		"empty-action": "Ver mi GitHub",
 		"no-results": "Todavía no hay nada en este tema.",
 		"back": "Todas las notas",
 		"toc": "En esta página",
 		"next": "SIGUIENTE NOTA"
+	},
+	"deck": {
+		"intro": "Intro",
+		"projects": "Proyectos",
+		"story": "Historia",
+		"stack": "Stack",
+		"blog": "Blog",
+		"contact": "Contacto",
+		"progress": "Diapositivas",
+		"next": "Siguiente",
+		"scroll-hint": "Haz scroll o presiona espacio",
+		"swipe-hint": "Desliza",
+		"work-in-progress": "En construcción"
+	},
+	"intro": {
+		"eyebrow": "Tonalli López  ·  Frontend Developer  ·  Ciudad de México",
+		"eyebrow-short": "Tonalli López · Frontend Dev",
+		"greeting": "Soy Tonalli.",
+		"punchline": "Pozole primero, código después.",
+		"lede": "En internet soy tuentyfaiv. Construyo interfaces tipadas, rápidas y accesibles con Svelte, TypeScript y un poco de Rust.",
+		"lede-short": "En internet soy tuentyfaiv. Interfaces tipadas, rápidas y accesibles con Svelte, TypeScript y un poco de Rust.",
+		"tour": "Haz el recorrido"
+	},
+	"skip": "Saltar al contenido",
+	"main-nav": "Principal",
+	"story-page": {
+		"eyebrow": "Historia  ·  2018 → hoy",
+		"title": "Ocho años",
+		"title-end": "construyendo en público.",
+		"description": "De un primer commit en 2018 a librerías tipadas y este portafolio.",
+		"timeline": "Línea de tiempo",
+		"2018-title": "Primer commit",
+		"2018-body": "Entré a GitHub y a Platzi. HTML, CSS y muchos cursos.",
+		"2021-title": "Publicando apps",
+		"2021-body": "TFChat, una app de podcasts y un explorador de Rick & Morty. Next.js + sockets.",
+		"2023-title": "Primeras librerías",
+		"2023-body": "mediaplayer, svelte-form y el CLI de tfverse, escrito en Rust.",
+		"2025-title": "Todo a Svelte 5",
+		"2025-body": "sveaming, el reproductor multimedia reconstruido con runes.",
+		"2026-title": "fetchzen",
+		"2026-body": "HTTP tipado sobre Fetch nativo. Y este portafolio."
+	},
+	"error": {
+		"not-found": "Esta página se perdió.",
+		"unexpected": "Algo falló de nuestro lado.",
+		"home": "Volver al inicio"
 	}
 }

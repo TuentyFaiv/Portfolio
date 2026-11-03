@@ -1,18 +1,49 @@
 <!doctype html>
 <!-- biome-ignore lint/a11y/useValidLang: Paraglide lang is valid -->
-<html lang="%paraglide.lang%" dir="%paraglide.dir%" class="dark">
+<html lang="%paraglide.lang%" dir="%paraglide.dir%">
 	<head>
 		<meta charset="utf-8">
 
-		<link rel="icon" href="/logo@3x.webp">
+		<link rel="icon" href="/logo-3x.webp">
+		<link rel="manifest" href="/manifest.webmanifest">
 
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
 		<meta name="text-scale" content="scale">
+
+		<!-- Runs before the first paint, so a saved or system theme never flashes the wrong one. -->
+		<script nonce="%sveltekit.nonce%">
+			(() => {
+				let saved;
+				try {
+					saved = localStorage.getItem("mode-watcher-mode");
+				} catch {
+					saved = "system";
+				}
+				const system = matchMedia("(prefers-color-scheme: dark)").matches;
+				const dark = saved === "dark" || (saved !== "light" && system);
+				document.documentElement.classList.toggle("dark", dark);
+			})();
+		</script>
+		<script type="application/ld+json">
+			{
+				"@context": "https://schema.org",
+				"@type": "Person",
+				"name": "Tonalli López",
+				"alternateName": "tuentyfaiv",
+				"jobTitle": "Frontend Developer",
+				"url": "https://tuentyfaiv.com",
+				"sameAs": [
+					"https://github.com/TuentyFaiv",
+					"https://www.linkedin.com/in/tuentyfaiv",
+					"https://x.com/TuentyFaiv"
+				]
+			}
+		</script>
 		%sveltekit.head%
 	</head>
 
 	<body data-sveltekit-preload-data="hover">
-		<div style="display: contents">%sveltekit.body%</div>
+		<div class="app">%sveltekit.body%</div>
 	</body>
 </html>

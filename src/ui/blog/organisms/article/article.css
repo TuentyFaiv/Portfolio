@@ -1,4 +1,5 @@
 @reference "#styles/app.css";
+@plugin "@tailwindcss/typography";
 
 .article {
 	@apply w-full max-w-300 mx-auto px-6 pt-8 pb-20 md:pt-14 flex gap-24 items-start;

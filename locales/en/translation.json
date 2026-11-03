@@ -1,13 +1,13 @@
 {
 	"$schema": "https://inlang.com/schema/inlang-message-format",
-	"hello-world": "Hello, {{name}} from en!",
 	"theme": {
-		"change": "Change theme"
+		"change": "Dark theme"
 	},
 	"home": "Home",
 	"story": "Story",
 	"blog": "Blog",
 	"menu": "Menu",
+	"language-switch": "EN, switch to Spanish",
 	"socials": "Social profiles",
 	"blog-page": {
 		"eyebrow": "BLOG  ·  ALL NOTES",
@@ -17,12 +17,58 @@
 		"all": "All",
 		"min-read": "{{minutes}} min read",
 		"empty-label": "FIRST POST",
-		"empty-title": "Still learning them.",
-		"empty-body": "The first note lands here soon. Until then, the projects are the best thing to read.",
-		"empty-action": "See the projects",
+		"empty-title": "Still choosing where to start.",
+		"empty-body": "These years left me with some big lessons. I'm still deciding which one to share first.",
+		"empty-action": "See my GitHub",
 		"no-results": "Nothing under this topic yet.",
 		"back": "All posts",
 		"toc": "On this page",
 		"next": "NEXT POST"
+	},
+	"deck": {
+		"intro": "Intro",
+		"projects": "Projects",
+		"story": "Story",
+		"stack": "Stack",
+		"blog": "Blog",
+		"contact": "Contact",
+		"progress": "Slides",
+		"next": "Next",
+		"scroll-hint": "Scroll or press space",
+		"swipe-hint": "Swipe",
+		"work-in-progress": "Work in progress"
+	},
+	"intro": {
+		"eyebrow": "Tonalli López  ·  Frontend Developer  ·  Mexico City",
+		"eyebrow-short": "Tonalli López · Frontend Dev",
+		"greeting": "I'm Tonalli.",
+		"punchline": "Pozole first, then code.",
+		"lede": "Online I'm tuentyfaiv. I build typed, fast, accessible interfaces with Svelte, TypeScript and a bit of Rust.",
+		"lede-short": "Online I'm tuentyfaiv. Typed, fast, accessible interfaces with Svelte, TypeScript and a bit of Rust.",
+		"tour": "Take the tour"
+	},
+	"skip": "Skip to content",
+	"main-nav": "Main",
+	"story-page": {
+		"eyebrow": "Story  ·  2018 → now",
+		"title": "Eight years of",
+		"title-end": "shipping in public.",
+		"description": "From a first commit in 2018 to typed libraries and this portfolio.",
+		"timeline": "Timeline",
+		"2018-title": "First commit",
+		"2018-body": "Joined GitHub and Platzi. HTML, CSS and a lot of courses.",
+		"2021-title": "Shipping apps",
+		"2021-body": "TFChat, a podcast app, Rick & Morty explorer. Next.js + sockets.",
+		"2023-title": "First libraries",
+		"2023-body": "mediaplayer, svelte-form and the tfverse CLI, written in Rust.",
+		"2025-title": "All in on Svelte 5",
+		"2025-body": "sveaming, the media player rebuilt on runes.",
+		"2026-title": "fetchzen",
+		"2026-body": "Typed HTTP on native Fetch. And this portfolio."
+	},
+	"error": {
+		"not-found": "This page got lost.",
+		"unexpected": "Something broke on our side.",
+		"home": "Back home"
 	}
 }

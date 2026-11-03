@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from "$app/state";
 
+	import config from "#config";
 	import { m } from "#lib/paraglide/messages.js";
 	import { getLocale } from "#lib/paraglide/runtime.js";
 	import { collectTags, formatMonth, groupByYear } from "#utils/blog.ts";
@@ -10,6 +11,8 @@
 	import type { Props } from "./post-list.proptypes";
 
 	let { posts }: Props = $props();
+
+	const github = config.socials.find(({ content }) => content === "GitHub");
 
 	let active = $derived(page.url.searchParams.get("tag"));
 	let tags = $derived(collectTags(posts));
@@ -44,15 +47,19 @@
 	</header>
 
 	{#if posts.length === 0}
-		<div class="posts__empty">
+		<section class="posts__empty">
 			<p class="posts__empty-label">{m["translation:blog-page.empty-label"]()}</p>
 			<h2 class="posts__empty-title">{m["translation:blog-page.empty-title"]()}</h2>
 			<p class="posts__empty-body">{m["translation:blog-page.empty-body"]()}</p>
-			<a href="/" class="posts__empty-action">
+			<a
+				href={github?.href}
+				class="posts__empty-action"
+				target="_blank"
+				rel="me noopener noreferrer"
+			>
 				{m["translation:blog-page.empty-action"]()}
-				<span aria-hidden="true">→</span>
 			</a>
-		</div>
+		</section>
 	{:else if visible.length === 0}
 		<p class="posts__none">{m["translation:blog-page.no-results"]()}</p>
 	{:else}

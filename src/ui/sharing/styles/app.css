@@ -1,6 +1,4 @@
 @import "tailwindcss";
-@plugin "@tailwindcss/forms";
-@plugin "@tailwindcss/typography";
 @import "@fontsource-variable/mulish";
 @import "@fontsource-variable/orbitron";
 
@@ -132,9 +130,20 @@
 	--ring: var(--primary-500);
 
 	--radius: 0.625rem;
+
+	/* Quiet text. Stronger than the .pen values, so both reach 4.5:1 on the background. */
+	--text-muted: #55565c;
+	--text-subtle: #6b6c72;
+
+	color-scheme: light;
 }
 
 .dark {
+	color-scheme: dark;
+
+	--text-muted: #a6a7ad;
+	--text-subtle: #8a8b91;
+
 	/* #090A0D */
 	--background: oklch(14.5% 0.01 270.48deg);
 	/* #FCFCFC */
@@ -258,6 +267,14 @@
 	--border: var(--primary-900);
 	--input: var(--primary-800);
 	--ring: var(--primary-400);
+}
+
+@media (prefers-contrast: more) {
+	:root,
+	.dark {
+		--text-muted: var(--foreground);
+		--text-subtle: var(--foreground);
+	}
 }
 
 @theme inline {
@@ -401,54 +418,44 @@
 		@apply bg-background text-foreground;
 	}
 	button:not(:disabled),
-	[role="button"]:not(:disabled),
-	select {
-		@apply focus:ring-0 focus:border-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-900;
+	[role="button"]:not(:disabled) {
 		cursor: pointer;
 	}
-	a {
-		@apply focus:ring-0 focus:border-none focus:outline-none;
+	/* Taps answer at once: no waiting to rule out a double tap zoom. */
+	a,
+	button {
+		touch-action: manipulation;
+	}
+	a:focus-visible,
+	button:focus-visible,
+	[tabindex]:focus-visible {
+		@apply outline-2 outline-offset-2 outline-primary;
 	}
 	html {
 		@apply font-sans;
 	}
 }
 
-select,
-::picker(select) {
-	appearance: base-select;
+.app {
+	display: contents;
 }
 
-select {
-	flex: 1;
+/* The header stays put while the page under it crossfades. */
+.header {
+	view-transition-name: site-header;
 }
 
-select::picker-icon {
-	display: none;
+::view-transition-old(root),
+::view-transition-new(root) {
+	animation-duration: 160ms;
 }
 
-::picker(select) {
-	@apply shadow-primary-100 rounded-full border-0 p-[3px] -translate-x-1;
-	box-shadow:
-		0 0 6px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1)),
-		0 0 3px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
+.skip-link {
+	@apply fixed top-2 left-2 z-100 -translate-y-20 rounded-md bg-primary px-4 py-2 font-semibold text-background transition-[translate] duration-150 focus-visible:translate-y-0;
 }
 
-.select {
-	@apply w-full h-7.5 rounded-full bg-background border-none py-[3px] px-2.5 hover:shadow-primary-100 text-sm font-sans transition-shadow duration-250;
-	&:hover:not(:disabled, :focus) {
-		box-shadow:
-			0 0 13px -2px var(--tw-shadow-color, rgb(0 0 0 / 0.1)),
-			0 0 6px -3px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
-	}
-
-	option {
-		@apply flex items-center justify-center border-none bg-background not-last:mb-1 transition-colors duration-250;
-	}
-	option:checked {
-		@apply bg-primary/35;
-	}
-	option::checkmark {
-		display: none;
+@media (prefers-reduced-motion: reduce) {
+	.skip-link {
+		transition: none;
 	}
 }

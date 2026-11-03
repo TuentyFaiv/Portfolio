@@ -1,0 +1,6 @@
+@reference "#styles/app.css";
+
+.story {
+	/* Fills the screen under the header, on all viewport sizes. */
+	@apply flex min-h-[calc(100dvh-4.75rem)] items-center justify-center px-6 pb-19 sm:min-h-[calc(100dvh-5.75rem)] sm:pb-23;
+}

@@ -1,15 +1,33 @@
 @reference "#styles/app.css";
 
 .header {
-	@apply relative w-full flex px-4 py-6 justify-between items-center gap-4 sm:gap-6 md:px-6 lg:px-8;
-	.header__brand {
-		@apply order-1;
+	/* Overshoots a little, then settles: a spring that needs no JavaScript. */
+	--spring: linear(0, 0.14 3%, 0.5 9%, 0.9 16%, 1.08 22%, 1.12 27%, 1.07 35%, 1 46%, 0.98 56%, 1);
+
+	@apply relative flex w-full items-center justify-between gap-2.5 p-5 sm:gap-6 sm:px-16 sm:py-7;
+
+	/* Stagger order lives here, not in style attributes, so the CSP can forbid those. */
+	.header__social:nth-child(1),
+	.header__item:nth-child(1) {
+		--index: 0;
+		--reverse-index: 2;
 	}
+	.header__social:nth-child(2),
+	.header__item:nth-child(2) {
+		--index: 1;
+		--reverse-index: 1;
+	}
+	.header__social:nth-child(3),
+	.header__item:nth-child(3) {
+		--index: 2;
+		--reverse-index: 0;
+	}
+
 	.header__identity {
-		@apply relative w-max;
+		@apply relative order-1 w-max;
 	}
 	.header__logo {
-		@apply inline-block overflow-hidden whitespace-nowrap align-bottom text-lg sm:text-2xl font-heading font-medium transition-colors duration-200;
+		@apply inline-block overflow-hidden align-bottom font-heading text-lg font-medium whitespace-nowrap transition-colors duration-200 sm:text-[1.375rem];
 	}
 	.header__identity:hover .header__logo,
 	.header__identity:focus-within .header__logo {
@@ -20,21 +38,21 @@
 		@apply flex items-center;
 	}
 	.header__socials--reveal {
-		--reveal-ease: cubic-bezier(0.22, 1, 0.36, 1);
-		@apply max-sm:hidden absolute top-1/2 left-full -translate-y-1/2 pl-3 gap-1 pointer-events-none;
+		@apply pointer-events-none absolute top-1/2 left-full -translate-y-1/2 gap-1 pl-3 max-sm:hidden;
 
 		&::before {
-			@apply block content-[""] w-px h-4.5 mr-2 bg-current opacity-0 scale-y-0;
+			@apply mr-2 block h-4.5 w-px scale-y-0 bg-primary opacity-0 content-[""];
 			transition:
-				opacity 180ms ease 140ms,
-				transform 180ms ease 140ms;
+				opacity 140ms ease 160ms,
+				scale 140ms ease-in 160ms;
 		}
 		.header__social {
-			@apply opacity-0 -translate-x-2;
-			/* Close fast and all at once, with a short grace period for a stray pointer. */
-			transition:
-				opacity 140ms ease 140ms,
-				transform 140ms ease 140ms;
+			@apply -translate-x-3 -rotate-12 scale-60 opacity-0 blur-xs;
+			/* Close fast, last icon first, after a short grace period for a stray pointer. */
+			transition-property: opacity, translate, scale, rotate, filter;
+			transition-duration: 150ms;
+			transition-timing-function: ease-in;
+			transition-delay: calc(80ms + var(--reverse-index) * 30ms);
 		}
 	}
 	.header__identity:hover .header__socials--reveal,
@@ -42,85 +60,163 @@
 		@apply pointer-events-auto;
 
 		&::before {
-			@apply opacity-20 scale-y-100;
-			transition-delay: 0ms;
+			@apply scale-y-100 opacity-50;
+			transition:
+				opacity 200ms ease,
+				scale 420ms var(--spring);
 		}
 		.header__social {
-			@apply opacity-100 translate-x-0;
-			transition:
-				opacity 260ms var(--reveal-ease) calc(40ms + var(--index) * 50ms),
-				transform 260ms var(--reveal-ease) calc(40ms + var(--index) * 50ms);
+			@apply translate-x-0 rotate-0 scale-100 opacity-100 blur-none;
+			transition-duration: 200ms, 520ms, 520ms, 520ms, 200ms;
+			transition-timing-function: ease-out, var(--spring), var(--spring), var(--spring), ease-out;
+			transition-delay: calc(60ms + var(--index) * 55ms);
 		}
 	}
 	.header__social-link {
-		@apply block p-1.5 rounded-md text-foreground opacity-80 transition-[opacity,color] duration-150 hover:opacity-100 hover:text-primary focus-visible:opacity-100 focus-visible:outline-double focus-visible:outline-primary-900;
+		@apply block rounded-md p-1.5 text-foreground opacity-80 hover:-translate-y-px hover:scale-120 hover:text-primary hover:opacity-100 hover:drop-shadow-[0_0_6px_var(--primary)] focus-visible:opacity-100 active:scale-95;
+		transition:
+			opacity 150ms ease,
+			color 150ms ease,
+			filter 200ms ease,
+			scale 320ms var(--spring),
+			translate 320ms var(--spring);
 	}
 	.header__social-icon {
 		@apply block size-4.5 fill-current;
 	}
-	.header__item--socials {
-		@apply mt-6 sm:hidden;
+
+	.header__nav {
+		@apply order-3 sm:absolute sm:left-1/2 sm:order-2 sm:-translate-x-1/2;
 	}
-	.header__socials--menu {
-		@apply gap-4;
-		.header__social-icon {
-			@apply size-6;
+	.header__burguer {
+		@apply flex size-9 items-center justify-center rounded-full border border-foreground/10 text-foreground transition-colors duration-150 hover:border-primary hover:text-primary focus:border-solid sm:hidden;
+	}
+	.header__burguer-icon {
+		@apply size-4 fill-none stroke-current stroke-2;
+		stroke-linecap: round;
+	}
+	.header__burguer-close {
+		@apply hidden;
+	}
+	.header__burguer:has(+ :popover-open) {
+		.header__burguer-open {
+			@apply hidden;
 		}
-	}
-	@media (prefers-reduced-motion: reduce) {
-		.header__logo,
-		.header__socials--reveal::before,
-		.header__socials--reveal .header__social {
-			transition: none !important;
+		.header__burguer-close {
+			@apply block;
 		}
 	}
 
-	.header__burguer {
-		@apply block sticky top-6 z-15 size-7.5 sm:hidden;
-		span {
-			@apply block size-3.5 bg-primary-600/65 -skew-x-35 skew-y-45 -rotate-13 translate-x-1/2 transition-transform;
-		}
-		&[data-active="true"] {
-			span {
-				@apply -rotate-113;
+	/* A popover panel under the header on phones, a plain row of links from sm up. */
+	.header__menu {
+		@apply fixed inset-x-0 top-19 bottom-0 m-0 h-auto w-full flex-col justify-between overflow-y-auto overscroll-contain border-0 bg-background px-6 pt-11 pb-17.5 text-foreground opacity-0 sm:contents;
+		transition:
+			opacity 120ms ease,
+			display 120ms allow-discrete,
+			overlay 120ms allow-discrete;
+
+		&:popover-open {
+			@apply flex opacity-100;
+
+			@variant sm {
+				display: contents;
+			}
+
+			@starting-style {
+				@apply opacity-0;
 			}
 		}
 	}
-	.header__nav {
-		@apply w-max order-3 sm:order-2 sm:absolute sm:left-1/2 sm:-translate-x-1/2;
-	}
 	.header__list {
-		@apply fixed inset-0 max-sm:h-dvh w-full sm:w-max sm:relative z-10 flex flex-col sm:flex-row justify-center sm:justify-start items-center transition-all transition-discrete duration-250 opacity-0;
-		&:not([inert]) {
-			@apply max-sm:bg-primary-700/30 max-sm:backdrop-blur-lg opacity-100;
-		}
+		@apply flex flex-col gap-2.5 sm:flex-row sm:items-center sm:gap-2;
 	}
 	.header__item {
 		@apply w-max;
 	}
 	.header__link {
-		@apply block min-w-max py-3 px-2 sm:py-1.5 sm:px-2.5 focus-visible:border-none focus-visible:outline-double focus-visible:outline-primary-900 transition-opacity duration-200 opacity-80 sm:opacity-70 hover:opacity-100;
+		@apply relative block overflow-hidden font-heading text-[2.5rem] leading-[1.25] font-bold whitespace-nowrap text-foreground sm:px-2.5 sm:py-1.5 sm:font-sans sm:text-sm sm:leading-normal sm:font-normal sm:opacity-65 sm:transition-opacity sm:duration-200 sm:hover:opacity-100;
+
+		&::after {
+			@apply absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-0 rounded-full bg-primary content-[""];
+			transition: scale 320ms var(--spring);
+		}
+		&:hover::after,
+		&.header__link--active::after {
+			@apply scale-x-100;
+		}
 		&.header__link--active {
-			@apply opacity-100;
-			&:not(:hover) > .header__link-text::before {
-				@apply w-full;
+			@apply max-sm:text-primary sm:opacity-100;
+		}
+	}
+
+	.header__contact {
+		@apply mt-auto flex flex-col items-start gap-4 border-t border-foreground/10 pt-6 not-italic sm:hidden;
+	}
+	.header__email {
+		@apply text-[0.9375rem] text-foreground/65 transition-colors duration-150 hover:text-primary focus-visible:text-primary;
+	}
+	.header__socials--menu {
+		@apply -ml-1.5 gap-4;
+
+		.header__social-icon {
+			@apply size-6;
+		}
+	}
+	.header__menu > .language {
+		@apply mt-4 sm:hidden;
+	}
+
+	/* The menu's content arrives right after the panel, one piece at a time. */
+	@media (width < 40rem) {
+		.header__item,
+		.header__socials--menu .header__social {
+			transition-property: opacity, translate;
+			transition-duration: 140ms, 320ms;
+			transition-timing-function: ease-out, var(--spring);
+			transition-delay: calc(var(--index) * 30ms);
+
+			@starting-style {
+				@apply translate-y-3 opacity-0;
 			}
 		}
-		&:hover > .header__link-text::before {
-			@apply w-full;
-		}
-	}
-	.header__link-text {
-		@apply block relative z-0 text-sm;
-	}
-	.header__link-text::before {
-		@apply block content-[""] absolute w-0 z-0 h-0.5 top-full left-0 bg-primary rounded-full transition-all duration-200 will-change-auto;
-	}
-	.header__icon {
-		@apply block w-full h-full object-contain max-w-[2.25rem] max-h-[2.25rem];
 	}
 
 	.header__actions {
-		@apply flex justify-center items-center gap-2 sm:gap-3 md:gap-4 order-2 sm:order-3 ml-auto;
+		@apply order-2 ml-auto flex items-center justify-center gap-2.5 sm:order-3 sm:gap-3;
+
+		.language {
+			@apply max-sm:hidden;
+		}
+	}
+
+	@media (prefers-contrast: more) {
+		.header__link,
+		.header__email {
+			@apply text-foreground opacity-100;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.header__logo,
+		.header__menu,
+		.header__item,
+		.header__link::after,
+		.header__socials--reveal::before,
+		.header__social,
+		.header__social-link {
+			transition: none !important;
+		}
+	}
+}
+
+/* Hidden, not just covered: the page behind an open menu leaves the tab order too. */
+@media (width < 40rem) {
+	:root:has(.header__menu:popover-open) {
+		overflow: hidden;
+
+		main {
+			visibility: hidden;
+			transition: visibility 0s 120ms;
+		}
 	}
 }

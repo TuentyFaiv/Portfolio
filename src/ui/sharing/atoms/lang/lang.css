@@ -1,26 +1,11 @@
 @reference "#styles/app.css";
 
 .language {
-	@apply size-7.5 p-0;
-
-	span {
-		@apply block size-7.5 p-0 rounded-full overflow-hidden;
-	}
-
-	option span {
-		@apply size-9 p-[3px];
-	}
-	option:checked {
-		@apply rounded-full;
-	}
+	@apply grid size-9 place-items-center rounded-full border border-foreground/10 font-heading text-xs font-semibold tracking-[0.08em] text-foreground transition-colors duration-150 hover:border-primary hover:text-primary focus:border-solid;
 }
 
-.language::picker(select) {
-	@apply p-0;
-}
-
-@supports not (appearance: base-select) {
+@media (prefers-reduced-motion: reduce) {
 	.language {
-		@apply h-7.5 size-full max-w-30 pl-2 px-4 bg-position-[100%_55%];
+		transition: none;
 	}
 }

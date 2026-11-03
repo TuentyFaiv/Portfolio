@@ -1,0 +1,19 @@
+@reference "#styles/app.css";
+
+.error {
+	@apply flex min-h-[calc(100dvh-4.75rem)] flex-col items-center justify-center gap-6 px-6 pb-19 text-center sm:min-h-[calc(100dvh-5.75rem)] sm:pb-23;
+
+	.error__status {
+		@apply font-heading text-xs font-semibold tracking-[0.25em] text-primary;
+	}
+	.error__title {
+		@apply mt-3 font-heading text-3xl font-extrabold tracking-tight text-balance sm:text-5xl;
+	}
+	.error__home {
+		@apply rounded-full border border-foreground/10 px-5.5 py-3.5 font-heading text-[0.8125rem] leading-4 font-semibold tracking-widest transition-colors duration-150 hover:border-primary hover:text-primary;
+
+		&::after {
+			content: " →" / "";
+		}
+	}
+}

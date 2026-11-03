@@ -1,0 +1,9 @@
+{
+	"name": "tuentyfaiv",
+	"short_name": "tuentyfaiv",
+	"start_url": "/",
+	"display": "standalone",
+	"background_color": "#090a0d",
+	"theme_color": "#21c08b",
+	"icons": [{ "src": "/logo-dark-3x.webp", "sizes": "616x616", "type": "image/webp" }]
+}
