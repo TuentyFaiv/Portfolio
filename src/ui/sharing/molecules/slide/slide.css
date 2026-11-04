@@ -1,0 +1,9 @@
+@reference "#styles/app.css";
+
+/* The bottom padding keeps content clear of the fixed deck footer. */
+.slide {
+	@apply relative flex min-h-dvh flex-col items-center justify-center overflow-clip px-6 pt-24 pb-22 sm:px-16 sm:pt-23 sm:pb-30;
+	scroll-snap-align: start;
+	/* One gesture, one slide: a hard flick on a trackpad no longer skips past slides. */
+	scroll-snap-stop: always;
+}

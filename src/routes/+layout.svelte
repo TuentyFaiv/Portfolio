@@ -9,6 +9,7 @@
 	import type { LayoutProps } from "./$types";
 
 	import { Header } from "#sharing/organisms/header/index.ts";
+	import { routeTransition } from "#utils/transition.ts";
 
 	let { children }: LayoutProps = $props();
 
@@ -17,13 +18,29 @@
 		const samePage = from?.route.id === to?.route.id;
 		const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-		if (!document.startViewTransition || samePage || calm) return;
+		const hidden = document.visibilityState !== "visible";
 
-		return new Promise((resolve) => {
-			document.startViewTransition(async () => {
-				resolve();
-				await complete;
-			});
+		if (!document.startViewTransition || samePage || calm || hidden) return;
+
+		return new Promise<void>((resolve) => {
+			let transition: ViewTransition;
+
+			try {
+				transition = document.startViewTransition(async () => {
+					resolve();
+					await complete;
+				});
+			} catch {
+				// Some browsers throw instead of skipping: the route then changes without it.
+				return resolve();
+			}
+
+			routeTransition.set(transition.finished);
+			// The navigation must never wait on the effect: if the browser skips or aborts
+			// the transition, or it simply has not started yet, the route changes anyway.
+			transition.ready.catch(() => resolve());
+			transition.finished.finally(() => resolve());
+			window.setTimeout(resolve, 300);
 		});
 	});
 

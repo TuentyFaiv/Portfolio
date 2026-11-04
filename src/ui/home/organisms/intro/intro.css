@@ -3,8 +3,6 @@
 .intro {
 	--intro-glow: #fd9b8b40, #d68aef1a 55%, transparent;
 	--intro-mark-glow: #971b1c33;
-	--intro-title-from: #090a0e;
-	--intro-title-to: #971b1c;
 	--intro-title-scale: 1;
 
 	@apply relative isolate flex w-full max-w-300 flex-col items-center text-center;
@@ -18,8 +16,6 @@
 	.dark & {
 		--intro-glow: #14c18a40, #6e2ab21a 55%, transparent;
 		--intro-mark-glow: #14c18a55;
-		--intro-title-from: #fcfcfc;
-		--intro-title-to: #5ed9b9;
 
 		&::before {
 			background-image: url("/logo-mark-dark.webp");
@@ -66,7 +62,7 @@
 		letter-spacing: -0.03em;
 		text-wrap: balance;
 		color: transparent;
-		background: linear-gradient(var(--intro-title-from) 35%, var(--intro-title-to));
+		background: linear-gradient(var(--headline-from) 35%, var(--headline-to));
 		background-clip: text;
 
 		@variant sm {

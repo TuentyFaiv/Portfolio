@@ -56,6 +56,8 @@ export default defineConfig(({ command }) => ({
 					"frame-ancestors": ["none"],
 					"form-action": ["self"],
 					"connect-src": ["self"],
+					// The nebula's renderer thread, from this site only.
+					"worker-src": ["self"],
 					"object-src": ["none"],
 					"base-uri": ["self"],
 				},
@@ -73,6 +75,8 @@ export default defineConfig(({ command }) => ({
 					"frame-ancestors": ["none"],
 					"form-action": ["self"],
 					"connect-src": ["self"],
+					// The nebula's renderer thread, from this site only.
+					"worker-src": ["self"],
 					"object-src": ["none"],
 					"base-uri": ["self"],
 					"report-to": ["csp-endpoint"],

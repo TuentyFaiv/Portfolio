@@ -1,19 +1,20 @@
 <script lang="ts">
 	import { scrambleTo } from "#attach/scramble.ts";
 	import { m } from "#lib/paraglide/messages.js";
-	import { slides } from "#utils/slides.ts";
 
 	import "./deck.css";
 
-	import type { SlideId } from "#utils/slides.ts";
 	import type { Props } from "./deck.proptypes.ts";
 
-	let { children }: Props = $props();
+	let { slides, children }: Props = $props();
 
 	const pad = (value: number) => String(value).padStart(2, "0");
-	const [first, second] = slides;
+	let first = $derived(slides[0]);
+	let second = $derived(slides[1] ?? slides[0]);
 
-	let active = $state<SlideId>(first.id);
+	// Empty until a slide crosses the middle of the screen: the first one is current until then.
+	let tracked = $state<string>();
+	let active = $derived(tracked ?? first.id);
 	let index = $derived(slides.findIndex((slide) => slide.id === active));
 	let last = $derived(index === slides.length - 1);
 	// The last slide has no next one: its link fades out still showing the previous label.
@@ -25,7 +26,7 @@
 			(entries) => {
 				const current = entries.find((entry) => entry.isIntersecting);
 
-				if (current) active = current.target.id as SlideId;
+				if (current) tracked = current.target.id;
 			},
 			{ rootMargin: "-50% 0px" }
 		);
@@ -69,7 +70,6 @@
 	</p>
 	<p class="deck__hint deck__hint--swipe" data-hidden={last}>
 		{m["translation:deck.swipe-hint"]()}
-		↑
 	</p>
 	<a class="deck__next" href="#{next.id}" data-hidden={last}>
 		{m["translation:deck.next"]()}&nbsp; · &nbsp;<span {@attach scrambleTo(next.label())}

@@ -47,6 +47,53 @@ test.describe("theme", () => {
 		await expect(page.locator("html")).toHaveClass(/dark/);
 	});
 
+	test("the theme spreads from the button in one view transition", async ({ page }) => {
+		await page.emulateMedia({ colorScheme: "dark" });
+		await page.goto("/");
+		await page.waitForLoadState("networkidle");
+		await page.evaluate(() => {
+			const start = document.startViewTransition?.bind(document);
+
+			Object.assign(window, { transitions: 0 });
+			if (start) {
+				document.startViewTransition = ((update: () => void) => {
+					(window as unknown as { transitions: number }).transitions += 1;
+
+					return start(update);
+				}) as typeof document.startViewTransition;
+			}
+		});
+
+		await page.locator(".themeswitch").click();
+
+		await expect(page.locator("html")).not.toHaveClass(/dark/);
+		const supported = await page.evaluate(() => "startViewTransition" in document);
+
+		expect(
+			await page.evaluate(() => (window as unknown as { transitions: number }).transitions)
+		).toBe(supported ? 1 : 0);
+		await expect(page.locator("html")).not.toHaveClass(/theme-transition/);
+	});
+
+	test("with reduced motion the theme switches at once", async ({ page }) => {
+		await page.emulateMedia({ colorScheme: "dark", reducedMotion: "reduce" });
+		await page.goto("/");
+		await page.waitForLoadState("networkidle");
+		await page.evaluate(() => {
+			Object.assign(window, { transitions: 0 });
+			document.startViewTransition = (() => {
+				(window as unknown as { transitions: number }).transitions += 1;
+			}) as unknown as typeof document.startViewTransition;
+		});
+
+		await page.locator(".themeswitch").click();
+
+		await expect(page.locator("html")).not.toHaveClass(/dark/);
+		expect(
+			await page.evaluate(() => (window as unknown as { transitions: number }).transitions)
+		).toBe(0);
+	});
+
 	test("native controls and scrollbars match the theme", async ({ page }) => {
 		await page.emulateMedia({ colorScheme: "dark" });
 		await page.goto("/");

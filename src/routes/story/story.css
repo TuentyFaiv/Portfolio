@@ -1,6 +1,61 @@
 @reference "#styles/app.css";
 
-.story {
-	/* Fills the screen under the header, on all viewport sizes. */
-	@apply flex min-h-[calc(100dvh-4.75rem)] items-center justify-center px-6 pb-19 sm:min-h-[calc(100dvh-5.75rem)] sm:pb-23;
+/*
+ * Three layers behind the slides:
+ * 1. ::before, a plain CSS sky in the design's layout, for browsers without a GPU API
+ *    and before the first frame. No image, so nothing to download or blur.
+ * 2. the nebula canvas, drawn by the GPU (see #sharing/atoms/nebula).
+ * 3. ::after, the scrim that keeps the text column readable over both.
+ */
+body:has(.opening)::before {
+	@apply pointer-events-none fixed inset-0 -z-10 content-[""];
+	background:
+		radial-gradient(60% 30% at 55% 8%, #efc8cb, transparent),
+		radial-gradient(28% 26% at 6% 66%, #f1d3d5, transparent),
+		radial-gradient(30% 26% at 95% 84%, #efcdd0, transparent), #fbf8f7;
+}
+
+.dark body:has(.opening)::before {
+	background:
+		radial-gradient(60% 30% at 55% 8%, #1d4a3d, transparent),
+		radial-gradient(28% 26% at 6% 66%, #17392f, transparent),
+		radial-gradient(30% 26% at 95% 84%, #1a4236, transparent), #05070b;
+}
+
+/* The scrim only covers where text sits: the left column on wide screens, a soft wash on
+   phones, where text spans the whole width. The rest of the sky stays bright. */
+body:has(.opening)::after {
+	@apply pointer-events-none fixed inset-0 -z-1 content-[""];
+	background: linear-gradient(#fbf8f7a6, #fbf8f7a6);
+
+	@variant sm {
+		background:
+			radial-gradient(46rem 24rem at 50% 50%, #fbf8f7d9, transparent),
+			linear-gradient(90deg, #f5f6f5eb, transparent 55%);
+	}
+}
+
+.dark body:has(.opening)::after {
+	background: linear-gradient(#05060ab3, #05060ab3);
+
+	@variant sm {
+		background:
+			radial-gradient(46rem 24rem at 50% 50%, #05060ae0, transparent),
+			linear-gradient(90deg, #090a0ef2, transparent 55%);
+	}
+}
+
+/* Once the nebula draws, the sky underneath is hidden. It returns if the GPU resets. */
+body:has(.nebula[data-ready]:not([data-leaving]))::before {
+	background: none;
+}
+
+/* More contrast wins over atmosphere: a plain background behind the text. */
+@media (prefers-contrast: more) {
+	body:has(.opening)::before,
+	.dark body:has(.opening)::before,
+	body:has(.opening)::after,
+	.dark body:has(.opening)::after {
+		background: var(--background);
+	}
 }

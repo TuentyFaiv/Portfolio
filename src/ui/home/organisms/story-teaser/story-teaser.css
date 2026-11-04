@@ -1,0 +1,12 @@
+@reference "#styles/app.css";
+
+/* The years read as one line on wide screens and wrap evenly (four and four) on phones. */
+.story-teaser {
+	@apply flex max-w-200 flex-wrap justify-center gap-2 sm:gap-3;
+	margin-top: clamp(1rem, 5dvh, 3rem);
+
+	.story-teaser__year {
+		@apply block rounded-full border border-foreground/10 px-3.5 py-1.5 font-heading text-sm font-semibold tracking-wider tabular-nums transition-[border-color,color] duration-200 hover:border-primary hover:text-primary sm:px-4 sm:py-2 sm:text-base;
+		color: var(--text-muted);
+	}
+}

@@ -12,10 +12,9 @@ test.describe("deck, desktop", () => {
 		await page.goto("/");
 
 		await expect(page.getByRole("heading", { level: 1 })).toContainText("Pozole first, then code.");
-		await expect(page.getByLabel("Slides").getByRole("link", { name: "Intro" })).toHaveAttribute(
-			"aria-current",
-			"location"
-		);
+		await expect(
+			page.locator(".deck__progress").getByRole("link", { name: "Intro", exact: true })
+		).toHaveAttribute("aria-current", "location");
 		expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(1440);
 	});
 
@@ -24,10 +23,9 @@ test.describe("deck, desktop", () => {
 		await page.getByRole("link", { name: "Take the tour" }).click();
 
 		await expect.poll(() => scrollTop(page)).toBe(900);
-		await expect(page.getByLabel("Slides").getByRole("link", { name: "Projects" })).toHaveAttribute(
-			"aria-current",
-			"location"
-		);
+		await expect(
+			page.locator(".deck__progress").getByRole("link", { name: "Projects", exact: true })
+		).toHaveAttribute("aria-current", "location");
 	});
 
 	test("space moves one slide at a time", async ({ page }) => {
@@ -46,6 +44,16 @@ test.describe("deck, desktop", () => {
 		await expect
 			.poll(() => page.locator(".header").evaluate((el) => el.getBoundingClientRect().top))
 			.toBe(0);
+	});
+
+	test("opening a shared link jumps straight to the slide", async ({ page }) => {
+		await page.goto("/#contact");
+		await page.waitForLoadState("networkidle");
+
+		expect(
+			await page.evaluate(() => getComputedStyle(document.documentElement).scrollBehavior)
+		).toBe("auto");
+		await expect.poll(() => scrollTop(page)).toBe(4500);
 	});
 
 	test("does not smooth scroll with reduced motion", async ({ page }) => {
@@ -127,11 +135,11 @@ test.describe("deck, desktop", () => {
 	test("lands on the right text after jumping across slides", async ({ page }) => {
 		await page.goto("/");
 
-		const rail = page.getByLabel("Slides");
+		const rail = page.locator(".deck__progress");
 
-		await rail.getByRole("link", { name: "Stack" }).click();
-		await rail.getByRole("link", { name: "Story" }).click();
-		await rail.getByRole("link", { name: "Blog" }).click();
+		await rail.getByRole("link", { name: "Stack", exact: true }).click();
+		await rail.getByRole("link", { name: "Story", exact: true }).click();
+		await rail.getByRole("link", { name: "Blog", exact: true }).click();
 
 		await expect(page.locator(".deck__count")).toContainText("05 / 06");
 		await expect(page.locator(".deck__next")).toContainText("Contact");
@@ -148,7 +156,7 @@ test.describe("deck, desktop", () => {
 	test("swaps the footer text with no scramble under reduced motion", async ({ page }) => {
 		await page.emulateMedia({ reducedMotion: "reduce" });
 		await page.goto("/");
-		await page.getByLabel("Slides").getByRole("link", { name: "Story" }).click();
+		await page.locator(".deck__progress").getByRole("link", { name: "Story", exact: true }).click();
 
 		await expect(page.locator(".deck__count")).toContainText("03 / 06", { timeout: 300 });
 	});
@@ -246,7 +254,7 @@ test("hides the native scrollbar on the deck only", async ({ page }) => {
 	await page.goto("/");
 	await expect(page.locator("html")).toHaveCSS("scrollbar-width", "none");
 
-	await page.goto("/story");
+	await page.goto("/blog");
 	await expect(page.locator("html")).toHaveCSS("scrollbar-width", "auto");
 });
 
@@ -323,6 +331,16 @@ test.describe("deck, phone", () => {
 
 	test("keeps everything reachable on a short screen", async ({ page }) => {
 		await page.setViewportSize({ width: 320, height: 480 });
+		await page.goto("/");
+
+		const github = page.getByRole("main").getByRole("link", { name: "GitHub" });
+
+		await github.scrollIntoViewIfNeeded();
+		await expect(github).toBeInViewport();
+	});
+
+	test("a phone held sideways can reach everything too", async ({ page }) => {
+		await page.setViewportSize({ width: 667, height: 375 });
 		await page.goto("/");
 
 		const github = page.getByRole("main").getByRole("link", { name: "GitHub" });
@@ -448,7 +466,7 @@ test.describe("pages around the deck", () => {
 		await page.goto("/");
 		await page.waitForLoadState("networkidle");
 		await page.locator(".header__list").getByRole("link", { name: "Story" }).click();
-		await expect(page.getByRole("heading", { level: 1 })).toHaveText("Story");
+		await expect(page.getByRole("heading", { level: 1 })).toContainText("Learning since 2016.");
 		await page.locator(".header__list").getByRole("link", { name: "Home" }).click();
 		await expect(page.locator(".deck")).toBeVisible();
 

@@ -1,0 +1,49 @@
+@reference "#styles/app.css";
+
+/* Same voice as the intro: centered, gradient headline, quiet eyebrow and lede. */
+.teaser {
+	@apply flex w-full max-w-240 flex-col items-center text-center;
+	gap: clamp(1rem, 3dvh, 1.75rem);
+
+	.teaser__eyebrow {
+		@apply font-heading text-[0.625rem] font-semibold tracking-[0.25em] whitespace-pre-wrap uppercase sm:text-[0.8125rem] sm:tracking-[0.27em];
+		color: var(--text-muted);
+	}
+
+	.teaser__title {
+		@apply w-full font-heading font-extrabold;
+		font-size: clamp(2rem, min(6vw, 9dvh), 4.5rem);
+		line-height: 1.08;
+		letter-spacing: -0.02em;
+		text-wrap: balance;
+		color: transparent;
+		background: linear-gradient(var(--headline-from) 35%, var(--headline-to));
+		background-clip: text;
+	}
+	.teaser__punchline {
+		@apply block;
+	}
+
+	.teaser__lede {
+		@apply max-w-140 text-base leading-normal text-pretty sm:text-xl;
+		color: var(--text-muted);
+	}
+}
+
+.teaser__action {
+	@apply flex items-center gap-2.5 rounded-full border border-foreground/10 px-5.5 py-3.5 font-heading text-[0.8125rem] leading-4 font-semibold tracking-widest text-foreground transition-[border-color,color] duration-200 hover:border-primary hover:text-primary;
+	margin-top: clamp(1rem, 4dvh, 2.5rem);
+}
+.teaser__icon {
+	@apply size-4 fill-none stroke-current stroke-2;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+}
+
+/* Gradient text is transparent text over a background that forced colors removes. */
+@media (forced-colors: active) {
+	.teaser .teaser__title {
+		background: none;
+		color: CanvasText;
+	}
+}

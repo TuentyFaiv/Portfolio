@@ -1,0 +1,31 @@
+@reference "#styles/app.css";
+
+.opening {
+	@apply flex w-full max-w-300 flex-col items-center gap-8 text-center;
+
+	.opening__eyebrow {
+		@apply font-heading text-[0.625rem] font-semibold tracking-[0.25em] whitespace-pre-wrap uppercase sm:text-[0.8125rem];
+		/* Over the nebula the muted grey drops below 4.5:1, so it uses the text color. */
+		color: var(--foreground);
+	}
+	.opening__title {
+		@apply font-heading font-extrabold;
+		font-size: clamp(2.25rem, min(6.4vw, 11dvh), 5rem);
+		line-height: 1.1;
+		letter-spacing: 0.01em;
+		text-wrap: balance;
+		color: transparent;
+		background: linear-gradient(var(--headline-from) 35%, var(--headline-to));
+		background-clip: text;
+	}
+	.opening__punchline {
+		@apply block;
+	}
+}
+
+@media (forced-colors: active) {
+	.opening .opening__title {
+		background: none;
+		color: CanvasText;
+	}
+}

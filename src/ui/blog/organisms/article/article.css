@@ -40,7 +40,7 @@
 		@apply flex flex-col gap-2 border-t pt-8 mt-4;
 	}
 	.article__next-label {
-		@apply font-heading text-xs font-semibold tracking-[0.25em] opacity-60;
+		@apply font-heading text-xs font-semibold tracking-[0.25em] uppercase opacity-60;
 	}
 	.article__next-title {
 		@apply font-heading text-lg md:text-xl font-semibold text-primary;

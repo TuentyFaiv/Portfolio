@@ -1,0 +1,40 @@
+@reference "#styles/app.css";
+
+.chapter {
+	@apply flex w-full max-w-300 flex-col items-start;
+
+	.chapter__heading {
+		@apply flex flex-col items-start;
+	}
+	.chapter__eyebrow {
+		@apply font-heading text-[0.625rem] font-semibold tracking-[0.25em] whitespace-pre-wrap uppercase sm:text-[0.8125rem];
+		/* Over the nebula the muted grey drops below 4.5:1, so it uses the text color. */
+		color: var(--foreground);
+	}
+	.chapter__year {
+		@apply mt-3 font-heading font-extrabold sm:mt-5;
+		font-size: min(21.5vw, 5.25rem);
+		line-height: 1;
+		letter-spacing: -0.02em;
+		color: transparent;
+		background: linear-gradient(var(--headline-from) 35%, var(--headline-to));
+		background-clip: text;
+
+		@variant sm {
+			font-size: clamp(5.25rem, min(10.3vw, 16.4dvh), 9.25rem);
+		}
+	}
+	.chapter__title {
+		@apply mt-4 font-heading text-[1.875rem] leading-tight font-extrabold sm:mt-6 sm:text-[2.5rem];
+	}
+	.chapter__body {
+		@apply mt-3 max-w-130 text-base leading-normal sm:mt-4 sm:text-xl;
+	}
+}
+
+@media (forced-colors: active) {
+	.chapter .chapter__year {
+		background: none;
+		color: CanvasText;
+	}
+}

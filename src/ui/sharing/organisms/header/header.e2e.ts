@@ -140,34 +140,16 @@ test.describe("header navigation, desktop", () => {
 
 		await nav.getByRole("link", { name: "Story" }).click();
 		await expect(page).toHaveURL("/story");
-		await expect(page.getByRole("heading", { level: 1 })).toHaveText("Story");
-		await expect(page.locator("main")).toContainText("Work in progress");
+		await expect(page.getByRole("heading", { level: 1 })).toContainText("Learning since 2016.");
 		await expect(nav.getByRole("link", { name: "Story" })).toHaveAttribute("aria-current", "page");
 		await expect(home).not.toHaveAttribute("aria-current");
 
 		await nav.getByRole("link", { name: "Blog" }).click();
 		await expect(page).toHaveURL("/blog");
-		await expect(page.getByRole("heading", { level: 2 })).toContainText(
-			"Still choosing where to start."
-		);
+		await expect(
+			page.getByRole("heading", { level: 2, name: "Still choosing where to start." })
+		).toBeVisible();
 		await expect(nav.getByRole("link", { name: "Blog" })).toHaveAttribute("aria-current", "page");
-	});
-
-	// Back on when /story renders <Timeline /> again.
-	test.fixme("keeps every timeline stop on the line, whatever the text length", async ({
-		context,
-		page,
-	}) => {
-		await context.addCookies([
-			{ name: "PARAGLIDE_LOCALE", value: "es", url: "http://localhost:4173" },
-		]);
-		await page.goto("/story");
-
-		const centers = await page
-			.locator(".timeline__milestone")
-			.evaluateAll((titles) => titles.map((title) => title.getBoundingClientRect().top));
-
-		expect(new Set(centers).size).toBe(1);
 	});
 
 	test("the empty blog points to GitHub in a new tab", async ({ page }) => {

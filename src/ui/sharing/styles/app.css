@@ -135,6 +135,10 @@
 	--text-muted: #55565c;
 	--text-subtle: #6b6c72;
 
+	/* Big headlines fade from the text color into the brand color. */
+	--headline-from: #090a0e;
+	--headline-to: #971b1c;
+
 	color-scheme: light;
 }
 
@@ -143,6 +147,9 @@
 
 	--text-muted: #a6a7ad;
 	--text-subtle: #8a8b91;
+
+	--headline-from: #fcfcfc;
+	--headline-to: #5ed9b9;
 
 	/* #090A0D */
 	--background: oklch(14.5% 0.01 270.48deg);
@@ -448,6 +455,19 @@
 ::view-transition-old(root),
 ::view-transition-new(root) {
 	animation-duration: 160ms;
+}
+
+/* The theme switch: the whole page changes as one, revealed in a circle from the button. */
+.theme-transition {
+	.header {
+		view-transition-name: none;
+	}
+
+	&::view-transition-old(root),
+	&::view-transition-new(root) {
+		animation: none;
+		mix-blend-mode: normal;
+	}
 }
 
 .skip-link {

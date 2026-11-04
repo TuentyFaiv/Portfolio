@@ -10,20 +10,20 @@
 	"language-switch": "ES, cambiar a inglés",
 	"socials": "Redes sociales",
 	"blog-page": {
-		"eyebrow": "BLOG  ·  TODAS LAS NOTAS",
+		"eyebrow": "Blog  ·  Todas las notas",
 		"title": "Cosas que aprendí por las malas.",
 		"lede": "Notas sobre TypeScript, Svelte y Rust, escritas mientras los errores siguen frescos.",
 		"filter": "Filtrar por tema",
 		"all": "Todo",
 		"min-read": "{{minutes}} min de lectura",
-		"empty-label": "PRIMERA NOTA",
+		"empty-label": "Primera nota",
 		"empty-title": "Todavía elijo por dónde empezar.",
 		"empty-body": "Estos años me dejaron grandes lecciones. Aún estoy decidiendo cuál compartir primero.",
 		"empty-action": "Ver mi GitHub",
 		"no-results": "Todavía no hay nada en este tema.",
 		"back": "Todas las notas",
 		"toc": "En esta página",
-		"next": "SIGUIENTE NOTA"
+		"next": "Siguiente nota"
 	},
 	"deck": {
 		"intro": "Intro",
@@ -39,32 +39,44 @@
 		"work-in-progress": "En construcción"
 	},
 	"intro": {
-		"eyebrow": "Tonalli López  ·  Frontend Developer  ·  Ciudad de México",
-		"eyebrow-short": "Tonalli López · Frontend Dev",
+		"eyebrow": "Tonalli López  ·  Líder de Frontend  ·  Ciudad de México",
+		"eyebrow-short": "Tonalli López · Líder de Frontend",
 		"greeting": "Soy Tonalli.",
 		"punchline": "Pozole primero, código después.",
-		"lede": "En internet soy tuentyfaiv. Construyo interfaces tipadas, rápidas y accesibles con Svelte, TypeScript y un poco de Rust.",
-		"lede-short": "En internet soy tuentyfaiv. Interfaces tipadas, rápidas y accesibles con Svelte, TypeScript y un poco de Rust.",
+		"lede": "En internet soy tuentyfaiv. Ingeniero de software que construye interfaces tipadas, rápidas y accesibles con Svelte, TypeScript y un poco de Rust.",
+		"lede-short": "En internet soy tuentyfaiv. Ingeniero de software detrás de interfaces tipadas, rápidas y accesibles con Svelte, TypeScript y un poco de Rust.",
 		"tour": "Haz el recorrido"
+	},
+	"story-teaser": {
+		"years": "Ir a un año",
+		"action": "Leer la historia"
+	},
+	"blog-teaser": {
+		"action": "Visitar el blog"
 	},
 	"skip": "Saltar al contenido",
 	"main-nav": "Principal",
 	"story-page": {
-		"eyebrow": "Historia  ·  2018 → hoy",
-		"title": "Ocho años",
-		"title-end": "construyendo en público.",
-		"description": "De un primer commit en 2018 a librerías tipadas y este portafolio.",
-		"timeline": "Línea de tiempo",
-		"2018-title": "Primer commit",
-		"2018-body": "Entré a GitHub y a Platzi. HTML, CSS y muchos cursos.",
-		"2021-title": "Publicando apps",
-		"2021-body": "TFChat, una app de podcasts y un explorador de Rick & Morty. Next.js + sockets.",
-		"2023-title": "Primeras librerías",
-		"2023-body": "mediaplayer, svelte-form y el CLI de tfverse, escrito en Rust.",
-		"2025-title": "Todo a Svelte 5",
-		"2025-body": "sveaming, el reproductor multimedia reconstruido con runes.",
-		"2026-title": "fetchzen",
-		"2026-body": "HTTP tipado sobre Fetch nativo. Y este portafolio."
+		"eyebrow": "Historia  ·  2016 → hoy",
+		"title": "Aprendiendo desde 2016.",
+		"title-end": "Publicando desde los 17.",
+		"description": "Empecé a programar en 2016 por curiosidad. Desde entonces pasé de freelance a líder de frontend, y sigo aprendiendo.",
+		"2016-title": "Aprendiendo a programar",
+		"2016-body": "Escribí mis primeras líneas de código por curiosidad, años antes de que alguien me pagara por ello.",
+		"2018-title": "Primeros clientes",
+		"2018-body": "A los 17 conseguí mis primeros clientes. Durante tres años aprendí publicando, incluida una plataforma escolar con React, Nest.js y GraphQL.",
+		"2021-title": "Primer equipo",
+		"2021-body": "A los 20 entré a mi primer equipo y propuse mover nuestro frontend a TypeScript.",
+		"2022-title": "Líder de Frontend",
+		"2022-body": "Me ascendieron a líder de frontend a los 22. Tomé las decisiones de stack, creé plantillas compartidas y ayudé a nuevos desarrolladores a publicar su primer trabajo.",
+		"2023-title": "Más a fondo",
+		"2023-body": "Empecé a aprender Rust y consolidé nuestra arquitectura de frontend: bases sólidas, adaptadas a cada tipo de proyecto.",
+		"2024-title": "IA con criterio",
+		"2024-body": "Empecé a aprender a programar con IA de la forma correcta: buenas prácticas y entender cada línea, no vibe coding.",
+		"2025-title": "Rust en el trabajo",
+		"2025-body": "Rust pasó de algo que estaba aprendiendo a mi día a día: empecé a construir nuestros propios microservicios con él.",
+		"2026-title": "Aún no termino",
+		"2026-body": "fetchzen, mi cliente HTTP tipado sobre Fetch nativo, sigue creciendo en npm. Y estoy lejos de terminar: más por aprender, más proyectos propios y un mejor trabajo cada año."
 	},
 	"error": {
 		"not-found": "Esta página se perdió.",

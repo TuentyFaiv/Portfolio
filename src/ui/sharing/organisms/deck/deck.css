@@ -11,8 +11,19 @@
 	display: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
+/* A slide taller than the screen needs free scrolling: mandatory snapping fights it. */
+@media (height < 44rem) {
 	:root:has(.deck) {
+		scroll-snap-type: y proximity;
+	}
+}
+
+/*
+ * Smooth only for moves made on the page (a link or button has focus then). Opening a
+ * shared link to a slide jumps straight there instead of scrolling past every slide.
+ */
+@media (prefers-reduced-motion: no-preference) {
+	:root:has(.deck):focus-within {
 		scroll-behavior: smooth;
 	}
 }
@@ -48,6 +59,12 @@ body:has(.deck) .header {
 	}
 	.deck__hint--swipe {
 		@apply text-xs sm:hidden;
+
+		/* Decoration only: the empty alternative keeps screen readers from saying "up arrow". */
+		&::after {
+			@apply ml-1;
+			content: "↑" / "";
+		}
 	}
 	/* Hangs outside the text, so the words themselves are what sits on the screen center. */
 	.deck__chevron {

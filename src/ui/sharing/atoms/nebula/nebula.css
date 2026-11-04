@@ -1,0 +1,26 @@
+@reference "#styles/app.css";
+
+/* Above the CSS sky, below the scrim. It fades in once the first frame is drawn. */
+.nebula {
+	@apply pointer-events-none fixed inset-0 -z-5 size-full opacity-0;
+	transition: opacity 700ms ease;
+
+	&[data-ready] {
+		@apply opacity-100;
+	}
+	&[data-leaving] {
+		@apply hidden;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.nebula {
+		transition: none;
+	}
+}
+
+@media (prefers-contrast: more) {
+	.nebula {
+		@apply hidden;
+	}
+}

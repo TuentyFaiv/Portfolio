@@ -10,20 +10,20 @@
 	"language-switch": "EN, switch to Spanish",
 	"socials": "Social profiles",
 	"blog-page": {
-		"eyebrow": "BLOG  ·  ALL NOTES",
+		"eyebrow": "Blog  ·  All notes",
 		"title": "Things I learned the slow way.",
 		"lede": "Notes on TypeScript, Svelte and Rust, written while the mistakes are still fresh.",
 		"filter": "Filter posts by topic",
 		"all": "All",
 		"min-read": "{{minutes}} min read",
-		"empty-label": "FIRST POST",
+		"empty-label": "First post",
 		"empty-title": "Still choosing where to start.",
 		"empty-body": "These years left me with some big lessons. I'm still deciding which one to share first.",
 		"empty-action": "See my GitHub",
 		"no-results": "Nothing under this topic yet.",
 		"back": "All posts",
 		"toc": "On this page",
-		"next": "NEXT POST"
+		"next": "Next post"
 	},
 	"deck": {
 		"intro": "Intro",
@@ -39,32 +39,44 @@
 		"work-in-progress": "Work in progress"
 	},
 	"intro": {
-		"eyebrow": "Tonalli López  ·  Frontend Developer  ·  Mexico City",
-		"eyebrow-short": "Tonalli López · Frontend Dev",
+		"eyebrow": "Tonalli López  ·  Frontend Lead  ·  Mexico City",
+		"eyebrow-short": "Tonalli López · Frontend Lead",
 		"greeting": "I'm Tonalli.",
 		"punchline": "Pozole first, then code.",
-		"lede": "Online I'm tuentyfaiv. I build typed, fast, accessible interfaces with Svelte, TypeScript and a bit of Rust.",
-		"lede-short": "Online I'm tuentyfaiv. Typed, fast, accessible interfaces with Svelte, TypeScript and a bit of Rust.",
+		"lede": "Online I'm tuentyfaiv. A software engineer building typed, fast, accessible interfaces with Svelte, TypeScript and a bit of Rust.",
+		"lede-short": "Online I'm tuentyfaiv. Software engineer behind typed, fast, accessible interfaces with Svelte, TypeScript and a bit of Rust.",
 		"tour": "Take the tour"
+	},
+	"story-teaser": {
+		"years": "Jump to a year",
+		"action": "Read the story"
+	},
+	"blog-teaser": {
+		"action": "Visit the blog"
 	},
 	"skip": "Skip to content",
 	"main-nav": "Main",
 	"story-page": {
-		"eyebrow": "Story  ·  2018 → now",
-		"title": "Eight years of",
-		"title-end": "shipping in public.",
-		"description": "From a first commit in 2018 to typed libraries and this portfolio.",
-		"timeline": "Timeline",
-		"2018-title": "First commit",
-		"2018-body": "Joined GitHub and Platzi. HTML, CSS and a lot of courses.",
-		"2021-title": "Shipping apps",
-		"2021-body": "TFChat, a podcast app, Rick & Morty explorer. Next.js + sockets.",
-		"2023-title": "First libraries",
-		"2023-body": "mediaplayer, svelte-form and the tfverse CLI, written in Rust.",
-		"2025-title": "All in on Svelte 5",
-		"2025-body": "sveaming, the media player rebuilt on runes.",
-		"2026-title": "fetchzen",
-		"2026-body": "Typed HTTP on native Fetch. And this portfolio."
+		"eyebrow": "Story  ·  2016 → now",
+		"title": "Learning since 2016.",
+		"title-end": "Shipping since 17.",
+		"description": "I started coding in 2016 out of curiosity. Since then I've gone from freelancer to Frontend Lead, and I'm still learning.",
+		"2016-title": "Learning to code",
+		"2016-body": "I wrote my first lines of code out of curiosity, years before anyone paid me for it.",
+		"2018-title": "First clients",
+		"2018-body": "At 17 I took on my first clients. For three years I learned by shipping, including a school admin platform built with React, Nest.js and GraphQL.",
+		"2021-title": "First team",
+		"2021-body": "At 20 I joined my first team, and proposed moving our frontend to TypeScript.",
+		"2022-title": "Frontend Lead",
+		"2022-body": "Promoted to Frontend Lead at 22. I made the stack calls, built shared templates and helped new developers ship their first work.",
+		"2023-title": "Going deeper",
+		"2023-body": "I started learning Rust, and consolidated our frontend architecture: solid foundations, adapted to each type of project.",
+		"2024-title": "AI, with judgment",
+		"2024-body": "I started learning to code with AI the right way: best practices and understanding every line, not vibe coding.",
+		"2025-title": "Rust at work",
+		"2025-body": "Rust went from something I was learning to my day job: I started building our own microservices with it.",
+		"2026-title": "Not done yet",
+		"2026-body": "fetchzen, my typed HTTP client on native Fetch, keeps growing on npm. And I'm far from finished: more to learn, more of my own projects and better work every year."
 	},
 	"error": {
 		"not-found": "This page got lost.",

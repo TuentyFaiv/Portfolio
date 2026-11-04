@@ -1,14 +1,14 @@
 <script lang="ts">
 	import config from "#config";
-	import { Slide } from "#home/molecules/slide/index.ts";
 	import { m } from "#lib/paraglide/messages.js";
+	import { Slide } from "#sharing/molecules/slide/index.ts";
 
 	import "./intro.css";
 
 	const github = config.socials.find(({ content }) => content === "GitHub");
 </script>
 
-<Slide id="intro">
+<Slide id="intro" label={m["translation:deck.intro"]()}>
 	<hgroup class="intro">
 		<p class="intro__eyebrow intro__eyebrow--long">{m["translation:intro.eyebrow"]()}</p>
 		<p class="intro__eyebrow intro__eyebrow--short">{m["translation:intro.eyebrow-short"]()}</p>
