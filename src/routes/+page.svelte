@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { BlogTeaser } from "#home/organisms/blog-teaser/index.ts";
 	import { Intro } from "#home/organisms/intro/index.ts";
+	import { Stack } from "#home/organisms/stack/index.ts";
 	import { StoryTeaser } from "#home/organisms/story-teaser/index.ts";
 	import { SEO } from "#sharing/atoms/seo/index.ts";
 	import { Slide } from "#sharing/molecules/slide/index.ts";
@@ -17,6 +18,8 @@
 	{#each slides.slice(1) as { id, label } (id)}
 		{#if id === "story"}
 			<StoryTeaser />
+		{:else if id === "stack"}
+			<Stack />
 		{:else if id === "blog"}
 			<BlogTeaser />
 		{:else}

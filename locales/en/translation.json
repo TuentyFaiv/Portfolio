@@ -54,6 +54,23 @@
 	"blog-teaser": {
 		"action": "Visit the blog"
 	},
+	"stack": {
+		"eyebrow": "Stack  ·  top to bottom",
+		"title": "The stack,",
+		"title-end": "top to bottom.",
+		"interface": "Interface",
+		"interface-used": "This site · dashboards and multilingual sites at work",
+		"languages": "Languages",
+		"languages-used": "fetchzen, this site · services at work",
+		"backend": "Backend",
+		"backend-used": "Microservices and APIs at work",
+		"also-shipped": "Also shipped",
+		"also-shipped-used": "Starter kits · mobile and internal apps",
+		"quality": "Quality",
+		"quality-used": "This site · shared UI libraries",
+		"ship": "Ship",
+		"ship-used": "fetchzen, this site · cloud deploys at work"
+	},
 	"skip": "Skip to content",
 	"main-nav": "Main",
 	"story-page": {

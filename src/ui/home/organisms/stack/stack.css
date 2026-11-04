@@ -1,0 +1,256 @@
+@reference "#styles/app.css";
+
+.stack {
+	@apply flex w-full max-w-300 flex-col items-start gap-4;
+
+	.stack__eyebrow {
+		@apply font-heading text-[0.625rem] font-semibold tracking-[0.25em] whitespace-pre-wrap text-primary uppercase sm:text-xs;
+	}
+	.stack__title {
+		@apply font-heading font-extrabold;
+		font-size: clamp(2rem, min(5vw, 7.1dvh), 4rem);
+		line-height: 1.02;
+		letter-spacing: -0.03em;
+		color: transparent;
+		background: linear-gradient(var(--headline-from) 35%, var(--headline-to));
+		background-clip: text;
+	}
+	.stack__punchline {
+		@apply block;
+	}
+}
+
+/*
+ * One row per layer, joined by a line: each row draws its dot (::before) and the piece of
+ * line down to the next dot (::after). The dot sits at the same height in every row, so
+ * a piece exactly as tall as its row always lands on the next dot.
+ */
+.layers {
+	--dot-y: 1.25rem;
+	--chip-bg: color-mix(in oklch, var(--primary) 15%, transparent);
+	--chip-text: var(--headline-to);
+	--glow: color-mix(in oklch, var(--primary) 14%, transparent);
+
+	@apply relative isolate w-full max-w-300;
+	margin-top: clamp(1.25rem, 5dvh, 3rem);
+
+	/* The soft glow from the design, low on the right. */
+	&::after {
+		@apply pointer-events-none absolute -z-10 content-[""];
+		top: 15%;
+		left: 62%;
+		width: 47.5rem;
+		height: 40rem;
+		background: radial-gradient(closest-side, var(--glow), transparent);
+	}
+
+	.layers__layer {
+		@apply relative grid py-2 pl-10;
+		grid-template-areas: "name" "tools" "used";
+
+		&::before {
+			@apply absolute left-[3px] size-2.5 -translate-y-1/2 rounded-full bg-primary content-[""];
+			top: var(--dot-y);
+			transition:
+				background-color 300ms ease,
+				scale 200ms ease,
+				box-shadow 200ms ease;
+		}
+		&:not(:last-child)::after {
+			@apply absolute left-[7px] h-full w-0.5 content-[""];
+			top: var(--dot-y);
+			background:
+				linear-gradient(var(--primary), color-mix(in oklch, var(--primary) 35%, transparent)) top /
+				100% 100% no-repeat,
+				color-mix(in oklch, var(--foreground) 10%, transparent);
+		}
+
+		&:hover {
+			.layers__name {
+				@apply text-primary;
+			}
+			&::before {
+				scale: 1.6;
+				box-shadow: 0 0 0 3px var(--chip-bg);
+			}
+		}
+	}
+
+	.layers__name {
+		@apply font-heading text-xl leading-6 font-bold tracking-tight transition-colors duration-300;
+		grid-area: name;
+	}
+
+	/* Phones: a quiet line of names. Wide screens: the design's chips. */
+	.layers__tools {
+		@apply mt-1 flex flex-wrap text-sm leading-normal;
+		grid-area: tools;
+		color: var(--text-muted);
+	}
+	/* The dot trails each name, so a wrapped line never starts with one. */
+	.layers__tool:not(:last-child)::after {
+		@apply mx-1.5;
+		content: "·" / "";
+	}
+
+	/* Phones show only names and tools, as in the design, so six rows fit one screen.
+	   Screen readers still get where each one was used. */
+	.layers__used {
+		@apply mt-0.5 text-[0.8125rem] leading-normal transition-colors duration-300 max-sm:sr-only;
+		grid-area: used;
+		color: var(--text-subtle);
+	}
+
+	/* Tablets and small laptops: the name beside its tools, still one line each. */
+	@variant sm {
+		.layers__layer {
+			@apply gap-x-6;
+			grid-template-columns: 12rem 1fr;
+			grid-template-areas: "name tools" "name used";
+		}
+	}
+
+	/* Wide screens: the design's three columns, chips included. */
+	@variant xl {
+		--dot-y: 50%;
+
+		/* The right column never reaches the slide rail, which sits just past the edge. */
+		padding-inline-end: clamp(0rem, 44rem - 50vw, 2.5rem);
+
+		/* Rows share the columns (subgrid): the chips column is as wide as the longest row of
+		   chips, so none wraps, and "used in" takes what is left. The first column counts the
+		   row's left padding and narrows below 1440px. */
+		@apply grid gap-x-6;
+		grid-template-columns: clamp(14.5rem, 100vw - 72.5rem, 17.5rem) auto minmax(14rem, 1fr);
+
+		.layers__layer {
+			@apply col-span-full items-center py-0;
+			grid-template-columns: subgrid;
+			grid-template-areas: "name tools used";
+			min-height: clamp(3.25rem, 8dvh, 5.25rem);
+		}
+		.layers__name {
+			@apply text-[1.375rem] leading-7;
+		}
+		.layers__tools {
+			@apply mt-0 gap-2;
+		}
+		.layers__tool {
+			@apply rounded-full px-3 py-1.5 text-[0.8125rem] leading-5 font-semibold transition-[background-color,color] duration-300;
+			background: var(--chip-bg);
+			color: var(--chip-text);
+
+			&::after {
+				@apply hidden;
+			}
+		}
+		.layers__used {
+			@apply mt-0 text-right text-sm;
+			color: var(--text-muted);
+		}
+	}
+}
+
+/*
+ * The walk: until the list is in view, names and tools wait in quieter colors (never below
+ * 4.5:1).
+ * Then each row plays a short animation from those colors to its own, one after another,
+ * and the line draws down with them. Animations, not transitions, so hovering later is
+ * never delayed. Only with motion allowed: otherwise every row is lit from the start.
+ */
+@keyframes layers-wait-text {
+	from {
+		color: var(--text-subtle);
+	}
+}
+@keyframes layers-wait-chip {
+	from {
+		color: var(--text-subtle);
+		background-color: transparent;
+	}
+}
+@keyframes layers-wait-dot {
+	from {
+		background-color: color-mix(in oklch, var(--foreground) 14%, transparent);
+	}
+}
+@keyframes layers-draw {
+	from {
+		background-size:
+			100% 0%,
+			auto;
+	}
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.layers[data-walk="ready"] .layers__layer {
+		&::before {
+			background: color-mix(in oklch, var(--foreground) 14%, transparent);
+		}
+		&:not(:last-child)::after {
+			background-size:
+				100% 0%,
+				auto;
+		}
+		/* "Used in" keeps its color: the subtler grey drops below 4.5:1 over the glow. */
+		.layers__name,
+		.layers__tool {
+			color: var(--text-subtle);
+		}
+		.layers__tool {
+			background: transparent;
+		}
+	}
+
+	.layers[data-walk="on"] .layers__layer {
+		--step: 0ms;
+
+		.layers__name,
+		.layers__tool {
+			animation: layers-wait-text 450ms ease var(--step) backwards;
+		}
+		&::before {
+			animation: layers-wait-dot 450ms ease var(--step) backwards;
+		}
+		&:not(:last-child)::after {
+			animation: layers-draw 250ms ease-in calc(var(--step) + 200ms) backwards;
+		}
+
+		&:nth-child(2) {
+			--step: 250ms;
+		}
+		&:nth-child(3) {
+			--step: 500ms;
+		}
+		&:nth-child(4) {
+			--step: 750ms;
+		}
+		&:nth-child(5) {
+			--step: 1000ms;
+		}
+		&:nth-child(6) {
+			--step: 1250ms;
+		}
+	}
+
+	@variant xl {
+		.layers[data-walk="on"] .layers__layer .layers__tool {
+			animation-name: layers-wait-chip;
+		}
+	}
+}
+
+@media (forced-colors: active) {
+	.stack .stack__title {
+		background: none;
+		color: CanvasText;
+	}
+	.layers .layers__layer::before,
+	.layers .layers__layer:not(:last-child)::after {
+		forced-color-adjust: none;
+		background: CanvasText;
+	}
+	.layers .layers__tool {
+		@apply border;
+	}
+}
