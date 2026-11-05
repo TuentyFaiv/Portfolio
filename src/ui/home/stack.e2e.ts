@@ -169,6 +169,19 @@ test.describe("stack slide, desktop", () => {
 				() => document.querySelector("#stack .layers")?.getAnimations({ subtree: true }).length
 			)
 		).toBe(0);
+
+		// Hovering a row keeps its color cue, but its dot neither grows nor animates.
+		await page.locator("#stack .layers__layer").first().hover();
+		expect(
+			await page.evaluate(() => {
+				const dot = getComputedStyle(
+					document.querySelector("#stack .layers__layer") as Element,
+					"::before"
+				);
+
+				return { scale: dot.scale, transition: dot.transitionDuration };
+			})
+		).toEqual({ scale: "none", transition: "0s" });
 	});
 
 	test("speaks Spanish with the language cookie", async ({ context, page }) => {

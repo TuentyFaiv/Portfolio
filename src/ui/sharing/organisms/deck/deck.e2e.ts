@@ -145,12 +145,19 @@ test.describe("deck, desktop", () => {
 		await expect(page.locator(".deck__next")).toContainText("Contact");
 	});
 
-	test("hides the hint and next link on the last slide", async ({ page }) => {
+	test("swaps the hint and next link for a way back on the last slide", async ({ page }) => {
 		await page.goto("/#contact");
 
 		await expect(page.locator(".deck__count")).toContainText("06 / 06");
 		await expect(page.locator(".deck__next")).toBeHidden();
 		await expect(page.locator(".deck__hint--scroll")).toBeHidden();
+		await expect(page.locator(".deck__back")).toBeVisible();
+	});
+
+	test("shows the way back only on the last slide", async ({ page }) => {
+		await page.goto("/");
+
+		await expect(page.locator(".deck__back")).toBeHidden();
 	});
 
 	test("swaps the footer text with no scramble under reduced motion", async ({ page }) => {
@@ -333,20 +340,28 @@ test.describe("deck, phone", () => {
 		await page.setViewportSize({ width: 320, height: 480 });
 		await page.goto("/");
 
-		const github = page.getByRole("main").getByRole("link", { name: "GitHub" });
+		const github = page.getByRole("main").getByRole("link", { name: "GitHub", exact: true });
+		// The last link on the page, at the bottom of the contact slide.
+		const last = page.locator("#contact").getByRole("link", { name: /^X/ });
 
 		await github.scrollIntoViewIfNeeded();
 		await expect(github).toBeInViewport();
+		await last.scrollIntoViewIfNeeded();
+		await expect(last).toBeInViewport({ ratio: 1 });
 	});
 
 	test("a phone held sideways can reach everything too", async ({ page }) => {
 		await page.setViewportSize({ width: 667, height: 375 });
 		await page.goto("/");
 
-		const github = page.getByRole("main").getByRole("link", { name: "GitHub" });
+		const github = page.getByRole("main").getByRole("link", { name: "GitHub", exact: true });
+		// The last link on the page, at the bottom of the contact slide.
+		const last = page.locator("#contact").getByRole("link", { name: /^X/ });
 
 		await github.scrollIntoViewIfNeeded();
 		await expect(github).toBeInViewport();
+		await last.scrollIntoViewIfNeeded();
+		await expect(last).toBeInViewport({ ratio: 1 });
 	});
 });
 

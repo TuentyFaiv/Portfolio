@@ -48,7 +48,7 @@ function inflight() {
 const SOFTWARE = /swiftshader|llvmpipe|softpipe|software|microsoft basic render/i;
 
 /** WebGPU first: it is the faster API, and the GPU here is entirely the nebula's. */
-async function webgpu(surface: Surface): Promise<Backend | undefined> {
+async function webgpu(surface: Surface, transparent: boolean): Promise<Backend | undefined> {
 	const gpu = (globalThis.navigator as Navigator & { gpu?: GPU }).gpu;
 
 	if (!gpu) return undefined;
@@ -88,7 +88,8 @@ async function webgpu(surface: Surface): Promise<Backend | undefined> {
 		return undefined;
 	}
 
-	context.configure({ device, format, alphaMode: "opaque" });
+	// The band lets the page show through where there is no cloud (premultiplied colors).
+	context.configure({ device, format, alphaMode: transparent ? "premultiplied" : "opaque" });
 
 	const buffer = device.createBuffer({
 		size: UNIFORM_FLOATS * 4,
@@ -161,8 +162,14 @@ function compile(gl: WebGLRenderingContext | WebGL2RenderingContext, type: numbe
 	return shader;
 }
 
-function webgl(surface: Surface): Backend | undefined {
-	const options = { alpha: false, antialias: false, powerPreference: "low-power" } as const;
+function webgl(surface: Surface, transparent: boolean): Backend | undefined {
+	// The band lets the page show through where there is no cloud (premultiplied colors).
+	const options = {
+		alpha: transparent,
+		antialias: false,
+		powerPreference: "low-power",
+		premultipliedAlpha: true,
+	} as const;
 	// WebGL 2 runs the same GLSL ES 1.0 shaders and adds fences, which tell when the GPU is
 	// done with a frame. WebGL 1 has no way to know, so it relies on frame timing alone.
 	const context = (surface.getContext("webgl2", options) ?? surface.getContext("webgl", options)) as
@@ -250,15 +257,22 @@ function webgl(surface: Surface): Backend | undefined {
  */
 const GECKO = /\bGecko\/\d/;
 
-/** The best API this browser offers for this canvas, or none at all. */
-export async function pickBackend(surface: Surface, prefer?: "webgpu" | "webgl") {
+/**
+ * The best API this browser offers for this canvas, or none at all. A transparent canvas
+ * shows the page wherever the shader draws nothing.
+ */
+export async function pickBackend(
+	surface: Surface,
+	prefer?: "webgpu" | "webgl",
+	transparent = false
+) {
 	const gecko = GECKO.test(globalThis.navigator?.userAgent ?? "");
 
 	if (prefer === "webgpu" || (prefer !== "webgl" && !gecko)) {
-		const gpu = await webgpu(surface).catch(() => undefined);
+		const gpu = await webgpu(surface, transparent).catch(() => undefined);
 
 		if (gpu) return gpu;
 	}
 
-	return webgl(surface);
+	return webgl(surface, transparent);
 }

@@ -75,8 +75,28 @@ body:has(.deck) .header {
 	.deck__next {
 		@apply pointer-events-auto hover:text-primary focus-visible:text-primary;
 	}
+	/* The swipe hint, the next link and the way back share one cell: only one shows at a time. */
+	.deck__end {
+		@apply grid justify-items-end;
+
+		> * {
+			grid-area: 1 / 1;
+		}
+	}
+	/* Phones: the hint's quiet sentence case. Wider screens: the next link's caps. */
+	.deck__back {
+		@apply pointer-events-auto text-xs whitespace-nowrap hover:text-primary focus-visible:text-primary sm:font-heading sm:text-[0.6875rem] sm:font-semibold sm:tracking-[0.15em] sm:uppercase;
+		color: var(--text-subtle);
+
+		/* Decoration only: the empty alternative keeps screen readers from saying "up arrow". */
+		&::after {
+			@apply ml-1;
+			content: "↑" / "";
+		}
+	}
 	.deck__hint,
-	.deck__next {
+	.deck__next,
+	.deck__back {
 		transition:
 			color 150ms ease,
 			opacity 240ms ease,
@@ -160,6 +180,7 @@ body:has(.deck) .header {
 @media (prefers-reduced-motion: reduce) {
 	.deck .deck__hint,
 	.deck .deck__next,
+	.deck .deck__back,
 	.deck .deck__tick,
 	.deck .deck__tick::before {
 		transition: none;

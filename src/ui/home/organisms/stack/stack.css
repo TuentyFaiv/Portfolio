@@ -240,6 +240,16 @@
 	}
 }
 
+/* Hovering a row still colors its name and rings its dot, but the dot does not grow. */
+@media (prefers-reduced-motion: reduce) {
+	.layers .layers__layer::before {
+		transition: none;
+	}
+	.layers .layers__layer:hover::before {
+		scale: none;
+	}
+}
+
 @media (forced-colors: active) {
 	.stack .stack__title {
 		background: none;

@@ -11,13 +11,23 @@ export interface NebulaSetup {
 	dark: boolean;
 	reduced: boolean;
 	depth: number;
+	/** The sky behind /story, or the band across the Contact slide. Default: sky. */
+	scene?: "sky" | "band";
+	/** Band only: CSS pixels at the top and bottom where text sits and no cloud may show. */
+	clear?: { top: number; bottom: number };
 	/** Only for tests: draw with WebGL even where WebGPU exists. */
 	prefer?: "webgpu" | "webgl";
 }
 
 /** Messages from the page: the same shape whether the renderer runs in a worker or not. */
 export type NebulaInput =
-	| { type: "resize"; width: number; height: number; ratio: number }
+	| {
+			type: "resize";
+			width: number;
+			height: number;
+			ratio: number;
+			clear?: { top: number; bottom: number };
+	  }
 	| { type: "pointer"; x: number; y: number; touching: boolean }
 	| { type: "leave" }
 	| { type: "press"; x: number; y: number }
@@ -202,6 +212,10 @@ export function createNebula(
 				12 + index * 4
 			);
 		}
+		// The ripples' spare floats: the scene, and the band's clear rows at the top and bottom.
+		values[15] = state.scene === "band" ? 1 : 0;
+		values[19] = state.clear?.top ?? 0;
+		values[23] = state.clear?.bottom ?? 0;
 		backend.draw(values);
 		state.draws += 1;
 	}
@@ -326,6 +340,7 @@ export function createNebula(
 				state.width = message.width;
 				state.height = message.height;
 				state.ratio = message.ratio;
+				if (message.clear) state.clear = message.clear;
 				fit();
 				break;
 			case "pointer":
@@ -403,7 +418,7 @@ export function createNebula(
 
 	surface.addEventListener("webglcontextlost", onLost);
 
-	pickBackend(surface, setup.prefer).then((picked) => {
+	pickBackend(surface, setup.prefer, setup.scene === "band").then((picked) => {
 		if (!picked) return notify({ type: "fallback", reason: "no-gpu" });
 
 		backend = picked;

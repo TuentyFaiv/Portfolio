@@ -19,7 +19,7 @@ export const walk: Attachment<HTMLElement> = (element) => {
 			element.dataset.walk = "on";
 			observer.disconnect();
 		},
-		// A third in view: the slide is arriving, not just peeking in.
+		// About a third in view: the slide is arriving, not just peeking in.
 		{ threshold: 0.35 }
 	);
 

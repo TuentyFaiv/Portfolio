@@ -36,7 +36,8 @@
 		"next": "Next",
 		"scroll-hint": "Scroll or press space",
 		"swipe-hint": "Swipe",
-		"work-in-progress": "Work in progress"
+		"work-in-progress": "Work in progress",
+		"back-to-start": "Back to start"
 	},
 	"intro": {
 		"eyebrow": "Tonalli López  ·  Frontend Lead  ·  Mexico City",
@@ -70,6 +71,18 @@
 		"quality-used": "This site · shared UI libraries",
 		"ship": "Ship",
 		"ship-used": "fetchzen, this site · cloud deploys at work"
+	},
+	"contact": {
+		"eyebrow": "Contact  ·  Last stop",
+		"title": "Bring pozole.",
+		"title-end": "Say hi.",
+		"lede": "Tell me what you're building and we'll see what it needs.",
+		"availability": "Open to side projects and new roles.",
+		"copy": "Copy email address",
+		"copied": "Copied",
+		"copy-failed": "Couldn't copy",
+		"elsewhere": "Elsewhere",
+		"sign-off": "Mexico City. Powered by pozole."
 	},
 	"skip": "Skip to content",
 	"main-nav": "Main",

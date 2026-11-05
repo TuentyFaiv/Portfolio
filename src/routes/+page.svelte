@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { BlogTeaser } from "#home/organisms/blog-teaser/index.ts";
+	import { Contact } from "#home/organisms/contact/index.ts";
 	import { Intro } from "#home/organisms/intro/index.ts";
 	import { Stack } from "#home/organisms/stack/index.ts";
 	import { StoryTeaser } from "#home/organisms/story-teaser/index.ts";
@@ -22,6 +23,8 @@
 			<Stack />
 		{:else if id === "blog"}
 			<BlogTeaser />
+		{:else if id === "contact"}
+			<Contact />
 		{:else}
 			<Slide {id} label={label()} />
 		{/if}

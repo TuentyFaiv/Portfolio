@@ -6,6 +6,11 @@
  *
  * Two versions of one shader: WGSL for WebGPU and GLSL for WebGL. Keep them in step;
  * the e2e test "both backends draw the same nebula" compares their output.
+ *
+ * Two scenes share the clouds: the sky behind /story, and a band across the Contact slide.
+ * The band is transparent where there is no cloud, and fades out along ragged edges before
+ * the rows where the page has text. The ripples' spare floats carry it: r0.w is 1 for the
+ * band, r1.w and r2.w are those text rows at the top and bottom, in CSS pixels.
  */
 
 /** Uniform layout shared by both backends: six vec4, in this order. */
@@ -25,7 +30,7 @@ precision mediump float;
 uniform vec4 u_a; // canvas w, h, device pixels per CSS pixel, min(1, w / h)
 uniform vec4 u_b; // time, scroll depth, theme (1 dark), cursor presence
 uniform vec4 u_c; // parallax x, y, cursor x, y (cursor 0..1, y down)
-// Ripples: x, y (0..1, y down), start time, unused.
+// Ripples: x, y (0..1, y down), start time. Spare floats: scene, band clear top, bottom.
 uniform vec4 u_r0;
 uniform vec4 u_r1;
 uniform vec4 u_r2;
@@ -50,6 +55,12 @@ float composition(vec2 s) {
 	vec2 l = (s - vec2(-0.47, -0.2)) * vec2(3.6, 3.0);
 	vec2 r = (s - vec2(0.45, -0.36)) * vec2(3.4, 3.4);
 	return clamp(top + exp(-dot(l, l)) + exp(-dot(r, r)), 0.0, 1.0);
+}
+
+/* The Contact band: clouds gather on the left, from the email down, and thin out to the
+   right and toward the bottom. The page masks the band's edges. */
+float band(vec2 s) {
+	return clamp(0.2 + 0.85 * (1.0 - smoothstep(0.0, 0.9, s.x)) * smoothstep(-0.9, -0.1, s.y), 0.0, 1.0);
 }
 
 vec2 touch(vec2 uv, float aspect) {
@@ -104,7 +115,8 @@ void main() {
 	vec2 moved = touch(raw, aspect);
 	vec2 uv = raw - moved;
 	float time = u_b.x;
-	float shape = composition(pixel / u_a.xy - 0.5 - moved / vec2(aspect, 1.0));
+	vec2 spot = pixel / u_a.xy - 0.5 - moved / vec2(aspect, 1.0);
+	float shape = u_r0.w > 0.5 ? band(spot) : composition(spot);
 
 	// Four sheets at different depths. The camera flies forward with the scroll; a sheet
 	// that passes the camera returns far behind as a new one (its seed changes).
@@ -148,6 +160,33 @@ void main() {
 	float star = seed > 0.93 ? smoothstep(0.09, 0.02, length(fract(grid) - 0.5 - (vec2(hash(cell + 1.7), hash(cell + 9.2)) - 0.5) * 0.7)) * (0.55 + 0.45 * sin(time * (0.6 + seed) + seed * 40.0)) : 0.0;
 	dark += vec3(0.85, 0.95, 1.0) * star * 0.8 * pow(1.0 - cover, 2.0);
 
+	// The band: premultiplied color, transparent where there is no cloud, so the page shows
+	// through and the band has no box of its own. Its outline is a ragged, drifting fade that
+	// starts past the rows where the page has text.
+	if (u_r0.w > 0.5) {
+		float css = u_a.z;
+		float room = max(u_a.y / css - u_r1.w - u_r2.w, 1.0);
+		float rise = min(80.0, room * 0.3);
+		float sink = min(140.0, room * 0.4);
+		float x = pixel.x / css;
+		float high = fbm4(vec2(x * 0.012, time * 0.03));
+		float low = fbm4(vec2(x * 0.015 + 9.0, time * 0.03));
+		float top = smoothstep(0.0, 1.0, ((u_a.y - pixel.y) / css - u_r1.w - high * rise * 0.5) / (rise * 0.6));
+		float bottom = smoothstep(0.0, 1.0, (pixel.y / css - u_r2.w - low * sink * 0.5) / (sink * 0.6));
+		float side = (1.0 - smoothstep(0.75, 0.98, q.x + (high - 0.5) * 0.2)) * (1.0 - smoothstep(0.92, 1.0, q.x));
+		vec4 night = vec4(cloud * cover + threads * vec3(0.10, 0.34, 0.26) + vec3(0.85, 0.95, 1.0) * star * 0.8 * pow(1.0 - cover, 2.0), cover);
+		float w1 = min(cover * 0.9, 0.8);
+		float w2 = min(cover * lit * 0.7, 0.45);
+		float w3 = min(cover * purple * 1.4, 0.6);
+		float w4 = min(threads * 1.2, 0.4);
+		float sum = w1 + w2 + w3 + w4;
+		vec4 day = vec4(vec3(0.90, 0.70, 0.72) * w1 + vec3(0.78, 0.48, 0.53) * w2 + vec3(0.80, 0.74, 0.93) * w3 + vec3(0.88, 0.72, 0.75) * w4, sum) / max(sum, 1.0);
+		vec4 veil = mix(day, night, u_b.z) * top * bottom * side;
+		veil.rgb += (hash(pixel + fract(time) * 91.0) - 0.5) / 255.0 * veil.a;
+		gl_FragColor = veil;
+		return;
+	}
+
 	vec3 paper = vec3(0.985, 0.972, 0.968);
 	vec3 light = paper
 		- (paper - vec3(0.90, 0.70, 0.72)) * min(cover * 0.9 + haze * 0.15, 0.8)
@@ -176,7 +215,7 @@ struct Uniforms {
 	a: vec4f, // canvas w, h, device pixels per CSS pixel, min(1, w / h)
 	b: vec4f, // time, scroll depth, theme (1 dark), cursor presence
 	c: vec4f, // parallax x, y, cursor x, y (cursor 0..1, y down)
-	r0: vec4f, // ripples: x, y (0..1, y down), start time, unused
+	r0: vec4f, // ripples: x, y (0..1, y down), start time; spare floats: scene, band clear top, bottom
 	r1: vec4f,
 	r2: vec4f,
 };
@@ -247,6 +286,10 @@ fn composition(s: vec2f) -> f32 {
 	return clamp(top + exp(-dot(l, l)) + exp(-dot(r, r)), 0.0, 1.0);
 }
 
+fn band(s: vec2f) -> f32 {
+	return clamp(0.2 + 0.85 * (1.0 - smoothstep(0.0, 0.9, s.x)) * smoothstep(-0.9, -0.1, s.y), 0.0, 1.0);
+}
+
 fn ripple(index: i32) -> vec4f {
 	if (index == 0) { return u.r0; }
 	if (index == 1) { return u.r1; }
@@ -306,7 +349,9 @@ fn fragment_main(@builtin(position) position: vec4f) -> @location(0) vec4f {
 	let moved = touch(raw, aspect);
 	let uv = raw - moved;
 	let time = u.b.x;
-	let shape = composition(pixel / u.a.xy - 0.5 - moved / vec2f(aspect, 1.0));
+	let spot = pixel / u.a.xy - 0.5 - moved / vec2f(aspect, 1.0);
+	var shape = composition(spot);
+	if (u.r0.w > 0.5) { shape = band(spot); }
 
 	let camera = u.b.y * 0.32 + time * 0.012;
 	var acc = vec4f(0.0);
@@ -346,6 +391,29 @@ fn fragment_main(@builtin(position) position: vec4f) -> @location(0) vec4f {
 		star = smoothstep(0.09, 0.02, length(fract(grid) - 0.5 - offset)) * (0.55 + 0.45 * sin(time * (0.6 + seed) + seed * 40.0));
 	}
 	dark += vec3f(0.85, 0.95, 1.0) * star * 0.8 * pow(1.0 - cover, 2.0);
+
+	if (u.r0.w > 0.5) {
+		let css = u.a.z;
+		let room = max(u.a.y / css - u.r1.w - u.r2.w, 1.0);
+		let rise = min(80.0, room * 0.3);
+		let sink = min(140.0, room * 0.4);
+		let x = pixel.x / css;
+		let high = fbm4(vec2f(x * 0.012, time * 0.03));
+		let low = fbm4(vec2f(x * 0.015 + 9.0, time * 0.03));
+		let top = smoothstep(0.0, 1.0, ((u.a.y - pixel.y) / css - u.r1.w - high * rise * 0.5) / (rise * 0.6));
+		let bottom = smoothstep(0.0, 1.0, (pixel.y / css - u.r2.w - low * sink * 0.5) / (sink * 0.6));
+		let side = (1.0 - smoothstep(0.75, 0.98, q.x + (high - 0.5) * 0.2)) * (1.0 - smoothstep(0.92, 1.0, q.x));
+		let night = vec4f(cloud * cover + threads * vec3f(0.10, 0.34, 0.26) + vec3f(0.85, 0.95, 1.0) * star * 0.8 * pow(1.0 - cover, 2.0), cover);
+		let w1 = min(cover * 0.9, 0.8);
+		let w2 = min(cover * lit * 0.7, 0.45);
+		let w3 = min(cover * purple * 1.4, 0.6);
+		let w4 = min(threads * 1.2, 0.4);
+		let sum = w1 + w2 + w3 + w4;
+		let day = vec4f(vec3f(0.90, 0.70, 0.72) * w1 + vec3f(0.78, 0.48, 0.53) * w2 + vec3f(0.80, 0.74, 0.93) * w3 + vec3f(0.88, 0.72, 0.75) * w4, sum) / max(sum, 1.0);
+		var veil = mix(day, night, u.b.z) * top * bottom * side;
+		veil = vec4f(veil.rgb + (hash(pixel + fract(time) * 91.0) - 0.5) / 255.0 * veil.a, veil.a);
+		return veil;
+	}
 
 	let paper = vec3f(0.985, 0.972, 0.968);
 	var light = paper

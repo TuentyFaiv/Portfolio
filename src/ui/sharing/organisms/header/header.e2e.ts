@@ -95,7 +95,7 @@ test.describe("header socials, desktop", () => {
 
 	test("open profiles in a new tab", async ({ page }) => {
 		await openHome(page);
-		await expect(github(page)).toHaveAttribute("href", "https://github.com/TuentyFaiv");
+		await expect(github(page)).toHaveAttribute("href", "https://github.com/tuentyfaiv");
 		await expect(github(page)).toHaveAttribute("target", "_blank");
 	});
 });
@@ -157,7 +157,7 @@ test.describe("header navigation, desktop", () => {
 
 		const link = page.getByRole("main").getByRole("link", { name: "See my GitHub" });
 
-		await expect(link).toHaveAttribute("href", "https://github.com/TuentyFaiv");
+		await expect(link).toHaveAttribute("href", "https://github.com/tuentyfaiv");
 		await expect(link).toHaveAttribute("target", "_blank");
 	});
 

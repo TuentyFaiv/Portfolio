@@ -13,13 +13,34 @@
 	}
 }
 
+/*
+ * Where the band's slide has text, at the top and bottom of the band: the clouds fade out
+ * before these rows. Registered as lengths so the page reads them in pixels.
+ */
+@property --nebula-clear-top {
+	syntax: "<length>";
+	inherits: true;
+	initial-value: 0px;
+}
+@property --nebula-clear-bottom {
+	syntax: "<length>";
+	inherits: true;
+	initial-value: 0px;
+}
+
+/* The band fills the box its slide places and masks for it. */
+.nebula--band {
+	@apply absolute inset-0 z-auto size-full;
+}
+
 @media (prefers-reduced-motion: reduce) {
 	.nebula {
 		transition: none;
 	}
 }
 
-@media (prefers-contrast: more) {
+/* More contrast, or the system's own colors (they never reach a canvas): no clouds behind text. */
+@media (prefers-contrast: more), (forced-colors: active) {
 	.nebula {
 		@apply hidden;
 	}

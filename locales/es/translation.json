@@ -36,7 +36,8 @@
 		"next": "Siguiente",
 		"scroll-hint": "Haz scroll o presiona espacio",
 		"swipe-hint": "Desliza",
-		"work-in-progress": "En construcción"
+		"work-in-progress": "En construcción",
+		"back-to-start": "Volver al inicio"
 	},
 	"intro": {
 		"eyebrow": "Tonalli López  ·  Líder de Frontend  ·  Ciudad de México",
@@ -70,6 +71,18 @@
 		"quality-used": "Este sitio · librerías de UI compartidas",
 		"ship": "Entrega",
 		"ship-used": "fetchzen, este sitio · despliegues en la nube en el trabajo"
+	},
+	"contact": {
+		"eyebrow": "Contacto  ·  Última parada",
+		"title": "Trae pozole.",
+		"title-end": "Saluda.",
+		"lede": "Cuéntame qué estás construyendo y vemos qué necesita.",
+		"availability": "Abierto a proyectos paralelos y nuevos roles.",
+		"copy": "Copiar correo",
+		"copied": "Copiado",
+		"copy-failed": "No se pudo copiar",
+		"elsewhere": "En otros lados",
+		"sign-off": "Ciudad de México. Impulsado por pozole."
 	},
 	"skip": "Saltar al contenido",
 	"main-nav": "Principal",

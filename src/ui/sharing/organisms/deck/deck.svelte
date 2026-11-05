@@ -68,12 +68,18 @@
 			<path d="m6 9 6 6 6-6" />
 		</svg>
 	</p>
-	<p class="deck__hint deck__hint--swipe" data-hidden={last}>
-		{m["translation:deck.swipe-hint"]()}
-	</p>
-	<a class="deck__next" href="#{next.id}" data-hidden={last}>
-		{m["translation:deck.next"]()}&nbsp; · &nbsp;<span {@attach scrambleTo(next.label())}
-			>{second.label()}</span
-		>
-	</a>
+	<!-- One spot on the right: the next slide, or the way back once there is no next one. -->
+	<div class="deck__end">
+		<p class="deck__hint deck__hint--swipe" data-hidden={last}>
+			{m["translation:deck.swipe-hint"]()}
+		</p>
+		<a class="deck__next" href="#{next.id}" data-hidden={last}>
+			{m["translation:deck.next"]()}&nbsp; · &nbsp;<span {@attach scrambleTo(next.label())}
+				>{second.label()}</span
+			>
+		</a>
+		<a class="deck__back" href="#{first.id}" data-hidden={!last}>
+			{m["translation:deck.back-to-start"]()}
+		</a>
+	</div>
 </nav>
