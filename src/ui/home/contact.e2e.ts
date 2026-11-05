@@ -44,9 +44,8 @@ async function ratios(page: Page, selectors: string[]) {
 		};
 
 		const background = parse(getComputedStyle(document.body).backgroundColor);
-		const primary = parse(
-			getComputedStyle(document.querySelector(".contact__eyebrow") as Element).color
-		);
+		// The brand color, the same token the glow mixes in.
+		const primary = parse(getComputedStyle(document.documentElement).getPropertyValue("--primary"));
 		const glow = background
 			.slice(0, 3)
 			.map((value, index) => value * 0.85 + (primary[index] ?? 0) * 0.15);
@@ -157,7 +156,6 @@ test.describe("contact slide, desktop", () => {
 			await page.waitForLoadState("networkidle");
 
 			const selectors = [
-				".contact__eyebrow",
 				".contact__title",
 				".contact__lede",
 				".contact__availability",
@@ -452,7 +450,6 @@ test("on a phone everything fits above the footer, and the links keep their head
  * reach 4.5:1 with that text's color.
  */
 const texts = [
-	"#contact .contact__eyebrow",
 	"#contact .contact__title",
 	"#contact .contact__lede",
 	"#contact .contact__availability",

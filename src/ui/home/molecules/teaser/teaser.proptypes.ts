@@ -3,7 +3,8 @@ import type { Snippet } from "svelte";
 export interface Props {
 	id: string;
 	label: string;
-	eyebrow: string;
+	/** A small label above the title, only when it says something the slide doesn't. */
+	eyebrow?: string;
 	title: string;
 	/** A second line of the title, on its own line. */
 	punchline?: string;

@@ -13,7 +13,6 @@
 <Slide id={chapterId(year)} label={year}>
 	<article class="chapter">
 		<hgroup class="chapter__heading">
-			<p class="chapter__eyebrow">{m["translation:story-page.eyebrow"]()}</p>
 			<p class="chapter__year"><time datetime={year}>{year}</time></p>
 			<h2 class="chapter__title">{title}</h2>
 		</hgroup>

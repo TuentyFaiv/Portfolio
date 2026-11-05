@@ -10,7 +10,6 @@
 	"language-switch": "ES, cambiar a inglés",
 	"socials": "Redes sociales",
 	"blog-page": {
-		"eyebrow": "Blog  ·  Todas las notas",
 		"title": "Cosas que aprendí por las malas.",
 		"lede": "Notas sobre TypeScript, Svelte y Rust, escritas mientras los errores siguen frescos.",
 		"filter": "Filtrar por tema",
@@ -56,7 +55,6 @@
 		"action": "Visitar el blog"
 	},
 	"stack": {
-		"eyebrow": "Stack  ·  de arriba abajo",
 		"title": "El stack,",
 		"title-end": "de arriba abajo.",
 		"interface": "Interfaz",
@@ -73,7 +71,6 @@
 		"ship-used": "fetchzen, este sitio · despliegues en la nube en el trabajo"
 	},
 	"contact": {
-		"eyebrow": "Contacto  ·  Última parada",
 		"title": "Trae pozole.",
 		"title-end": "Saluda.",
 		"lede": "Cuéntame qué estás construyendo y vemos qué necesita.",

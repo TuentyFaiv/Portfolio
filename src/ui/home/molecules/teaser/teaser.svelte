@@ -11,7 +11,9 @@
 <!-- A doorway to a page of its own: a short heading, maybe shortcuts, and the way in. -->
 <Slide {id} {label}>
 	<hgroup class="teaser">
-		<p class="teaser__eyebrow">{eyebrow}</p>
+		{#if eyebrow}
+			<p class="teaser__eyebrow">{eyebrow}</p>
+		{/if}
 		<h2 class="teaser__title">
 			{title}
 			{#if punchline}

@@ -49,15 +49,9 @@
 	}
 }
 
-.contact__heading {
-	@apply flex flex-col gap-4 sm:gap-6;
-	grid-area: heading;
-}
-.contact__eyebrow {
-	@apply font-heading text-[0.625rem] font-semibold tracking-[0.25em] whitespace-pre-wrap text-primary uppercase sm:text-xs;
-}
 .contact__title {
 	@apply font-heading font-extrabold text-foreground;
+	grid-area: heading;
 	font-size: clamp(2.25rem, min(5vw, 8dvh), 4.5rem);
 	line-height: 1.02;
 	letter-spacing: -0.035em;

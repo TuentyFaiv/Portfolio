@@ -24,7 +24,6 @@
 
 <section class="posts">
 	<header class="posts__hero">
-		<p class="posts__eyebrow">{m["translation:blog-page.eyebrow"]()}</p>
 		<h1 class="posts__title">{m["translation:blog-page.title"]()}</h1>
 		<p class="posts__lede">{m["translation:blog-page.lede"]()}</p>
 

@@ -8,13 +8,10 @@
 </script>
 
 <Slide id="stack" label={m["translation:deck.stack"]()}>
-	<hgroup class="stack">
-		<p class="stack__eyebrow">{m["translation:stack.eyebrow"]()}</p>
-		<h2 class="stack__title">
-			{m["translation:stack.title"]()}
-			<span class="stack__punchline">{m["translation:stack.title-end"]()}</span>
-		</h2>
-	</hgroup>
+	<h2 class="stack__title">
+		{m["translation:stack.title"]()}
+		<span class="stack__punchline">{m["translation:stack.title-end"]()}</span>
+	</h2>
 
 	<!-- In order: from what people see down to how it ships. -->
 	<ol class="layers" {@attach walk}>

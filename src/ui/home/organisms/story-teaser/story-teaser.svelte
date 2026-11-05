@@ -9,7 +9,6 @@
 <Teaser
 	id="story"
 	label={m["translation:deck.story"]()}
-	eyebrow={m["translation:story-page.eyebrow"]()}
 	title={m["translation:story-page.title"]()}
 	punchline={m["translation:story-page.title-end"]()}
 	action={{ href: "/story", text: m["translation:story-teaser.action"]() }}

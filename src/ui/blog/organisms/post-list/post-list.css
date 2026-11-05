@@ -6,7 +6,6 @@
 	.posts__hero {
 		@apply flex flex-col gap-5 pb-12;
 	}
-	.posts__eyebrow,
 	.posts__empty-label {
 		@apply font-heading text-xs font-semibold tracking-[0.25em] text-primary uppercase;
 	}

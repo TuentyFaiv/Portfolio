@@ -43,9 +43,8 @@ async function ratios(page: Page, selectors: string[]) {
 		};
 
 		const background = parse(getComputedStyle(document.body).backgroundColor);
-		const primary = parse(
-			getComputedStyle(document.querySelector(".stack__eyebrow") as Element).color
-		);
+		// The brand color, the same token the glow mixes in.
+		const primary = parse(getComputedStyle(document.documentElement).getPropertyValue("--primary"));
 		// The glow's center mixes 14% of the brand color into the page.
 		const glow = background
 			.slice(0, 3)

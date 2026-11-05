@@ -6,13 +6,8 @@
 	.chapter__heading {
 		@apply flex flex-col items-start;
 	}
-	.chapter__eyebrow {
-		@apply font-heading text-[0.625rem] font-semibold tracking-[0.25em] whitespace-pre-wrap uppercase sm:text-[0.8125rem];
-		/* Over the nebula the muted grey drops below 4.5:1, so it uses the text color. */
-		color: var(--foreground);
-	}
 	.chapter__year {
-		@apply mt-3 font-heading font-extrabold sm:mt-5;
+		@apply font-heading font-extrabold;
 		font-size: min(21.5vw, 5.25rem);
 		line-height: 1;
 		letter-spacing: -0.02em;

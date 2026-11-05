@@ -200,7 +200,7 @@ test.describe("story text over the nebula", () => {
 
 					const targets = await page.locator(`#${id}`).evaluate((slide) => {
 						const elements = slide.querySelectorAll<HTMLElement>(
-							".opening__eyebrow, .opening__title, .chapter__eyebrow, .chapter__year, .chapter__title, .chapter__body"
+							".opening__eyebrow, .opening__title, .chapter__year, .chapter__title, .chapter__body"
 						);
 
 						return [...elements].map((element) => {

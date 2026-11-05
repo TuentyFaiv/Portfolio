@@ -30,13 +30,10 @@
 			<Nebula scene="band" />
 		</div>
 
-		<hgroup class="contact__heading">
-			<p class="contact__eyebrow">{m["translation:contact.eyebrow"]()}</p>
-			<h2 class="contact__title">
-				{m["translation:contact.title"]()}
-				<span class="contact__punchline">{m["translation:contact.title-end"]()}</span>
-			</h2>
-		</hgroup>
+		<h2 class="contact__title">
+			{m["translation:contact.title"]()}
+			<span class="contact__punchline">{m["translation:contact.title-end"]()}</span>
+		</h2>
 
 		<p class="contact__lede">{m["translation:contact.lede"]()}</p>
 		<p class="contact__availability">{m["translation:contact.availability"]()}</p>

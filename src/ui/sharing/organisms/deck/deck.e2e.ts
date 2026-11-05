@@ -430,6 +430,28 @@ test("the deck has no wrapper and one navigation landmark", async ({ page }) => 
 	await expect(page.locator("main > footer")).toHaveCount(0);
 });
 
+/*
+ * The footer and the header already say where you are, so no slide or page opens with a
+ * label that repeats it. The story's opening slide keeps its label: it introduces the story.
+ */
+test("no label above a heading repeats where you are", async ({ page }) => {
+	await page.goto("/");
+	await expect(page.locator("#story")).not.toContainText("2016 → now");
+	await expect(page.locator("#stack")).not.toContainText(/·\s*top to bottom/);
+	await expect(page.locator("#contact")).not.toContainText("Last stop");
+
+	await page.goto("/story");
+	await expect(page.locator("#story")).toContainText("2016 → now");
+
+	const chapters = await page.locator(".chapter").allTextContents();
+
+	expect(chapters).toHaveLength(8);
+	expect(chapters.filter((text) => text.includes("2016 → now"))).toEqual([]);
+
+	await page.goto("/blog");
+	await expect(page.locator("main")).not.toContainText("All notes");
+});
+
 test.describe("pages around the deck", () => {
 	test("an unknown address shows a branded 404 with a way home", async ({ page }) => {
 		const response = await page.goto("/nothing-here");

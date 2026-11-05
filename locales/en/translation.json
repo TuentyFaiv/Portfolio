@@ -10,7 +10,6 @@
 	"language-switch": "EN, switch to Spanish",
 	"socials": "Social profiles",
 	"blog-page": {
-		"eyebrow": "Blog  ·  All notes",
 		"title": "Things I learned the slow way.",
 		"lede": "Notes on TypeScript, Svelte and Rust, written while the mistakes are still fresh.",
 		"filter": "Filter posts by topic",
@@ -56,7 +55,6 @@
 		"action": "Visit the blog"
 	},
 	"stack": {
-		"eyebrow": "Stack  ·  top to bottom",
 		"title": "The stack,",
 		"title-end": "top to bottom.",
 		"interface": "Interface",
@@ -73,7 +71,6 @@
 		"ship-used": "fetchzen, this site · cloud deploys at work"
 	},
 	"contact": {
-		"eyebrow": "Contact  ·  Last stop",
 		"title": "Bring pozole.",
 		"title-end": "Say hi.",
 		"lede": "Tell me what you're building and we'll see what it needs.",

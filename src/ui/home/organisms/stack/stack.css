@@ -1,23 +1,16 @@
 @reference "#styles/app.css";
 
-.stack {
-	@apply flex w-full max-w-300 flex-col items-start gap-4;
-
-	.stack__eyebrow {
-		@apply font-heading text-[0.625rem] font-semibold tracking-[0.25em] whitespace-pre-wrap text-primary uppercase sm:text-xs;
-	}
-	.stack__title {
-		@apply font-heading font-extrabold;
-		font-size: clamp(2rem, min(5vw, 7.1dvh), 4rem);
-		line-height: 1.02;
-		letter-spacing: -0.03em;
-		color: transparent;
-		background: linear-gradient(var(--headline-from) 35%, var(--headline-to));
-		background-clip: text;
-	}
-	.stack__punchline {
-		@apply block;
-	}
+.stack__title {
+	@apply w-full max-w-300 font-heading font-extrabold;
+	font-size: clamp(2rem, min(5vw, 7.1dvh), 4rem);
+	line-height: 1.02;
+	letter-spacing: -0.03em;
+	color: transparent;
+	background: linear-gradient(var(--headline-from) 35%, var(--headline-to));
+	background-clip: text;
+}
+.stack__punchline {
+	@apply block;
 }
 
 /*
@@ -251,7 +244,7 @@
 }
 
 @media (forced-colors: active) {
-	.stack .stack__title {
+	.stack__title {
 		background: none;
 		color: CanvasText;
 	}
