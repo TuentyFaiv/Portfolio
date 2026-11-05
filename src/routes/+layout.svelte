@@ -9,18 +9,39 @@
 	import type { LayoutProps } from "./$types";
 
 	import { Header } from "#sharing/organisms/header/index.ts";
+	import { morph } from "#utils/morph.ts";
 	import { routeTransition } from "#utils/transition.ts";
 
 	let { children }: LayoutProps = $props();
 
-	// Route changes crossfade natively; hash jumps inside a page just scroll.
+	/*
+	 * Route changes crossfade natively, and what both pages show (the Story and Blog slides'
+	 * headings) moves into place; hash jumps inside a page just scroll.
+	 */
 	onNavigate(({ complete, from, to }) => {
 		const samePage = from?.route.id === to?.route.id;
 		const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 		const hidden = document.visibilityState !== "visible";
 
+		// A new page lands where it should at once, never with a smooth scroll (see deck.css).
+		if (!samePage) {
+			const root = document.documentElement;
+
+			const done = () => delete root.dataset.routing;
+
+			root.dataset.routing = "";
+			// Also when the navigation fails or is cancelled.
+			complete.then(done, done);
+		}
+
 		if (!document.startViewTransition || samePage || calm || hidden) return;
+
+		const arrive = morph(
+			{ route: from?.route.id ?? null, hash: from?.url.hash ?? "" },
+			{ route: to?.route.id ?? null, hash: to?.url.hash ?? "" }
+		);
+		let settle: (() => void) | undefined;
 
 		return new Promise<void>((resolve) => {
 			let transition: ViewTransition;
@@ -29,12 +50,14 @@
 				transition = document.startViewTransition(async () => {
 					resolve();
 					await complete;
+					settle = arrive();
 				});
 			} catch {
 				// Some browsers throw instead of skipping: the route then changes without it.
 				return resolve();
 			}
 
+			transition.finished.finally(() => settle?.());
 			routeTransition.set(transition.finished);
 			// The navigation must never wait on the effect: if the browser skips or aborts
 			// the transition, or it simply has not started yet, the route changes anyway.

@@ -8,9 +8,32 @@
 	@apply relative isolate flex w-full max-w-300 flex-col items-center text-center;
 	gap: clamp(1rem, 3.5dvh, 2rem);
 
-	/* The Spanish line is longer: this keeps the same line breaks as the design. */
+	/*
+	 * Spanish runs longer: these keep the design's line breaks, and the same line heights,
+	 * so switching language moves nothing. The headline is smaller; the paragraph is a
+	 * little wider where the slide has room, and a little smaller where it does not.
+	 */
 	&:lang(es) {
 		--intro-title-scale: 0.8;
+
+		.intro__eyebrow--long {
+			@variant md {
+				@apply tracking-[0.22em];
+			}
+			@variant lg {
+				@apply tracking-[0.27em];
+			}
+		}
+
+		.intro__lede--long {
+			@variant sm {
+				font-size: 1.125rem;
+				line-height: 1.875rem;
+			}
+			@variant lg {
+				@apply max-w-184 text-xl leading-normal;
+			}
+		}
 	}
 
 	.dark & {
@@ -48,16 +71,21 @@
 		@apply font-heading font-semibold whitespace-pre-wrap uppercase;
 		color: var(--text-muted);
 	}
+	/* The full line from where it fits on one line (in Spanish too), the short one before. */
 	.intro__eyebrow--long {
-		@apply text-[0.8125rem] tracking-[0.27em] max-sm:hidden;
+		@apply text-[0.8125rem] tracking-[0.27em] max-md:hidden;
 	}
 	.intro__eyebrow--short {
-		@apply text-[0.625rem] tracking-[0.25em] sm:hidden;
+		@apply text-[0.625rem] tracking-[0.25em] sm:text-[0.8125rem] sm:tracking-[0.27em] md:hidden;
 	}
 
 	.intro__title {
 		@apply w-full font-heading font-extrabold;
 		font-size: calc(min(11.3vw, 2.75rem) * var(--intro-title-scale));
+		/*
+		 * Phones: the Spanish paragraph needs one line more than the English one, and the
+		 * smaller headline's shorter lines make up for it, so the slide stays put.
+		 */
 		line-height: 1.04;
 		letter-spacing: -0.03em;
 		text-wrap: balance;
@@ -67,7 +95,8 @@
 
 		@variant sm {
 			font-size: calc(clamp(2.75rem, min(6vw, 9.6dvh), 5.375rem) * var(--intro-title-scale));
-			line-height: 1.08;
+			/* From the full size, so each line is as tall in every language. */
+			line-height: calc(clamp(2.75rem, min(6vw, 9.6dvh), 5.375rem) * 1.08);
 		}
 	}
 	.intro__punchline {

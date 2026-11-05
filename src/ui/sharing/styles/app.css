@@ -457,6 +457,16 @@
 	animation-duration: 160ms;
 }
 
+/* What both pages show (named in #utils/morph.ts) glides to its new place. */
+::view-transition-group(story-title),
+::view-transition-group(story-year),
+::view-transition-group(blog-label),
+::view-transition-group(blog-title),
+::view-transition-group(blog-body) {
+	animation-duration: 420ms;
+	animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
 /* The theme switch: the whole page changes as one, revealed in a circle from the button. */
 .theme-transition {
 	.header {

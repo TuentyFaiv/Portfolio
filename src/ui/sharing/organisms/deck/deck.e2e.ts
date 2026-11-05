@@ -169,12 +169,44 @@ test.describe("deck, desktop", () => {
 	});
 });
 
+// Nothing in the footer touches anything else, at any width and in either language.
+for (const language of ["en", "es"] as const) {
+	for (const width of [640, 700, 767, 768, 900, 1024, 1440]) {
+		test(`the footer never overlaps itself, ${language} at ${width}px`, async ({
+			context,
+			page,
+		}) => {
+			await context.addCookies([
+				{ name: "PARAGLIDE_LOCALE", value: language, url: "http://localhost:4173" },
+			]);
+			await page.setViewportSize({ width, height: 800 });
+			await page.goto("/");
+			await page.waitForLoadState("networkidle");
+
+			const overlaps = await page.evaluate(() => {
+				const boxes = [".deck__count", ".deck__hint--scroll", ".deck__next"]
+					.map((selector) => document.querySelector(selector) as HTMLElement)
+					.filter((element) => element.checkVisibility({ visibilityProperty: true }))
+					.map((element) => [element.className, element.getBoundingClientRect()] as const);
+
+				return boxes.flatMap(([name, box], index) =>
+					boxes
+						.slice(index + 1)
+						.filter(([, other]) => box.right + 16 > other.left && other.right + 16 > box.left)
+						.map(([other]) => `${name} / ${other}`)
+				);
+			});
+
+			expect(overlaps).toEqual([]);
+		});
+	}
+}
+
 test.describe("deck footer centering", () => {
 	for (const [language, width] of [
 		["en", 1440],
 		["es", 1024],
-		["es", 700],
-		["es", 640],
+		["es", 768],
 	] as const) {
 		test(`the hint sits on the screen center, ${language} at ${width}px`, async ({
 			context,

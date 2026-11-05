@@ -12,11 +12,13 @@
 	import { Lang } from "#sharing/atoms/lang/index.ts";
 	import { Socials } from "#sharing/atoms/socials/index.ts";
 	import { ThemeSwitch } from "#sharing/atoms/theme-switch/index.ts";
+	import { blank, play } from "#utils/retext.ts";
 
+	// Messages, not strings: the markup calls them, so a language switch rewrites the labels.
 	const links = [
-		{ content: m["translation:home"](), href: resolve("/") },
-		{ content: m["translation:story"](), href: resolve("/story") },
-		{ content: m["translation:blog"](), href: resolve("/blog") },
+		{ content: m["translation:home"], href: resolve("/") },
+		{ content: m["translation:story"], href: resolve("/story") },
+		{ content: m["translation:blog"], href: resolve("/blog") },
 	];
 
 	const isCurrent = (href: string) =>
@@ -62,9 +64,15 @@
 		// Only pointer devices show this hello: phones skip the download and the work.
 		if (prefersReducedMotion() || !window.matchMedia("(hover: hover)").matches) return;
 
+		const links = [...document.querySelectorAll<HTMLElement>(".header__link")];
+
+		// The links scramble in place (holding their size): they follow the language, so their
+		// text must stay Svelte's.
+		play(blank(links));
+
+		// The logo never changes language, so anime.js may own it.
 		const { animate, scrambleText } = await import("animejs");
 		const logo = document.querySelector<HTMLElement>(".header__logo");
-		const texts = document.querySelectorAll<HTMLElement>(".header__link");
 
 		if (logo) {
 			animate(logo, {
@@ -74,20 +82,6 @@
 					revealRate: 15,
 					revealDelay: 100,
 				}),
-			});
-		}
-
-		for (const text of texts) {
-			// Scrambled letters are wider, so hold the width or the links beside it jitter.
-			text.style.width = `${text.getBoundingClientRect().width}px`;
-			animate(text, {
-				innerHTML: scrambleText({
-					ease: "outExpo",
-					override: false,
-					revealRate: 15,
-					revealDelay: 140,
-				}),
-				onComplete: () => text.style.removeProperty("width"),
 			});
 		}
 	});
@@ -130,7 +124,7 @@
 							aria-current={isCurrent(href) ? "page" : undefined}
 							onclick={closeMenu}
 						>
-							{content}
+							{content()}
 						</a>
 					</li>
 				{/each}

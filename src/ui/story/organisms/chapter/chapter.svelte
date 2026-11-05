@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { m } from "#lib/paraglide/messages.js";
 	import { Slide } from "#sharing/molecules/slide/index.ts";
 	import { chapterId } from "#utils/story.ts";
 

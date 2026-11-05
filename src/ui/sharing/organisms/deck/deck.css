@@ -20,10 +20,12 @@
 
 /*
  * Smooth only for moves made on the page (a link or button has focus then). Opening a
- * shared link to a slide jumps straight there instead of scrolling past every slide.
+ * shared link to a slide jumps straight there instead of scrolling past every slide, and
+ * so does coming back from another page (`data-routing`, set by the layout): the browser
+ * puts you back on your slide at once, where the page transition expects it.
  */
 @media (prefers-reduced-motion: no-preference) {
-	:root:has(.deck):focus-within {
+	:root:has(.deck):focus-within:not([data-routing]) {
 		scroll-behavior: smooth;
 	}
 }
@@ -107,9 +109,12 @@ body:has(.deck) .header {
 		}
 	}
 	.deck__name,
-	.deck__next,
-	.deck__hint--scroll {
+	.deck__next {
 		@apply max-sm:hidden;
+	}
+	/* Only where it fits between the count and the next link, in every language. */
+	.deck__hint--scroll {
+		@apply max-md:hidden;
 	}
 
 	.deck__progress {
