@@ -7,10 +7,13 @@
  * Two versions of one shader: WGSL for WebGPU and GLSL for WebGL. Keep them in step;
  * the e2e test "both backends draw the same nebula" compares their output.
  *
- * Two scenes share the clouds: the sky behind /story, and a band across the Contact slide.
- * The band is transparent where there is no cloud, and fades out along ragged edges before
- * the rows where the page has text. The ripples' spare floats carry it: r0.w is 1 for the
- * band, r1.w and r2.w are those text rows at the top and bottom, in CSS pixels.
+ * Three scenes share the clouds: the sky behind /story, a band across the Contact slide,
+ * and a sky inside the Projects slide. The band is transparent where there is no cloud, and
+ * fades out along ragged edges before the rows where the page has text. The ripples' spare
+ * floats carry it: r0.w is 1 for the band, r1.w and r2.w are those text rows at the top and
+ * bottom, in CSS pixels. Outside the band, r1.w and r2.w are how far the sky has travelled
+ * across and up (in screen heights): the Projects sky travels with its camera, near clouds
+ * more than far ones and the stars least of all.
  */
 
 /** Uniform layout shared by both backends: six vec4, in this order. */
@@ -113,7 +116,8 @@ void main() {
 	float aspect = u_a.x / u_a.y;
 	vec2 raw = (pixel / u_a.xy - 0.5) * vec2(aspect, 1.0);
 	vec2 moved = touch(raw, aspect);
-	vec2 uv = raw - moved;
+	vec2 pan = u_r0.w > 0.5 ? vec2(0.0) : vec2(u_r1.w, u_r2.w);
+	vec2 uv = raw - moved + pan;
 	float time = u_b.x;
 	vec2 spot = pixel / u_a.xy - 0.5 - moved / vec2(aspect, 1.0);
 	float shape = u_r0.w > 0.5 ? band(spot) : composition(spot);
@@ -154,7 +158,7 @@ void main() {
 	vec3 cloud = mix(ramp(lit), vec3(0.52, 0.40, 0.72) * (0.4 + 0.8 * lit), clamp(purple, 0.0, 0.85));
 	vec3 dark = space * (1.0 - cover) + cloud * cover + threads * vec3(0.10, 0.34, 0.26);
 	vec2 drift = u_c.xy * u_a.y;
-	vec2 grid = (pixel + drift * 0.02) / (13.0 * u_a.z);
+	vec2 grid = (pixel + drift * 0.02 + pan * u_a.y * 0.4) / (13.0 * u_a.z);
 	vec2 cell = floor(grid);
 	float seed = hash(cell);
 	float star = seed > 0.93 ? smoothstep(0.09, 0.02, length(fract(grid) - 0.5 - (vec2(hash(cell + 1.7), hash(cell + 9.2)) - 0.5) * 0.7)) * (0.55 + 0.45 * sin(time * (0.6 + seed) + seed * 40.0)) : 0.0;
@@ -347,7 +351,8 @@ fn fragment_main(@builtin(position) position: vec4f) -> @location(0) vec4f {
 	let aspect = u.a.x / u.a.y;
 	let raw = (pixel / u.a.xy - 0.5) * vec2f(aspect, 1.0);
 	let moved = touch(raw, aspect);
-	let uv = raw - moved;
+	let pan = select(vec2f(u.r1.w, u.r2.w), vec2f(0.0), u.r0.w > 0.5);
+	let uv = raw - moved + pan;
 	let time = u.b.x;
 	let spot = pixel / u.a.xy - 0.5 - moved / vec2f(aspect, 1.0);
 	var shape = composition(spot);
@@ -382,7 +387,7 @@ fn fragment_main(@builtin(position) position: vec4f) -> @location(0) vec4f {
 	var dark = space * (1.0 - cover) + cloud * cover + threads * vec3f(0.10, 0.34, 0.26);
 
 	let drift = u.c.xy * u.a.y;
-	let grid = (pixel + drift * 0.02) / (13.0 * u.a.z);
+	let grid = (pixel + drift * 0.02 + pan * u.a.y * 0.4) / (13.0 * u.a.z);
 	let cell = floor(grid);
 	let seed = hash(cell);
 	var star = 0.0;

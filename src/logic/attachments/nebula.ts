@@ -11,8 +11,10 @@ type Scene = NonNullable<NebulaSetup["scene"]>;
  * its own thread wherever the browser can hand a canvas to a worker, and on the page
  * otherwise. The CSS sky underneath stays until the first frame is ready.
  *
- * The sky fills the screen behind /story. The band is a strip across the Contact slide:
- * it starts only once the slide comes near, and draws only while it is on screen.
+ * The sky fills the screen behind /story. The band is a strip across the Contact slide,
+ * and the slide scene is the same sky inside one slide (Projects), travelling with the
+ * slide's camera: both start only once their slide comes near, and draw only while it is
+ * on screen.
  */
 export const nebula =
 	(scene: Scene = "sky"): Attachment<HTMLCanvasElement> =>
@@ -41,8 +43,8 @@ export const nebula =
 				return;
 			}
 
-			// The band waits until its slide is about a screen away: the home page loads
-			// without compiling a shader it may never show.
+			// The band and the slide's sky wait until their slide is about a screen away: the
+			// home page loads without compiling a shader it may never show.
 			near = new IntersectionObserver(
 				([entry]) => {
 					if (!entry?.isIntersecting) return;
@@ -63,11 +65,22 @@ export const nebula =
 
 function start(canvas: HTMLCanvasElement, scene: Scene) {
 	const band = scene === "band";
+	// Inside a slide (the band, or the slide's own sky) rather than across the whole screen.
+	const local = scene !== "sky";
 	const root = document.documentElement;
 	const forced = new URLSearchParams(window.location.search).get("nebula");
 	const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
-	// The band does not fly through the clouds as the page scrolls; the sky does.
-	const depth = () => (band ? 0 : window.scrollY / window.innerHeight);
+	// The full-screen sky flies through the clouds as the page scrolls; the band stays put.
+	// A slide's sky sits one slide deep, where the shader keeps the text column on the left
+	// calm (at zero it calms a centered headline instead), and travels with the slide's
+	// camera: the element marked [data-nebula-pan] says how far (data-nebula-pan-x and -y,
+	// in screen heights) and fires "nebula:pan" when that changes.
+	const depth = () => (scene === "sky" ? window.scrollY / window.innerHeight : band ? 0 : 1);
+	const camera = local
+		? canvas.closest(".slide")?.querySelector<HTMLElement>("[data-nebula-pan]")
+		: undefined;
+	const pan = () => Number(camera?.dataset.nebulaPanX) || 0;
+	const rise = () => Number(camera?.dataset.nebulaPanY) || 0;
 	// Where the band's text sits, from the slide's CSS: no cloud may show there.
 	const clear = () => {
 		const style = getComputedStyle(canvas);
@@ -84,6 +97,8 @@ function start(canvas: HTMLCanvasElement, scene: Scene) {
 		dark: root.classList.contains("dark"),
 		reduced: reduced.matches,
 		depth: depth(),
+		pan: pan(),
+		rise: rise(),
 		scene,
 		clear: band ? clear() : undefined,
 		// ?nebula=webgpu or ?nebula=webgl forces an API and ?nebula=none no GPU, so tests
@@ -140,8 +155,9 @@ function start(canvas: HTMLCanvasElement, scene: Scene) {
 			instant: root.classList.contains("theme-transition"),
 		});
 	});
-	// The sky fills the screen from its top left corner; the band starts wherever its slide is.
-	const origin = () => (band ? canvas.getBoundingClientRect() : { left: 0, top: 0 });
+	// The sky fills the screen from its top left corner; the others start wherever their
+	// slide is.
+	const origin = () => (local ? canvas.getBoundingClientRect() : { left: 0, top: 0 });
 	const onPointer = (event: PointerEvent) => {
 		// A finger only parts the clouds while it is down.
 		const touching = event.pointerType !== "touch" || event.buttons > 0;
@@ -155,8 +171,8 @@ function start(canvas: HTMLCanvasElement, scene: Scene) {
 
 		send({ type: "press", x: event.clientX - left, y: event.clientY - top });
 	};
-	const onScroll = () => send({ type: "scroll", depth: depth() });
-	// Drawn only while the tab is open and, for the band, while its slide is on screen.
+	const onScroll = () => send({ type: "scroll", depth: depth(), pan: pan(), rise: rise() });
+	// Drawn only while the tab is open and, inside a slide, while that slide is on screen.
 	let onScreen = true;
 	const onVisible = () => send({ type: "visible", value: onScreen && !document.hidden });
 	const seen = new IntersectionObserver(([entry]) => {
@@ -177,8 +193,9 @@ function start(canvas: HTMLCanvasElement, scene: Scene) {
 	window.addEventListener("pointermove", onPointer, { passive: true });
 	window.addEventListener("pointerdown", onPress, { passive: true });
 	root.addEventListener("pointerleave", onLeave);
-	if (band) seen.observe(canvas);
-	else window.addEventListener("scroll", onScroll, { passive: true });
+	if (local) seen.observe(canvas);
+	if (scene === "sky") window.addEventListener("scroll", onScroll, { passive: true });
+	camera?.addEventListener("nebula:pan", onScroll);
 	document.addEventListener("visibilitychange", onVisible);
 	reduced.addEventListener("change", onReduced);
 	canvas.addEventListener("nebula:stats", onStats);
@@ -192,6 +209,7 @@ function start(canvas: HTMLCanvasElement, scene: Scene) {
 		window.removeEventListener("pointerdown", onPress);
 		root.removeEventListener("pointerleave", onLeave);
 		window.removeEventListener("scroll", onScroll);
+		camera?.removeEventListener("nebula:pan", onScroll);
 		document.removeEventListener("visibilitychange", onVisible);
 		reduced.removeEventListener("change", onReduced);
 		canvas.removeEventListener("nebula:stats", onStats);

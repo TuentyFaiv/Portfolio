@@ -20,6 +20,40 @@
 	// The last slide has no next one: its link fades out still showing the previous label.
 	let next = $derived(slides[index + 1] ?? slides[index]);
 
+	/**
+	 * A shared link (/#contact) should open on its slide. The browser jumps there while the
+	 * page is still loading, and on a busy machine it can jump before the layout settles and
+	 * stop a slide or more short. Once loaded, line the slide up again, unless the visitor
+	 * has already started moving.
+	 */
+	function keepLinkedSlide() {
+		const target = () => {
+			const id = decodeURIComponent(window.location.hash.slice(1));
+
+			return id ? document.getElementById(id) : null;
+		};
+		let moved = false;
+		const onMove = () => (moved = true);
+		const align = () => {
+			const element = target();
+
+			if (moved || !element) return;
+			if (Math.abs(element.getBoundingClientRect().top) > 1)
+				element.scrollIntoView({ behavior: "instant", block: "start" });
+		};
+		const settle = () => requestAnimationFrame(() => requestAnimationFrame(align));
+		const events = ["wheel", "touchstart", "keydown", "pointerdown"] as const;
+
+		for (const name of events) window.addEventListener(name, onMove, { passive: true, once: true });
+		if (document.readyState === "complete") settle();
+		else window.addEventListener("load", settle, { once: true });
+
+		return () => {
+			for (const name of events) window.removeEventListener(name, onMove);
+			window.removeEventListener("load", settle);
+		};
+	}
+
 	/** The slide crossing the middle of the screen is the current one, whatever its height. */
 	function trackActive() {
 		const observer = new IntersectionObserver(
@@ -40,7 +74,12 @@
 <!-- The slides and this nav are direct children of the layout's <main>. -->
 {@render children()}
 
-<nav class="deck" aria-label={m["translation:deck.progress"]()} {@attach trackActive}>
+<nav
+	class="deck"
+	aria-label={m["translation:deck.progress"]()}
+	{@attach trackActive}
+	{@attach keepLinkedSlide}
+>
 	<p class="deck__count">
 		<span {@attach scrambleTo(pad(index + 1), "0-9")}>{pad(1)}</span>
 		/ {pad(slides.length)}<span class="deck__name"

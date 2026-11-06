@@ -213,11 +213,15 @@ test("forced colors keep the headline readable", async ({ page }) => {
 });
 
 // System colors never reach a canvas, so clouds there could sit behind forced text.
-for (const path of ["/#contact", "/story"]) {
+for (const path of ["/#projects", "/#contact", "/story"]) {
 	test(`forced colors leave no clouds behind the text on ${path}`, async ({ page }) => {
 		await page.emulateMedia({ forcedColors: "active" });
 		await page.goto(path);
 
-		await expect(page.locator("canvas.nebula")).toBeHidden();
+		// The home page has two: the Projects sky and the Contact band.
+		const canvases = await page.locator("canvas.nebula").all();
+
+		expect(canvases.length).toBeGreaterThan(0);
+		for (const canvas of canvases) await expect(canvas).toBeHidden();
 	});
 }

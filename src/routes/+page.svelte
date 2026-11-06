@@ -2,6 +2,7 @@
 	import { BlogTeaser } from "#home/organisms/blog-teaser/index.ts";
 	import { Contact } from "#home/organisms/contact/index.ts";
 	import { Intro } from "#home/organisms/intro/index.ts";
+	import { Projects } from "#home/organisms/projects/index.ts";
 	import { Stack } from "#home/organisms/stack/index.ts";
 	import { StoryTeaser } from "#home/organisms/story-teaser/index.ts";
 	import { SEO } from "#sharing/atoms/seo/index.ts";
@@ -17,7 +18,9 @@
 
 	<!-- Story and Blog have pages of their own: here they are doorways into them. -->
 	{#each slides.slice(1) as { id, label } (id)}
-		{#if id === "story"}
+		{#if id === "projects"}
+			<Projects />
+		{:else if id === "story"}
 			<StoryTeaser />
 		{:else if id === "stack"}
 			<Stack />

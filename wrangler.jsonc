@@ -13,6 +13,19 @@
 			"name": "CSP_REPORT_LIMIT",
 			"namespace_id": "1001",
 			"simple": { "limit": 60, "period": 60 }
+		},
+		{
+			"name": "STARS_LIMIT",
+			"namespace_id": "1002",
+			"simple": { "limit": 30, "period": 60 }
+		}
+	],
+	// Which browsers found every star on the Projects slide: one row each, read privately
+	// (src/routes/api/stars/+server.ts says how). No database_id: `wrangler deploy` creates it.
+	"d1_databases": [
+		{
+			"binding": "FINDERS",
+			"database_name": "portfolio-finders"
 		}
 	],
 	"observability": {

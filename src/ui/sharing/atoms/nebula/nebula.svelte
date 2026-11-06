@@ -21,7 +21,7 @@
 <!-- Decorative: the page reads the same without it. -->
 <canvas
 	bind:this={canvas}
-	class={["nebula", scene === "band" && "nebula--band"]}
+	class={["nebula", scene !== "sky" && `nebula--${scene}`]}
 	aria-hidden="true"
 	{@attach nebula(scene)}
 ></canvas>

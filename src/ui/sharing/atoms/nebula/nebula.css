@@ -28,8 +28,9 @@
 	initial-value: 0px;
 }
 
-/* The band fills the box its slide places and masks for it. */
-.nebula--band {
+/* The band and the slide's sky fill the box their slide places (and masks, for the band). */
+.nebula--band,
+.nebula--slide {
 	@apply absolute inset-0 z-auto size-full;
 }
 

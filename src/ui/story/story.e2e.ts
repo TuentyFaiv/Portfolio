@@ -645,7 +645,8 @@ test.describe("live nebula", () => {
 		await page.locator(".header__list").getByRole("link", { name: "Home" }).click();
 
 		await expect(page.locator(".deck__count")).toContainText("Intro");
-		await expect(page.locator("canvas:not(.nebula--band)")).toHaveCount(0);
+		// Only the home page's own canvases: the Contact band and the Projects sky.
+		await expect(page.locator("canvas:not(.nebula--band, .nebula--slide)")).toHaveCount(0);
 		// The home page's own band waits for the Contact slide: nothing draws on the intro.
 		await expect(page.locator("canvas.nebula--band")).not.toHaveAttribute("data-backend", /.+/);
 	});

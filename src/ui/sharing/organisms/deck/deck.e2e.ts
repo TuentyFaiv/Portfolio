@@ -297,14 +297,12 @@ test("hides the native scrollbar on the deck only", async ({ page }) => {
 	await expect(page.locator("html")).toHaveCSS("scrollbar-width", "auto");
 });
 
-test("slides that are not ready say so", async ({ page }) => {
-	await page.goto("/#projects");
+// A slide without content of its own says "Work in progress"; every home slide has its own now.
+test("every home slide is ready", async ({ page }) => {
+	await page.goto("/");
 
-	const slide = page.locator("#projects");
-
-	await expect(slide.getByRole("heading", { level: 2 })).toHaveText("Projects");
-	await expect(slide).toContainText("Work in progress");
-	await expect(page.locator("#intro")).not.toContainText("Work in progress");
+	await expect(page.locator(".slide")).toHaveCount(6);
+	await expect(page.locator("main")).not.toContainText("Work in progress");
 });
 
 test("only the current theme's logo downloads", async ({ page }) => {

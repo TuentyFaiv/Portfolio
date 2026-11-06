@@ -11,8 +11,15 @@ export interface NebulaSetup {
 	dark: boolean;
 	reduced: boolean;
 	depth: number;
-	/** The sky behind /story, or the band across the Contact slide. Default: sky. */
-	scene?: "sky" | "band";
+	/** How far a slide's sky has travelled sideways, in screen heights. Default: 0. */
+	pan?: number;
+	/** How far a slide's sky has travelled up (down when negative), in screen heights. */
+	rise?: number;
+	/**
+	 * The sky behind /story, the band across the Contact slide, or the same sky inside one
+	 * slide (Projects). Default: sky.
+	 */
+	scene?: "sky" | "band" | "slide";
 	/** Band only: CSS pixels at the top and bottom where text sits and no cloud may show. */
 	clear?: { top: number; bottom: number };
 	/** Only for tests: draw with WebGL even where WebGPU exists. */
@@ -31,7 +38,7 @@ export type NebulaInput =
 	| { type: "pointer"; x: number; y: number; touching: boolean }
 	| { type: "leave" }
 	| { type: "press"; x: number; y: number }
-	| { type: "scroll"; depth: number }
+	| { type: "scroll"; depth: number; pan?: number; rise?: number }
 	| { type: "theme"; dark: boolean; instant: boolean }
 	| { type: "reduced"; value: boolean }
 	| { type: "visible"; value: boolean }
@@ -54,6 +61,9 @@ export type NebulaOutput =
 			cost: number;
 			/** Frames skipped because the GPU was still on the previous one. */
 			skipped: number;
+			/** How far the sky has travelled so far (eased), in screen heights. */
+			pan: number;
+			rise: number;
 			backend: Backend["name"];
 	  };
 
@@ -130,6 +140,10 @@ export function createNebula(
 		presence: 0,
 		theme: setup.dark ? 1 : 0,
 		depthEased: setup.depth,
+		pan: setup.pan ?? 0,
+		panEased: setup.pan ?? 0,
+		rise: setup.rise ?? 0,
+		riseEased: setup.rise ?? 0,
 		quality: 1,
 		slow: 0,
 		fast: 0,
@@ -167,6 +181,8 @@ export function createNebula(
 
 		return (
 			Math.abs(state.depth - state.depthEased) > 0.0005 ||
+			Math.abs(state.pan - state.panEased) > 0.0005 ||
+			Math.abs(state.rise - state.riseEased) > 0.0005 ||
 			Math.abs(state.targetX - state.px) > 0.0005 ||
 			Math.abs(state.targetY - state.py) > 0.0005 ||
 			Math.abs((state.touching ? 1 : 0) - state.presence) > 0.005 ||
@@ -183,6 +199,8 @@ export function createNebula(
 		// Settles in about a second, with the native snap: slower felt like the clouds lagged
 		// behind the slides.
 		state.depthEased += (state.depth - state.depthEased) * ease(0.1, dt);
+		state.panEased += (state.pan - state.panEased) * ease(0.1, dt);
+		state.riseEased += (state.rise - state.riseEased) * ease(0.1, dt);
 		state.presence += ((state.touching ? 1 : 0) - state.presence) * ease(0.08, dt);
 		state.theme += ((state.dark ? 1 : 0) - state.theme) * (state.reduced ? 1 : ease(0.12, dt));
 
@@ -212,10 +230,11 @@ export function createNebula(
 				12 + index * 4
 			);
 		}
-		// The ripples' spare floats: the scene, and the band's clear rows at the top and bottom.
+		// The ripples' spare floats: the scene, then the band's clear rows at the top and
+		// bottom, or (any other scene) how far the sky has travelled across and up.
 		values[15] = state.scene === "band" ? 1 : 0;
-		values[19] = state.clear?.top ?? 0;
-		values[23] = state.clear?.bottom ?? 0;
+		values[19] = state.scene === "band" ? (state.clear?.top ?? 0) : state.panEased;
+		values[23] = state.scene === "band" ? (state.clear?.bottom ?? 0) : state.riseEased;
 		backend.draw(values);
 		state.draws += 1;
 	}
@@ -370,8 +389,12 @@ export function createNebula(
 			}
 			case "scroll":
 				state.depth = message.depth;
+				state.pan = message.pan ?? 0;
+				state.rise = message.rise ?? 0;
 				if (state.reduced || state.still) {
 					state.depthEased = message.depth;
+					state.panEased = state.pan;
+					state.riseEased = state.rise;
 					draw();
 				}
 				break;
@@ -401,6 +424,8 @@ export function createNebula(
 					scale: scale(),
 					cost: backend.cost(),
 					skipped: state.skipped,
+					pan: state.panEased,
+					rise: state.riseEased,
 					backend: backend.name,
 				});
 				break;
