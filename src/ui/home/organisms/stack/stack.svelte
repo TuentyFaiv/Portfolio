@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { walk } from "#attach/walk.ts";
+	import { layers } from "#lib/content/stack.ts";
 	import { m } from "#lib/paraglide/messages.js";
+	import { walk } from "#lib/shared/walk.attach.ts";
 	import { Slide } from "#sharing/molecules/slide/index.ts";
-	import { layers } from "#utils/stack.ts";
 
 	import "./stack.css";
 </script>
@@ -13,7 +13,6 @@
 		<span class="stack__punchline">{m["translation:stack.title-end"]()}</span>
 	</h2>
 
-	<!-- In order: from what people see down to how it ships. -->
 	<ol class="layers" {@attach walk}>
 		{#each layers as { id, label, tools, used } (id)}
 			<li class="layers__layer">

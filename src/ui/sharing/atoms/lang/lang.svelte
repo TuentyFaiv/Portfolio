@@ -3,8 +3,8 @@
 
 	import { m } from "#lib/paraglide/messages.js";
 	import { getLocale } from "#lib/paraglide/runtime.js";
-	import { languages } from "#utils/languages.ts";
-	import { switchLocale } from "#utils/locale.svelte.ts";
+	import { languages } from "#lib/text/languages.ts";
+	import { switchLocale } from "#lib/text/locale.svelte.ts";
 
 	import "./lang.css";
 
@@ -12,7 +12,6 @@
 	let other = $derived<Locale>(current === "en" ? "es" : "en");
 </script>
 
-<!-- Switches in place, with no reload: the page keeps its scroll and this button its focus. -->
 <button
 	type="button"
 	class="language"

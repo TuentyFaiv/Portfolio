@@ -13,11 +13,6 @@
 	@apply block;
 }
 
-/*
- * One row per layer, joined by a line: each row draws its dot (::before) and the piece of
- * line down to the next dot (::after). The dot sits at the same height in every row, so
- * a piece exactly as tall as its row always lands on the next dot.
- */
 .layers {
 	--dot-y: 1.25rem;
 	--chip-bg: color-mix(in oklch, var(--primary) 15%, transparent);
@@ -27,7 +22,6 @@
 	@apply relative isolate w-full max-w-300;
 	margin-top: clamp(1.25rem, 5dvh, 3rem);
 
-	/* The soft glow from the design, low on the right. */
 	&::after {
 		@apply pointer-events-none absolute -z-10 content-[""];
 		top: 15%;
@@ -74,27 +68,22 @@
 		grid-area: name;
 	}
 
-	/* Phones: a quiet line of names. Wide screens: the design's chips. */
 	.layers__tools {
 		@apply mt-1 flex flex-wrap text-sm leading-normal;
 		grid-area: tools;
 		color: var(--text-muted);
 	}
-	/* The dot trails each name, so a wrapped line never starts with one. */
 	.layers__tool:not(:last-child)::after {
 		@apply mx-1.5;
 		content: "·" / "";
 	}
 
-	/* Phones show only names and tools, as in the design, so six rows fit one screen.
-	   Screen readers still get where each one was used. */
 	.layers__used {
 		@apply mt-0.5 text-[0.8125rem] leading-normal transition-colors duration-300 max-sm:sr-only;
 		grid-area: used;
 		color: var(--text-subtle);
 	}
 
-	/* Tablets and small laptops: the name beside its tools, still one line each. */
 	@variant sm {
 		.layers__layer {
 			@apply gap-x-6;
@@ -103,16 +92,11 @@
 		}
 	}
 
-	/* Wide screens: the design's three columns, chips included. */
 	@variant xl {
 		--dot-y: 50%;
 
-		/* The right column never reaches the slide rail, which sits just past the edge. */
 		padding-inline-end: clamp(0rem, 44rem - 50vw, 2.5rem);
 
-		/* Rows share the columns (subgrid): the chips column is as wide as the longest row of
-		   chips, so none wraps, and "used in" takes what is left. The first column counts the
-		   row's left padding and narrows below 1440px. */
 		@apply grid gap-x-6;
 		grid-template-columns: clamp(14.5rem, 100vw - 72.5rem, 17.5rem) auto minmax(14rem, 1fr);
 
@@ -144,13 +128,6 @@
 	}
 }
 
-/*
- * The walk: until the list is in view, names and tools wait in quieter colors (never below
- * 4.5:1).
- * Then each row plays a short animation from those colors to its own, one after another,
- * and the line draws down with them. Animations, not transitions, so hovering later is
- * never delayed. Only with motion allowed: otherwise every row is lit from the start.
- */
 @keyframes layers-wait-text {
 	from {
 		color: var(--text-subtle);
@@ -185,7 +162,6 @@
 				100% 0%,
 				auto;
 		}
-		/* "Used in" keeps its color: the subtler grey drops below 4.5:1 over the glow. */
 		.layers__name,
 		.layers__tool {
 			color: var(--text-subtle);
@@ -233,7 +209,6 @@
 	}
 }
 
-/* Hovering a row still colors its name and rings its dot, but the dot does not grow. */
 @media (prefers-reduced-motion: reduce) {
 	.layers .layers__layer::before {
 		transition: none;

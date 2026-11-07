@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { copyable } from "#attach/copyable.ts";
 	import config from "#config";
 	import { m } from "#lib/paraglide/messages.js";
+	import { copyable } from "#lib/shared/copyable.attach.ts";
 	import { Nebula } from "#sharing/atoms/nebula/index.ts";
 	import { Slide } from "#sharing/molecules/slide/index.ts";
 
@@ -25,7 +25,6 @@
 
 <Slide id="contact" label={m["translation:deck.contact"]()}>
 	<div class="contact">
-		<!-- A band of live nebula behind the slide: from the lede down, and into the links. -->
 		<div class="contact__band">
 			<Nebula scene="band" />
 		</div>
@@ -38,10 +37,6 @@
 		<p class="contact__lede">{m["translation:contact.lede"]()}</p>
 		<p class="contact__availability">{m["translation:contact.availability"]()}</p>
 
-		<!--
-			My contact details, hence <address>. The address opens a mail app; the copy button is
-			for people without one set up.
-		-->
 		<address class="contact__email">
 			<a class="contact__mail" href="mailto:{config.email}">{config.email}</a>
 			<button

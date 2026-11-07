@@ -2,9 +2,9 @@
 	import { page } from "$app/state";
 
 	import config from "#config";
+	import { collectTags, formatMonth, groupByYear } from "#lib/blog/posts.ts";
 	import { m } from "#lib/paraglide/messages.js";
 	import { getLocale } from "#lib/paraglide/runtime.js";
-	import { collectTags, formatMonth, groupByYear } from "#utils/blog.ts";
 
 	import "./post-list.css";
 

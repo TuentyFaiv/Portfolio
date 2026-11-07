@@ -4,14 +4,12 @@
 	<head>
 		<meta charset="utf-8">
 
-		<link rel="icon" href="/logo-3x.webp">
 		<link rel="manifest" href="/manifest.webmanifest">
 
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
 		<meta name="text-scale" content="scale">
 
-		<!-- Runs before the first paint, so a saved or system theme never flashes the wrong one. -->
 		<script nonce="%sveltekit.nonce%">
 			(() => {
 				let saved;
@@ -28,16 +26,36 @@
 		<script type="application/ld+json">
 			{
 				"@context": "https://schema.org",
-				"@type": "Person",
-				"name": "Tonalli López",
-				"alternateName": "tuentyfaiv",
-				"jobTitle": "Frontend Lead",
-				"description": "Software engineer focused on frontend",
-				"url": "https://tuentyfaiv.com",
-				"sameAs": [
-					"https://github.com/tuentyfaiv",
-					"https://www.linkedin.com/in/tuentyfaiv",
-					"https://x.com/tuentyfaiv"
+				"@graph": [
+					{
+						"@type": "Person",
+						"@id": "https://tuentyfaiv.com/#person",
+						"name": "Tonalli López",
+						"alternateName": "tuentyfaiv",
+						"jobTitle": "Frontend Lead",
+						"description": "Software engineer focused on frontend",
+						"url": "https://tuentyfaiv.com",
+						"address": {
+							"@type": "PostalAddress",
+							"addressLocality": "Mexico City",
+							"addressCountry": "MX"
+						},
+						"knowsAbout": ["Svelte", "TypeScript", "Rust", "Web accessibility"],
+						"sameAs": [
+							"https://github.com/tuentyfaiv",
+							"https://www.linkedin.com/in/tuentyfaiv",
+							"https://x.com/tuentyfaiv"
+						]
+					},
+					{
+						"@type": "WebSite",
+						"@id": "https://tuentyfaiv.com/#website",
+						"name": "tuentyfaiv",
+						"alternateName": "Tonalli López",
+						"url": "https://tuentyfaiv.com",
+						"inLanguage": ["en-US", "es-MX"],
+						"publisher": { "@id": "https://tuentyfaiv.com/#person" }
+					}
 				]
 			}
 		</script>

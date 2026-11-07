@@ -12,6 +12,6 @@
 		"moduleResolution": "bundler",
 		"types": ["$app/types", "./worker-configuration.d.ts", "node"]
 	},
-	"include": ["src", ".storybook", "*.ts"],
+	"include": ["src", "e2e", ".storybook", "*.ts"],
 	"exclude": ["src/service-worker"]
 }

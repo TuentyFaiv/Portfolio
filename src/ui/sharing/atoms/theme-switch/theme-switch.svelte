@@ -1,11 +1,11 @@
 <script lang="ts">
+	import { prefersReducedMotion } from "svelte/motion";
 	import { mode, toggleMode } from "mode-watcher";
 
 	import { m } from "#lib/paraglide/messages.js";
 
 	import "./theme-switch.css";
 
-	/** Resolves once the page carries the new theme class, so the snapshot shows it. */
 	function themeApplied(root: HTMLElement, dark: boolean) {
 		return new Promise<void>((resolve) => {
 			if (root.classList.contains("dark") === dark) return resolve();
@@ -14,7 +14,6 @@
 				if (root.classList.contains("dark") !== dark) return;
 
 				observer.disconnect();
-				// A live nebula draws on its own thread: wait for its new frame, briefly.
 				if (!document.querySelector(".nebula[data-ready]")) return resolve();
 				document.addEventListener("nebula:drawn", () => resolve(), { once: true });
 				window.setTimeout(resolve, 150);
@@ -28,16 +27,10 @@
 		});
 	}
 
-	/**
-	 * The new theme spreads in a circle from the button over the whole page. Without view
-	 * transitions, or with reduced motion, it simply switches.
-	 */
 	function switchTheme(event: MouseEvent) {
-		// Read here, never at load: this component also renders on the server.
 		const root = document.documentElement;
-		const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-		if (!document.startViewTransition || calm) return toggleMode();
+		if (!document.startViewTransition || prefersReducedMotion.current) return toggleMode();
 
 		const button = (event.currentTarget as HTMLElement).getBoundingClientRect();
 		const x = button.left + button.width / 2;

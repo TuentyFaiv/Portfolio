@@ -1,7 +1,7 @@
 <script lang="ts">
+	import { formatMonth } from "#lib/blog/posts.ts";
 	import { m } from "#lib/paraglide/messages.js";
 	import { getLocale } from "#lib/paraglide/runtime.js";
-	import { formatMonth } from "#utils/blog.ts";
 
 	import "./article.css";
 

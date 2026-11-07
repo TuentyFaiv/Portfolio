@@ -35,7 +35,6 @@
 		"next": "Next",
 		"scroll-hint": "Scroll or press space",
 		"swipe-hint": "Swipe",
-		"work-in-progress": "Work in progress",
 		"back-to-start": "Back to start"
 	},
 	"intro": {
@@ -86,7 +85,8 @@
 		"reveal-found": "You found every star. Few people do.",
 		"close": "Close",
 		"said-aloud": "twenty-five, said out loud",
-		"see-chart": "See it again"
+		"see-chart": "See it again",
+		"tagline": "TypeScript HTTP client"
 	},
 	"story-teaser": {
 		"years": "Jump to a year",
@@ -150,5 +150,13 @@
 		"not-found": "This page got lost.",
 		"unexpected": "Something broke on our side.",
 		"home": "Back home"
+	},
+	"seo": {
+		"home-title": "Tonalli López (tuentyfaiv) · Frontend Lead",
+		"home-description": "I'm Tonalli, a frontend engineer in Mexico City. I build web interfaces with Svelte, TypeScript and some Rust.",
+		"home-cover": "Tonalli López over a green nebula: online I'm tuentyfaiv, I build web interfaces with Svelte, TypeScript and some Rust",
+		"story-cover": "Since 2016: I started coding out of curiosity and went from freelancer to Frontend Lead",
+		"blog-cover": "The tuentyfaiv blog: notes on TypeScript, Svelte and Rust",
+		"project-cover": "{name}: {tagline}, with its constellation on the star chart"
 	}
 }

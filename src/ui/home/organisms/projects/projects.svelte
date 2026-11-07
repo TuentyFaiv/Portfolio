@@ -1,35 +1,34 @@
 <script lang="ts">
+	import { prefersReducedMotion } from "svelte/motion";
 	import { SvelteSet } from "svelte/reactivity";
 	import { replaceState } from "$app/navigation";
 
-	import { starChart } from "#attach/chart.ts";
 	import config from "#config";
 	import { Constellation } from "#home/molecules/constellation/index.ts";
+	import { slides } from "#lib/content/slides.ts";
 	import { m } from "#lib/paraglide/messages.js";
+	import { assign, swirl } from "#lib/projects/birth.ts";
+	import { starChart } from "#lib/projects/chart.attach.ts";
+	import { features, links, project, STOPS, STRAYS, slots, strays } from "#lib/projects/data.ts";
+	import { FINDER } from "#lib/projects/finder.ts";
+	import { pad } from "#lib/shared/format.ts";
+	import { quietly } from "#lib/shared/quietly.ts";
 	import { Nebula } from "#sharing/atoms/nebula/index.ts";
 	import { Slide } from "#sharing/molecules/slide/index.ts";
-	import { assign, swirl } from "#utils/birth.ts";
-	import { homeLeg, legs } from "#utils/chart.ts";
-	import { FINDER } from "#utils/finder.ts";
-	import { features, links, project, STOPS, STRAYS, slots, strays } from "#utils/projects.ts";
-	import { slides } from "#utils/slides.ts";
 
 	import "./projects.css";
 
 	import type { Attachment } from "svelte/attachments";
 
 	const KEY = "tuentyfaiv:strays";
-	/** The stop this tab was on, so a reload or a trip to another page comes back to it. */
 	const PLACE = "tuentyfaiv:stop";
 	const github = config.socials.find(({ content }) => content === "GitHub");
-	const pad = (value: number) => String(value).padStart(2, "0");
 	const number = pad(slides.findIndex(({ id }) => id === "projects") + 1);
 	const total = pad(slots.length);
 	const at = (id: (typeof links)[number][number]) =>
 		id === "core"
 			? { x: 50, y: 50 }
 			: (features.find((feature) => feature.id === id) ?? { x: 50, y: 50 });
-	/** Stop 0 is the intro; stop n is the nth constellation. */
 	const name = (stop: number) =>
 		stop === 0
 			? m["translation:projects.intro"]()
@@ -39,71 +38,38 @@
 	const stops = Array.from({ length: STOPS }, (_, stop) => stop);
 	const points = slots.map(({ at }) => at);
 	const sizes = slots.map(({ size }) => size);
-	/** The star each constellation's route runs through, in its drawing's 0 to 100 square. */
 	const lands = slots.map(({ shape }) => shape.stars[shape.land] ?? ([50, 50] as const));
-	/** The way home leaves from the last constellation's last star... */
 	const departure = slots.at(-1)?.shape.stars.at(-1) ?? ([50, 50] as const);
-	/** ...and comes into fetchzen at its Hooks star, on the outside, never through its core. */
 	const hooks = features.find(({ id }) => id === "hooks");
 	const arrival = [hooks?.x ?? 0, hooks?.y ?? 50] as const;
-	/**
-	 * Where a star of a constellation's drawing is on the map, before any camera: the drawing
-	 * is a square as big as its box's shorter side (a 4:3 box, as wide as its size).
-	 */
-	const onMap = (index: number, [x, y]: readonly [number, number]) => {
-		const [cx, cy] = points[index] ?? [0, 0];
-		const side = (sizes[index] ?? 1) * 0.75;
-
-		return [cx + (x / 100 - 0.5) * side, cy + (y / 100 - 0.5) * side] as const;
-	};
-	/**
-	 * The route between the constellations on the chart, one leg per step, through their
-	 * landing stars, and the way home from the last to the first. The chart draws them again
-	 * as the camera moves (#attach/chart.ts); these are where they start.
-	 */
-	const roads = legs(lands.map((star, index) => onMap(index, star)));
-	const way = homeLeg(onMap(slots.length - 1, departure), [
-		(points[0]?.[0] ?? 0) + (arrival[0] / 100 - 0.5) * (sizes[0] ?? 1),
-		(points[0]?.[1] ?? 0) + (arrival[1] / 100 - 0.5) * (sizes[0] ?? 1) * 0.75,
-	]);
-	/**
-	 * The reveal's stars: one for each constellation and one for each stray. They gather
-	 * into a newborn nebula and become the name.
-	 */
 	const born = [
 		...slots.map((_, index) => ({ kind: "constellation", index })),
 		...strays.map((_, index) => ({ kind: "stray", index })),
 	];
-	/** The name, letter by letter: the ones a Spanish ear hears (u, a, i) glow violet. */
 	const letters = [..."tuentyfaiv"].map((letter, index) => ({
 		letter,
 		heard: [1, 7, 8].includes(index),
 	}));
 
-	/** The stop in view: 0 is the intro, 1 to 7 the constellations. */
 	let current = $state(0);
-	/** The farthest stop this visit has reached: its landing stars stay lit. */
 	let farthest = $state(0);
-	/** On the last stop the forward arrow goes home, to the first constellation. */
 	const atEnd = $derived(current === STOPS - 1);
-	let found = new SvelteSet<number>();
+	const found = new SvelteSet<number>();
 	let toast = $state(false);
-	let inView = $state(false);
+	let inView = false;
 
 	let track = $state<HTMLElement>();
 	let reveal = $state<HTMLDialogElement>();
 	let toastTimer: ReturnType<typeof setTimeout> | undefined;
-	/** The stars are on their way home: the reveal closes when they arrive. */
 	let leaving = false;
 
-	const motion = () =>
-		window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth";
-
-	/** Slides the track to a stop. The track's own scrolling then sets `current`. */
 	function go(stop: number) {
 		if (!track || stop < 0 || stop >= STOPS) return;
 		arrive(stop);
-		track.scrollTo({ left: stop * track.clientWidth, behavior: motion() });
+		track.scrollTo({
+			left: stop * track.clientWidth,
+			behavior: prefersReducedMotion.current ? "instant" : "smooth",
+		});
 	}
 
 	function arrive(stop: number) {
@@ -111,10 +77,6 @@
 		farthest = Math.max(farthest, stop);
 	}
 
-	/**
-	 * From the last constellation back to the first, along the way home: the chart flies the
-	 * camera and moves the track (#attach/chart.ts); with reduced motion, it just lands.
-	 */
 	function loop() {
 		track?.closest(".journey")?.dispatchEvent(new Event("chart:loop"));
 	}
@@ -122,12 +84,7 @@
 	function find(index: number) {
 		if (found.has(index)) return;
 		found.add(index);
-		try {
-			localStorage.setItem(KEY, JSON.stringify([...found]));
-		} catch {
-			// Private windows can refuse storage: the strays are still found for this visit.
-		}
-		// The last one needs no toast: the reveal is its answer.
+		quietly(() => localStorage.setItem(KEY, JSON.stringify([...found])));
 		if (found.size === STRAYS) {
 			toast = false;
 			counted();
@@ -139,37 +96,19 @@
 		toastTimer = setTimeout(() => (toast = false), 2600);
 	}
 
-	/**
-	 * Tells the site that one more browser found every star (#utils/finder.ts): a random
-	 * id, kept in this browser so it counts once. Never in the way: no answer is awaited,
-	 * and a failure is silent.
-	 */
 	function counted() {
-		let id: string = crypto.randomUUID();
+		const id = quietly(() => localStorage.getItem(FINDER)) ?? crypto.randomUUID();
 
-		try {
-			const kept = localStorage.getItem(FINDER);
-
-			if (kept) id = kept;
-			else localStorage.setItem(FINDER, id);
-		} catch {
-			// Storage blocked: this find still counts, with an id of its own.
-		}
+		quietly(() => localStorage.setItem(FINDER, id));
 
 		fetch("/api/stars", {
 			method: "POST",
 			headers: { "content-type": "application/json" },
 			body: JSON.stringify({ id }),
 			keepalive: true,
-		}).catch(() => {
-			// Offline or refused: the reveal matters, the count does not.
-		});
+		}).catch(() => undefined);
 	}
 
-	/**
-	 * A click on the dialog itself (around the words and the art, not on them) closes it,
-	 * like Escape and the close button: always through close(), so the stars go home.
-	 */
 	const dismiss: Attachment<HTMLDialogElement> = (dialog) => {
 		const onClick = (event: MouseEvent) => {
 			if (event.target === dialog) close();
@@ -188,17 +127,10 @@
 		};
 	};
 
-	const reduced = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 	const glide = "cubic-bezier(0.45, 0, 0.2, 1)";
 	const ease = "cubic-bezier(0.2, 0.8, 0.2, 1)";
-	/** A screen point as a translate value. */
 	const px = ([x, y]: [number, number]) => `${x}px ${y}px`;
 
-	/**
-	 * Where a star lives on screen: a constellation's at its place on the chart, a stray at
-	 * its speck on its own stop. A stray on another stop is that many screens to the side,
-	 * so it comes from (and goes back to) the direction of its stop.
-	 */
 	function home(kind: string | undefined, index: number): [number, number] {
 		if (kind === "constellation") {
 			const rect = document
@@ -218,7 +150,6 @@
 		];
 	}
 
-	/** Where each star sits on the name right now: on its letter, as assign() shares them. */
 	function onTheName(reveal: HTMLDialogElement) {
 		const letters = [...reveal.querySelectorAll<HTMLElement>(".emblem__letter")];
 
@@ -236,9 +167,7 @@
 		);
 	}
 
-	/** The page around the reveal (header, footer, chart, track) fading out or back in. */
 	function fadePage(to: 0 | 1, duration: number) {
-		// Only what is showing: a hidden toast must not flash in on the way.
 		const parts = document.querySelectorAll<HTMLElement>(
 			".header, .deck, .chart, .journey__track, .track"
 		);
@@ -253,16 +182,10 @@
 			);
 	}
 
-	/**
-	 * Opens the reveal and plays the name's birth. Every star the visitor found flies in from
-	 * where it was, they circle and gather into one bright core while a nebula blooms around
-	 * it, then they burst out, land on the letters and melt into them as the name lights up
-	 * (u, a and i last). The words come after. With reduced motion it is simply there.
-	 */
 	function open() {
 		if (!reveal) return;
 		reveal.showModal();
-		if (reduced()) return;
+		if (prefersReducedMotion.current) return;
 
 		const name = reveal.querySelector(".emblem__name")?.getBoundingClientRect();
 		const letters = [...reveal.querySelectorAll<HTMLElement>(".emblem__letter")];
@@ -273,7 +196,6 @@
 		const targets = onTheName(reveal);
 		const birth = 3200;
 
-		// The page steps aside in step with the stars rising, not in one cut.
 		fadePage(0, 700);
 
 		reveal.querySelectorAll<HTMLElement>(".birth__star").forEach((star, order) => {
@@ -284,8 +206,7 @@
 			const landing =
 				(kind === "constellation" ? targets.constellations : targets.strays)[index] ?? core;
 
-			// Each leg eases on its own; the whole flight runs linearly, so the moments stay
-			// where the offsets say (an overall easing would rush them).
+			// Easing per keyframe with linear overall timing, or the offsets drift.
 			star.animate(
 				[
 					{ translate: px(start), opacity: 0, scale: 0.6, easing: ease },
@@ -307,16 +228,12 @@
 			],
 			{ duration: birth, fill: "backwards" }
 		);
-		// Only opacity and movement on the letters: a blur filter redrawn every frame on
-		// letters this big is what makes a browser stutter. Their glow is one blurred copy
-		// behind them, fading in once.
+		// No filter on the letters: a blur redrawn every frame at this size stutters.
 		letters.forEach((letter, index) => {
-			// The plain letters first, then the ones a Spanish ear hears.
 			const order = letter.dataset.heard === undefined ? index : 10 + index;
 
 			letter.animate(
 				{ opacity: [0, 1], translate: ["0 0.12em", "0 0"], scale: [0.9, 1] },
-				// As its stars land and melt into it.
 				{ duration: 700, delay: birth * 0.76 + order * 40, easing: ease, fill: "backwards" }
 			);
 		});
@@ -333,15 +250,9 @@
 			);
 	}
 
-	/**
-	 * Closes the reveal with the stars going home: the name breaks back into its stars, the
-	 * page comes back, and every star flies to where it was found (a constellation's to its
-	 * place on the chart, a stray's to its speck, off to the side if it hid on another stop).
-	 * With reduced motion it simply closes.
-	 */
 	function close() {
 		if (!reveal?.open || leaving) return;
-		if (reduced()) {
+		if (prefersReducedMotion.current) {
 			reveal.close();
 			return;
 		}
@@ -388,10 +299,6 @@
 		});
 	}
 
-	/**
-	 * Left and right travel along the track while the slide is in view, wherever the focus
-	 * is (up and down stay with the deck). Text fields and the reveal keep their keys.
-	 */
 	function onKey(event: KeyboardEvent) {
 		const step = { ArrowRight: 1, ArrowLeft: -1 }[event.key];
 		const target = event.target as HTMLElement | null;
@@ -400,22 +307,16 @@
 		if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
 		if (target?.closest("input, textarea, select, [contenteditable]")) return;
 		event.preventDefault();
-		// Forward from the last one goes home, like the arrow; back from the intro stays.
 		if (step === 1 && atEnd) loop();
 		else go(current + step);
 	}
 
-	/** Strays found on an earlier visit stay found (this browser only); keys work in view. */
 	const watch: Attachment<HTMLElement> = (element) => {
-		try {
-			const saved = JSON.parse(localStorage.getItem(KEY) ?? "[]") as unknown;
+		const saved = quietly(() => JSON.parse(localStorage.getItem(KEY) ?? "[]") as unknown);
 
-			if (Array.isArray(saved))
-				for (const index of saved)
-					if (Number.isInteger(index) && index >= 0 && index < STRAYS) found.add(index);
-		} catch {
-			// Nothing saved, or storage is blocked: start with none found.
-		}
+		if (Array.isArray(saved))
+			for (const index of saved)
+				if (Number.isInteger(index) && index >= 0 && index < STRAYS) found.add(index);
 
 		const observer = new IntersectionObserver(
 			([entry]) => {
@@ -424,7 +325,6 @@
 			{ threshold: 0.6 }
 		);
 
-		// A click on a stray's (generous) hit area finds it.
 		const onClick = (event: MouseEvent) => {
 			const hit = (event.target as Element).closest<SVGElement>("[data-stray]");
 
@@ -441,34 +341,19 @@
 		};
 	};
 
-	/** The stop a link asks for (?project=fetchzen), else the one this tab was on. */
 	function remembered(): number {
 		const id = new URLSearchParams(window.location.search).get("project");
 		const linked = slots.findIndex((slot) => slot.id === id);
 
 		if (linked >= 0) return linked + 1;
 
-		try {
-			const stop = Number(sessionStorage.getItem(PLACE));
+		const stop = Number(quietly(() => sessionStorage.getItem(PLACE)));
 
-			return Number.isInteger(stop) && stop > 0 && stop < STOPS ? stop : 0;
-		} catch {
-			return 0;
-		}
+		return Number.isInteger(stop) && stop > 0 && stop < STOPS ? stop : 0;
 	}
 
-	/**
-	 * Keeps the stop in view: in this tab (a reload or a trip to another page comes back to
-	 * it) and in the address, through SvelteKit's shallow routing (replaceState, never a
-	 * navigation), so a link opens the same project. Replacing, not pushing: the back button
-	 * still leaves the page instead of stepping through every constellation.
-	 */
 	function remember(stop: number) {
-		try {
-			sessionStorage.setItem(PLACE, String(stop));
-		} catch {
-			// Storage blocked: the address still carries it.
-		}
+		quietly(() => sessionStorage.setItem(PLACE, String(stop)));
 
 		const url = new URL(window.location.href);
 		const id = slots[stop - 1]?.id;
@@ -478,17 +363,9 @@
 			url.hash = "projects";
 		} else url.searchParams.delete("project");
 		if (url.href === window.location.href) return;
-		try {
-			replaceState(`${url.pathname}${url.search}${url.hash}`, {});
-		} catch {
-			// The router is not ready yet (the very first frames): the next stop will write it.
-		}
+		quietly(() => replaceState(`${url.pathname}${url.search}${url.hash}`, {}));
 	}
 
-	/**
-	 * However the track moves (a swipe, a trackpad, the buttons, or Tab reaching a link on
-	 * another stop), the stop in view is current, and it is remembered once the track rests.
-	 */
 	const follow: Attachment<HTMLElement> = (element) => {
 		let settle: ReturnType<typeof setTimeout> | undefined;
 		const onScroll = () => {
@@ -500,7 +377,6 @@
 		};
 		const start = remembered();
 
-		// Back where this visitor was, at once: no slide across the whole track on load.
 		if (start > 0)
 			requestAnimationFrame(() => {
 				element.scrollTo({ left: start * element.clientWidth, behavior: "instant" });
@@ -526,45 +402,32 @@
 		{@attach watch}
 		{@attach starChart(points, sizes, lands, departure, arrival)}
 	>
-		<!-- The live nebula, over a plain CSS sky; it travels with the chart's camera. -->
 		<div class="journey__sky">
 			<Nebula scene="slide" />
 		</div>
 
-		<!--
-			The star chart: every constellation on one map, joined by the route. A camera glides
-			along it as the track moves (#attach/chart.ts). A drawing only: each stop below says
-			in words what its constellation is.
-		-->
 		<div class="chart" data-chart aria-hidden="true">
 			<svg class="chart__route" data-route preserveAspectRatio="none" aria-hidden="true">
-				{#each roads as road, leg (leg)}
-					<path class="chart__road" d={road} data-road />
+				{#snippet trail(data: Record<string, string | number>)}
 					<path
 						class="chart__trail"
-						d={road}
 						pathLength="1"
 						stroke-dasharray="1 1"
 						stroke-dashoffset="1"
-						data-trail={leg}
+						{...data}
 					/>
+				{/snippet}
+				{#each slots.slice(1) as slot, leg (slot.id)}
+					<path class="chart__road" data-road />
+					{@render trail({ "data-trail": leg })}
 				{/each}
-				<!-- The way home, from the last constellation into fetchzen: on the whole map only. -->
 				<path
 					class="chart__road chart__road--home"
-					d={way}
 					pathLength="1"
 					stroke-dasharray="0.012 0.014"
 					data-home-road
 				/>
-				<path
-					class="chart__trail"
-					d={way}
-					pathLength="1"
-					stroke-dasharray="1 1"
-					stroke-dashoffset="1"
-					data-home-trail
-				/>
+				{@render trail({ "data-home-trail": "" })}
 			</svg>
 
 			{#each slots as slot, index (slot.id)}
@@ -575,7 +438,6 @@
 					data-passed={farthest > index || undefined}
 				>
 					{#if slot.lit}
-						<!-- fetchzen: native fetch at the center, what it does around it. -->
 						<div class="constellation">
 							<svg
 								class="constellation__links"
@@ -611,7 +473,7 @@
 								>
 							</p>
 
-							<!-- Placed by projects.css (the CSP blocks style attributes), matching the lines. -->
+							<!-- Placed in projects.css: the CSP blocks style attributes. -->
 							<ul class="constellation__features">
 								{#each features as { id, label, side } (id)}
 									<li class="constellation__feature" data-feature={id} data-side={side}>
@@ -623,7 +485,6 @@
 					{:else}
 						<Constellation shape={slot.shape} />
 					{/if}
-					<!-- Its number on the map (and fetchzen's name), as in the design. -->
 					<p class="chart__label">
 						{pad(index + 1)}
 						{#if slot.lit}
@@ -634,7 +495,6 @@
 			{/each}
 		</div>
 
-		<!-- The track: the intro, then one stop per constellation, side by side. -->
 		<div class="journey__track" data-chart-track bind:this={track} {@attach follow}>
 			{#each stops as stop (stop)}
 				{@const slot = slots[stop - 1]}
@@ -651,7 +511,6 @@
 							<p class="journey__lede">{m["translation:projects.surface-lede"]()}</p>
 						</hgroup>
 
-						<!-- Where the whole chart shows on the intro: the map of everything ahead. -->
 						<div class="journey__area" data-area aria-hidden="true"></div>
 					{:else if slot}
 						<article class="project">
@@ -724,10 +583,6 @@
 							</div>
 
 							{#if slot.lit}
-								<!--
-									What fetchzen does, in words. Its drawing is on the chart, right over this
-									box (data-focus), which keeps the drawing's place in the layout.
-								-->
 								<figure class="project__focus" data-focus aria-labelledby="constellation-title">
 									<figcaption id="constellation-title" class="sr-only">
 										{m["translation:projects.features"]()}
@@ -745,7 +600,6 @@
 						</article>
 					{/if}
 
-					<!-- This stop's strays. A game for the pointer: not in the tab order. -->
 					<svg class="strays" aria-hidden="true">
 						{#each strays as [where, x, y], index (index)}
 							{#if where === stop}
@@ -760,7 +614,6 @@
 			{/each}
 		</div>
 
-		<!-- How many strays are found, said aloud; the bar shows it as a star and a number. -->
 		<p class="journey__found sr-only" aria-live="polite">
 			{found.size > 0 ? m["translation:projects.found"]({ count: pad(found.size) }) : ""}
 		</p>
@@ -770,10 +623,6 @@
 			{m["translation:projects.found-hint"]()}
 		</p>
 
-		<!--
-			Along the bottom: back, the stop you are on, every stop on a little route (lit as far
-			as you are), forward. On the last stop, forward goes home to the first one.
-		-->
 		<fieldset class="track">
 			<legend class="sr-only">{m["translation:projects.constellations"]()}</legend>
 			<button
@@ -790,7 +639,6 @@
 				<span class="sr-only">{m["translation:projects.previous"]()}</span>
 			</button>
 
-			<!-- The stop's number and name, for the eye: each stop's button says it aloud. -->
 			<p class="track__plate" aria-hidden="true">
 				{#key current}
 					<span class="track__plate-text">
@@ -819,7 +667,6 @@
 				<p class="track__swipe" aria-hidden="true">{m["translation:projects.swipe"]()} ← →</p>
 			</div>
 
-			<!-- One button, so the focus stays on it when it turns into the way home. -->
 			<button
 				class="track__arrow"
 				type="button"
@@ -842,10 +689,11 @@
 				</span>
 			</button>
 
-			<!--
-				The strays found so far, closing the bar from the first find (a game for wide
-				screens). All eighteen: the star replays the reveal.
-			-->
+			{#snippet starIcon()}
+				<svg class="track__star" viewBox="0 0 24 24" aria-hidden="true">
+					<path d="M12 2l2.2 7.8L22 12l-7.8 2.2L12 22l-2.2-7.8L2 12l7.8-2.2z" />
+				</svg>
+			{/snippet}
 			{#if found.size > 0}
 				<span class="track__stars">
 					{#if found.size === STRAYS}
@@ -855,17 +703,13 @@
 							title={m["translation:projects.see-chart"]()}
 							onclick={open}
 						>
-							<svg class="track__star" viewBox="0 0 24 24" aria-hidden="true">
-								<path d="M12 2l2.2 7.8L22 12l-7.8 2.2L12 22l-2.2-7.8L2 12l7.8-2.2z" />
-							</svg>
+							{@render starIcon()}
 							<span aria-hidden="true">{pad(found.size)}</span>
 							<span class="sr-only">{m["translation:projects.see-chart"]()}</span>
 						</button>
 					{:else}
 						<span class="track__count" aria-hidden="true">
-							<svg class="track__star" viewBox="0 0 24 24" aria-hidden="true">
-								<path d="M12 2l2.2 7.8L22 12l-7.8 2.2L12 22l-2.2-7.8L2 12l7.8-2.2z" />
-							</svg>
+							{@render starIcon()}
 							{pad(found.size)}
 						</span>
 					{/if}
@@ -873,11 +717,6 @@
 			{/if}
 		</fieldset>
 
-		<!--
-			All eighteen found: the stars gather into a newborn nebula and become the name, with
-			how it is said under it, then the words. The name and its stars are a drawing; the
-			heading and the words beside them say it all.
-		-->
 		<dialog class="reveal" bind:this={reveal} aria-labelledby="reveal-title" {@attach dismiss}>
 			<button class="reveal__close" type="button" onclick={close}>
 				<svg class="journey__icon" viewBox="0 0 24 24" aria-hidden="true">
@@ -893,7 +732,6 @@
 						<span class="emblem__letter" data-heard={heard || undefined}>{letter}</span>
 					{/each}
 				</p>
-				<!-- The name's glow: one blurred copy behind it, so no letter carries a filter. -->
 				<p class="emblem__glow">
 					{#each letters as { letter, heard }, index (index)}
 						<span class="emblem__letter-glow" data-heard={heard || undefined}>{letter}</span>
@@ -911,7 +749,6 @@
 				<p class="reveal__found">{m["translation:projects.reveal-found"]()}</p>
 			</div>
 
-			<!-- The stars on their way: placed by the animation, unseen once it ends. -->
 			<div class="birth" aria-hidden="true">
 				{#each born as { kind, index }, order (order)}
 					<span class="birth__star" data-kind={kind} data-index={index}></span>

@@ -7,7 +7,6 @@ const FIREFOX =
 const CHROME =
 	"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36";
 
-/** Just enough WebGL for the backend to compile, link and report a hardware renderer. */
 function fakeGl() {
 	const noop = () => undefined;
 

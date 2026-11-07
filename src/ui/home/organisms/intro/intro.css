@@ -8,11 +8,6 @@
 	@apply relative isolate flex w-full max-w-300 flex-col items-center text-center;
 	gap: clamp(1rem, 3.5dvh, 2rem);
 
-	/*
-	 * Spanish runs longer: these keep the design's line breaks, and the same line heights,
-	 * so switching language moves nothing. The headline is smaller; the paragraph is a
-	 * little wider where the slide has room, and a little smaller where it does not.
-	 */
 	&:lang(es) {
 		--intro-title-scale: 0.8;
 
@@ -45,7 +40,6 @@
 		}
 	}
 
-	/* The glow behind everything. */
 	&::after {
 		@apply pointer-events-none absolute top-0 left-1/2 -z-10 -translate-x-1/2 rounded-full content-[""];
 		width: min(43.75rem, 130vw);
@@ -53,7 +47,6 @@
 		background: radial-gradient(closest-side, var(--intro-glow));
 	}
 
-	/* The logo: a background, so only the current theme's file downloads. */
 	&::before {
 		@apply block content-[""];
 		aspect-ratio: 1;
@@ -71,7 +64,6 @@
 		@apply font-heading font-semibold whitespace-pre-wrap uppercase;
 		color: var(--text-muted);
 	}
-	/* The full line from where it fits on one line (in Spanish too), the short one before. */
 	.intro__eyebrow--long {
 		@apply text-[0.8125rem] tracking-[0.27em] max-md:hidden;
 	}
@@ -82,10 +74,6 @@
 	.intro__title {
 		@apply w-full font-heading font-extrabold;
 		font-size: calc(min(11.3vw, 2.75rem) * var(--intro-title-scale));
-		/*
-		 * Phones: the Spanish paragraph needs one line more than the English one, and the
-		 * smaller headline's shorter lines make up for it, so the slide stays put.
-		 */
 		line-height: 1.04;
 		letter-spacing: -0.03em;
 		text-wrap: balance;
@@ -95,7 +83,6 @@
 
 		@variant sm {
 			font-size: calc(clamp(2.75rem, min(6vw, 9.6dvh), 5.375rem) * var(--intro-title-scale));
-			/* From the full size, so each line is as tall in every language. */
 			line-height: calc(clamp(2.75rem, min(6vw, 9.6dvh), 5.375rem) * 1.08);
 		}
 	}
@@ -136,7 +123,6 @@
 	stroke-linejoin: round;
 }
 
-/* Gradient text is transparent text over a background that forced colors removes. */
 @media (forced-colors: active) {
 	.intro .intro__title {
 		background: none;

@@ -1,6 +1,5 @@
 @reference "#styles/app.css";
 
-/* The years read as one line on wide screens and wrap evenly (four and four) on phones. */
 .story-teaser {
 	@apply flex max-w-200 flex-wrap justify-center gap-2 sm:gap-3;
 	margin-top: clamp(1rem, 5dvh, 3rem);

@@ -8,7 +8,6 @@
 	let { id, label, eyebrow, title, punchline, lede, action, children }: Props = $props();
 </script>
 
-<!-- A doorway to a page of its own: a short heading, maybe shortcuts, and the way in. -->
 <Slide {id} {label}>
 	<hgroup class="teaser">
 		{#if eyebrow}

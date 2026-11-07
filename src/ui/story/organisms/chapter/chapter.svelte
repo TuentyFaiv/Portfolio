@@ -1,6 +1,6 @@
 <script lang="ts">
+	import { chapterId } from "#lib/content/story.ts";
 	import { Slide } from "#sharing/molecules/slide/index.ts";
-	import { chapterId } from "#utils/story.ts";
 
 	import "./chapter.css";
 

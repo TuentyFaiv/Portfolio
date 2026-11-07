@@ -1,21 +1,11 @@
 @reference "#styles/app.css";
 
-/*
- * "Into the nebula": one screen, like every other slide. Up and down still move between
- * slides; left and right travel along a track of stops: the intro, then one constellation
- * per project. The track is a sideways scroller, so swipes and trackpads move it natively,
- * and a camera over the star chart behind it follows wherever it is.
- */
 .slide:has(> .journey) {
 	@apply p-0;
 }
 
 .journey {
 	@apply relative isolate h-dvh w-full;
-	/*
-	 * Violet words about the strays (the count, the toast's title): the darker violet on
-	 * light, the lighter one on dark, so small text keeps 4.5:1 over the bar and the toast.
-	 */
 	--stray-text: var(--accent);
 
 	.dark & {
@@ -23,11 +13,6 @@
 	}
 }
 
-/*
- * Behind the track: a plain CSS sky for browsers without a GPU API and before the first
- * frame, the live nebula over it, and a scrim (::after) that keeps the text readable: the
- * left column on wide screens, the lower half on phones.
- */
 .journey__sky {
 	@apply pointer-events-none absolute inset-0 -z-10 overflow-hidden;
 	background:
@@ -64,7 +49,6 @@
 	}
 }
 
-/* More contrast wins over atmosphere: a plain background behind the text. */
 @media (prefers-contrast: more), (forced-colors: active) {
 	.journey__sky,
 	.dark .journey__sky {
@@ -82,11 +66,8 @@
 	stroke-linejoin: round;
 }
 
-/* The track: one screen-wide stop after another ------------------------------------ */
-
 .journey__track {
 	@apply relative z-1 flex size-full snap-x snap-mandatory overflow-x-auto overflow-y-hidden;
-	/* A swipe past either end never turns into the browser's back or forward gesture. */
 	overscroll-behavior-x: contain;
 	scrollbar-width: none;
 
@@ -95,23 +76,14 @@
 	}
 }
 
-/*
- * Each stop fills the screen. The bottom padding keeps its content clear of the track's
- * controls and the deck footer under them.
- */
 .stop {
 	@apply relative flex h-full w-full flex-none snap-start snap-always flex-col items-center justify-center px-6 pt-22 pb-41 sm:px-16 sm:pt-23 lg:pb-36;
 
-	/* A stop's words fade as the camera leaves it (--near, from #attach/chart.ts), so the
-	   chart has the screen to itself on the way. */
 	> * {
 		opacity: var(--near, 1);
 	}
 }
 
-/* The intro --------------------------------------------------------------------------- */
-
-/* Short phones (an iPhone SE): a little less room above, so the constellation keeps its own. */
 @media (height < 45rem) and (width < 64rem) {
 	.stop {
 		@apply pt-19;
@@ -140,10 +112,6 @@
 	color: var(--text-muted);
 }
 
-/*
- * Where the whole chart shows on the intro: under the words on phones, and on the right
- * half on wide screens, from the header down to the controls, as in the design.
- */
 .journey__area {
 	@apply mx-auto mt-[clamp(1rem,4dvh,3rem)] min-h-24 w-full max-w-300 flex-1;
 
@@ -152,19 +120,8 @@
 	}
 }
 
-/* The star chart ------------------------------------------------------------------ */
-
-/*
- * Between the sky and the track. #attach/chart.ts places and sizes every constellation and
- * the route for the camera; until it has measured the page, the chart waits unseen.
- */
 .chart {
 	@apply pointer-events-none absolute inset-0 overflow-hidden transition-opacity duration-500;
-	/*
-	 * Past the intro (--veil goes to 1), the map stays out of the words: under the
-	 * constellation's box on phones (--veil-y), the left column on wide screens. It always
-	 * fades out under the header.
-	 */
 	mask-image:
 		linear-gradient(to bottom, transparent 4rem, #000 7rem),
 		linear-gradient(
@@ -194,28 +151,17 @@
 	contain: layout style;
 }
 
-/* The route: a faint line through every constellation, lit as far as you have been. */
 .chart__road,
 .chart__trail {
 	fill: none;
 	stroke-linecap: round;
 }
-/*
- * Widths and the lit length are SVG attributes set by #attach/chart.ts, not CSS: Gecko
- * drops a stroke width computed with calc() from a number, and the route turned into a
- * band a whole constellation wide there.
- */
 .chart__road {
 	stroke: color-mix(in oklch, var(--primary) 28%, transparent);
 }
 .chart__trail {
 	stroke: color-mix(in oklch, var(--primary) 75%, transparent);
 }
-/*
- * The way home: the same faint line, dashed (its dashes are attributes, like the widths).
- * It closes the loop on the whole map and fades as the camera leaves for the stops, so no
- * stop ever shows it crossing a constellation.
- */
 .chart__road--home,
 [data-home-trail] {
 	opacity: calc(1 - var(--veil, 0));
@@ -224,7 +170,6 @@
 	stroke: color-mix(in oklch, var(--primary) 40%, transparent);
 }
 
-/* A landing star you have been to: lit, like the route that reached it. */
 .chart__place[data-passed] .constellation-shape__star[data-land] {
 	stroke: var(--primary);
 }
@@ -232,7 +177,6 @@
 	opacity: 1;
 }
 
-/* Each constellation's number under it, on the map only: its own stop names it in words. */
 .chart__label {
 	@apply absolute top-full left-0 mt-1 font-heading text-[0.6875rem] leading-4 tracking-[0.14em] whitespace-nowrap;
 	color: var(--text-muted);
@@ -243,11 +187,6 @@
 	}
 }
 
-/*
- * fetchzen's drawing on the chart: its words and its hub show only on its own stop
- * (--focus is 1 there); anywhere else it is a constellation like the others, with a plain
- * star at its center.
- */
 .chart__place .constellation::after {
 	@apply absolute top-1/2 left-1/2 size-2.5 -translate-1/2 rounded-full bg-primary content-[""];
 	opacity: calc(1 - var(--focus, 1));
@@ -264,9 +203,6 @@
 	stroke-width: 0.25;
 }
 
-/* The strays, the found counter, the toast ------------------------------------------- */
-
-/* Faint specks until found, then the accent color. Only their hit areas catch the pointer. */
 .strays {
 	@apply pointer-events-none absolute inset-0 z-2 size-full overflow-visible max-lg:hidden;
 }
@@ -301,13 +237,6 @@
 	color: var(--stray-text);
 }
 
-/* The track's controls, along the bottom ------------------------------------------- */
-
-/*
- * Wide screens: a pill in the middle: back, the stop you are on, every stop on a little
- * route, forward. Phones: the arrows at the edges, the route between them and a swipe hint
- * under it, as in the design. Nothing in it moves as you travel: only colors change.
- */
 .track {
 	@apply absolute inset-x-6 bottom-23 z-3 m-0 flex min-w-0 items-center justify-between gap-3 border-0 p-0 sm:inset-x-16 sm:bottom-24;
 
@@ -325,7 +254,6 @@
 	&[aria-disabled] {
 		@apply pointer-events-none opacity-35;
 	}
-	/* On the last stop, forward is the way home: drawn in the route's color. */
 	&[data-home] {
 		@apply border-primary text-primary;
 	}
@@ -334,7 +262,6 @@
 	}
 }
 
-/* The stop you are on, named: as wide as the longest name needs, so nothing shifts. */
 .track__plate {
 	@apply w-40 overflow-hidden whitespace-nowrap max-lg:hidden;
 }
@@ -360,10 +287,6 @@
 	@apply flex items-center;
 }
 
-/*
- * The little route: a leg from each stop back to the one before it, lit up to the stop you
- * are on, with a small gap at each dot (a wider one at the current star's halo).
- */
 .track__leg {
 	@apply relative grid place-items-center px-0.5 lg:px-1;
 	--from: 0.4375rem;
@@ -387,7 +310,6 @@
 	}
 }
 
-/* A dot for every stop (a 24px target): lit where you have been, hollow ahead. */
 .track__stop {
 	@apply relative grid size-6 place-items-center rounded-full;
 
@@ -409,17 +331,15 @@
 		@apply outline-2 outline-offset-2 outline-primary;
 	}
 
-	/* The stop you are on: a star with a halo. */
 	&[aria-current]::before {
 		@apply size-2.5 rotate-0 rounded-full border-primary bg-primary;
-		/* A soft glow, and a thin ring at its edge (an outline: shadows stack, never ring). */
+		/* Outline, not a second shadow: stacked spread shadows fill instead of ringing. */
 		box-shadow: 0 0 0 0.25rem color-mix(in oklch, var(--primary) 22%, transparent);
 		outline: 1px solid var(--primary);
 		outline-offset: calc(0.25rem - 1px);
 	}
 }
 
-/* High contrast: the legs and dots in system colors, the way so far highlighted. */
 @media (forced-colors: active) {
 	.track__leg + .track__leg::before {
 		background: CanvasText;
@@ -441,10 +361,6 @@
 	}
 }
 
-/*
- * The strays found, closing the bar after a hairline: a violet star and a number. Once all
- * are found it is a button that replays the reveal.
- */
 .track__stars {
 	@apply flex items-center gap-3 border-l pl-3 max-lg:hidden;
 	border-color: color-mix(in oklch, var(--foreground) 12%, transparent);
@@ -478,17 +394,11 @@
 	color: var(--text-subtle);
 }
 
-/* A constellation's stop ------------------------------------------------------------ */
-
 .project__crumbs {
 	@apply font-heading text-[0.6875rem] leading-4 font-semibold tracking-[0.25em] whitespace-nowrap uppercase;
 	color: var(--text-muted);
 }
 
-/*
- * Phones and tablets: the constellation above the text. The chips wait for a wide screen;
- * the facts and the links stay.
- */
 @media (width < 64rem) {
 	.project {
 		.project__tools {
@@ -501,7 +411,6 @@
 			max-width: min(100%, 22rem, 30dvh * 4 / 3);
 		}
 
-		/* Short phones (an iPhone SE): a smaller constellation. */
 		@media (height < 45rem) {
 			.project__focus {
 				max-width: min(100%, 23dvh * 4 / 3);
@@ -510,14 +419,6 @@
 	}
 }
 
-/* The reveal: all eighteen found ------------------------------------------------ */
-
-/*
- * The whole screen, on the slide's own live nebula: the page around it steps aside (its
- * words, the chart, the track, the header and the deck footer fade out) and no dimming
- * backdrop covers the sky. The name sits in the middle, the words under it, as in the
- * design.
- */
 .reveal {
 	@apply m-0 flex h-dvh max-h-none w-full max-w-none flex-col items-center justify-center gap-[clamp(1.5rem,5dvh,3rem)] overflow-hidden bg-transparent p-6 text-center;
 	color: var(--foreground);
@@ -537,7 +438,6 @@
 	@apply opacity-0;
 }
 
-/* Escape and a click around the art close it too; this is the visible way out. */
 .reveal__close {
 	@apply fixed top-4 right-4 z-1 grid size-11 place-items-center rounded-full border transition-colors duration-200 hover:border-primary hover:text-primary sm:top-6 sm:right-6;
 	border-color: color-mix(in oklch, var(--foreground) 15%, transparent);
@@ -548,7 +448,6 @@
 	}
 }
 
-/* The words, on a soft veil of the page color so they read over any cloud. */
 .reveal__words {
 	@apply relative flex max-w-120 flex-col items-center gap-4;
 
@@ -570,7 +469,6 @@
 .reveal__punchline {
 	@apply block;
 }
-/* Balanced lines, so "twenty-five" is not split at its hyphen across two lines. */
 .reveal__body {
 	@apply text-base leading-relaxed text-balance sm:text-lg;
 }
@@ -579,7 +477,6 @@
 	color: var(--text-muted);
 }
 
-/* The name in nebula light, a bloom of both brand colors behind it. */
 .emblem {
 	@apply pointer-events-none relative flex w-full flex-col items-center gap-3;
 }
@@ -623,10 +520,6 @@
 	}
 }
 
-/*
- * The glow: the same name, blurred, right behind it. One filter on a still layer, drawn
- * once, instead of a drop shadow on every letter redrawn while the letters animate.
- */
 .emblem__glow {
 	@apply absolute top-0 left-1/2 -z-1 -translate-x-1/2 font-heading leading-none font-extrabold whitespace-nowrap;
 	font-size: clamp(3rem, 13vw, 10rem);
@@ -634,10 +527,7 @@
 	filter: blur(0.14em);
 	opacity: 0.7;
 }
-/*
- * Under the name, clear of its glow (the y's tail glows furthest down), with a halo of
- * the page's color: the line keeps 4.5:1 even where the glow still reaches.
- */
+/* Below the glow's reach, or the line drops under 4.5:1. */
 .emblem__said {
 	@apply mt-5 text-base italic sm:mt-7 sm:text-xl;
 	color: var(--foreground);
@@ -648,13 +538,11 @@
 		0 0 1.5rem var(--background);
 }
 
-/* The found stars on their way to the name: unseen until the animation moves them. */
 .birth {
 	@apply pointer-events-none fixed inset-0;
 }
 .birth__star {
 	will-change: translate, scale, opacity;
-	/* Centered on its point by margins: the animation owns translate. */
 	@apply absolute top-0 left-0 -m-0.75 size-1.5 rounded-full opacity-0;
 	background: var(--accent);
 	box-shadow: 0 0 0.75rem 0.25rem color-mix(in oklch, var(--accent) 60%, transparent);
@@ -680,18 +568,11 @@
 	}
 }
 
-/* The project, landed: text on the left, its constellation on the right ---------- */
-
-/*
- * Phones and tablets: the constellation above the text. Large screens: the text on the
- * left and the constellation on the right, as in the design.
- */
 .project {
 	@apply grid w-full max-w-300 items-center;
 	row-gap: clamp(0.75rem, 2.5dvh, 1.75rem);
 	grid-template-areas: "figure" "text";
 
-	/* The right edge never reaches the slide rail, which sits just past it. */
 	@variant sm {
 		padding-inline-end: clamp(0rem, 44rem - 50vw, 2.5rem);
 	}
@@ -728,7 +609,6 @@
 .project__tools {
 	@apply flex flex-wrap gap-2;
 
-	/* Short phones: the facts and the links matter more than the tool list. */
 	@media (height < 45rem) and (width < 64rem) {
 		@apply sr-only;
 	}
@@ -739,7 +619,6 @@
 	color: var(--headline-to);
 }
 
-/* Three facts in a row between two hairlines. */
 .project__facts {
 	@apply grid w-full grid-cols-[auto_auto_auto] justify-start gap-x-6 border-y py-4 sm:grid-cols-3 sm:py-5;
 	border-color: color-mix(in oklch, var(--foreground) 10%, transparent);
@@ -751,7 +630,6 @@
 	dd {
 		@apply mt-1.5 text-[0.9375rem] leading-6 font-medium sm:text-base;
 
-		/* Short phones: each fact stays on one line. */
 		@media (height < 45rem) and (width < 64rem) {
 			@apply text-sm;
 		}
@@ -779,10 +657,6 @@
 	stroke-linejoin: round;
 }
 
-/*
- * Where a stop's constellation goes: an empty box in the layout, which the chart's camera
- * lands the constellation on. Phones get a wider, shorter box so the text fits under it.
- */
 .project__focus {
 	@apply mx-auto w-full;
 	grid-area: figure;
@@ -795,21 +669,15 @@
 
 	@variant lg {
 		@apply mx-0 justify-self-end;
-		/* Never taller than the room between the header and the track's controls. */
 		max-width: min(100%, 40rem, 100dvh - 16rem);
 		aspect-ratio: 1;
 	}
 
-	/* Short phones (an iPhone SE): a smaller sky, so the text still fits under it. */
 	@media (height < 45rem) and (width < 64rem) {
 		max-width: 16rem;
 	}
 }
 
-/*
- * fetchzen's constellation: lines in an SVG that stretches with the box, stars and labels
- * in HTML on top, placed by percentage, so the words stay crisp and translatable.
- */
 .constellation {
 	--star: 0.625rem;
 	--halo: color-mix(in oklch, var(--primary) 30%, transparent);
@@ -820,7 +688,6 @@
 		--star: 0.75rem;
 	}
 
-	/* The core's glow, behind everything. */
 	&::before {
 		@apply pointer-events-none absolute top-1/2 left-1/2 -z-1 size-[34%] -translate-1/2 rounded-full content-[""];
 		background: radial-gradient(closest-side, var(--halo), transparent);
@@ -837,7 +704,6 @@
 	}
 }
 
-/* The hub: its star, then the name over the note. */
 .constellation__core {
 	@apply absolute top-1/2 left-1/2 grid -translate-1/2 grid-cols-[auto_auto] items-center gap-x-2.5 rounded-full border border-primary px-4 py-2 whitespace-nowrap backdrop-blur-sm lg:gap-x-3 lg:px-5 lg:py-3;
 	background: color-mix(in oklch, var(--background) 72%, transparent);
@@ -854,13 +720,11 @@
 	@apply block text-[0.6875rem] leading-4 lg:text-[0.8125rem];
 	color: var(--text-muted);
 
-	/* Short phones: the hub would cover the labels beside it. */
 	@media (height < 45rem) and (width < 64rem) {
 		@apply hidden;
 	}
 }
 
-/* Each star is the point (x, y); its label sits under it, or beside it on wide screens. */
 .constellation__feature {
 	@apply absolute flex flex-col items-center gap-1.5 text-xs leading-4 font-semibold whitespace-nowrap text-foreground;
 	left: var(--x);
@@ -887,7 +751,6 @@
 	}
 }
 
-/* Where each star sits: the same points as in #utils/projects.ts, which draws the lines. */
 .constellation__feature {
 	&[data-feature="typed"] {
 		--x: 21.9%;
@@ -915,7 +778,6 @@
 	}
 }
 
-/* The stars breathe, one after another. Only with motion allowed; otherwise they hold still. */
 @keyframes constellation-breathe {
 	50% {
 		opacity: 0.55;

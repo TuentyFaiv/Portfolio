@@ -8,13 +8,13 @@
 	import "./header.css";
 
 	import { onMount } from "svelte";
+	import { prefersReducedMotion } from "svelte/motion";
 
+	import { blank, play } from "#lib/text/retext.ts";
 	import { Lang } from "#sharing/atoms/lang/index.ts";
 	import { Socials } from "#sharing/atoms/socials/index.ts";
 	import { ThemeSwitch } from "#sharing/atoms/theme-switch/index.ts";
-	import { blank, play } from "#utils/retext.ts";
 
-	// Messages, not strings: the markup calls them, so a language switch rewrites the labels.
 	const links = [
 		{ content: m["translation:home"], href: resolve("/") },
 		{ content: m["translation:story"], href: resolve("/story") },
@@ -26,21 +26,17 @@
 
 	let menu = $state<HTMLElement>();
 
-	/** Picking a link keeps the header mounted, so the phone menu closes itself here. */
 	function closeMenu() {
 		if (menu?.matches(":popover-open")) menu.hidePopover();
 	}
 
 	let scrambling = false;
 
-	const prefersReducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
 	async function scrambleLogo(event: Event) {
-		if (scrambling || prefersReducedMotion()) return;
+		if (scrambling || prefersReducedMotion.current) return;
 
 		const logo = event.currentTarget as HTMLElement;
 
-		// Scrambled letters are wider, so hold the width or the icons beside it jitter.
 		scrambling = true;
 		logo.style.width = `${logo.getBoundingClientRect().width}px`;
 
@@ -61,16 +57,13 @@
 	}
 
 	onMount(async () => {
-		// Only pointer devices show this hello: phones skip the download and the work.
-		if (prefersReducedMotion() || !window.matchMedia("(hover: hover)").matches) return;
+		if (prefersReducedMotion.current || !window.matchMedia("(hover: hover)").matches) return;
 
 		const links = [...document.querySelectorAll<HTMLElement>(".header__link")];
 
-		// The links scramble in place (holding their size): they follow the language, so their
-		// text must stay Svelte's.
 		play(blank(links));
 
-		// The logo never changes language, so anime.js may own it.
+		// anime.js may own the logo's text: it never changes language. Other text stays Svelte's.
 		const { animate, scrambleText } = await import("animejs");
 		const logo = document.querySelector<HTMLElement>(".header__logo");
 
@@ -101,7 +94,6 @@
 		<Socials variant="reveal" />
 	</div>
 	<nav class="header__nav" aria-label={m["translation:main-nav"]()}>
-		<!-- Native popover: opens, closes and handles Escape with no JavaScript at all. -->
 		<button
 			type="button"
 			class="header__burguer"

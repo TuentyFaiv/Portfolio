@@ -35,7 +35,6 @@
 		"next": "Siguiente",
 		"scroll-hint": "Haz scroll o presiona espacio",
 		"swipe-hint": "Desliza",
-		"work-in-progress": "En construcción",
 		"back-to-start": "Volver al inicio"
 	},
 	"intro": {
@@ -86,7 +85,8 @@
 		"reveal-found": "Encontraste todas las estrellas. Pocas personas lo logran.",
 		"close": "Cerrar",
 		"said-aloud": "twenty-five, dicho en voz alta",
-		"see-chart": "Verlo de nuevo"
+		"see-chart": "Verlo de nuevo",
+		"tagline": "cliente HTTP para TypeScript"
 	},
 	"story-teaser": {
 		"years": "Ir a un año",
@@ -150,5 +150,13 @@
 		"not-found": "Esta página se perdió.",
 		"unexpected": "Algo falló de nuestro lado.",
 		"home": "Volver al inicio"
+	},
+	"seo": {
+		"home-title": "Tonalli López (tuentyfaiv) · Líder de Frontend",
+		"home-description": "Soy Tonalli, ingeniero frontend en la Ciudad de México. Hago interfaces web con Svelte, TypeScript y algo de Rust.",
+		"home-cover": "Tonalli López sobre una nebulosa verde: en internet soy tuentyfaiv, hago interfaces web con Svelte, TypeScript y algo de Rust",
+		"story-cover": "Desde 2016: empecé a programar por curiosidad y pasé de freelance a líder de frontend",
+		"blog-cover": "El blog de tuentyfaiv: notas sobre TypeScript, Svelte y Rust",
+		"project-cover": "{name}: {tagline}, con su constelación en la carta estelar"
 	}
 }

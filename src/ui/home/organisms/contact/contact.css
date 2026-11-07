@@ -1,6 +1,5 @@
 @reference "#styles/app.css";
 
-/* The soft glow from the design, low on the left. */
 .slide:has(> .contact)::before {
 	@apply pointer-events-none absolute -z-10 content-[""];
 	top: 40%;
@@ -15,14 +14,7 @@
 	);
 }
 
-/*
- * Phones and tablets: one column. Large screens: the pitch on the left, the other ways to
- * reach me on the right, settled low like in the design. There the grid fills the slide's
- * height (the empty rows above and below keep it centered), so the band can run down to
- * the slide's bottom edge.
- */
 .contact {
-	/* The space kept free at the end; the band's fade is measured from the links past it. */
 	--contact-end: 0rem;
 
 	@apply relative isolate grid w-full max-w-300 items-start;
@@ -30,7 +22,6 @@
 	grid-template-areas: "heading" "lede" "availability" "email" "elsewhere";
 	padding-inline-end: var(--contact-end);
 
-	/* The right edge never reaches the slide rail, which sits just past it. */
 	@variant sm {
 		--contact-end: clamp(0rem, 44rem - 50vw, 2.5rem);
 	}
@@ -70,23 +61,12 @@
 	@apply flex items-start gap-2.5 text-[0.9375rem] leading-normal font-semibold sm:text-base;
 	grid-area: availability;
 
-	/* Centered on the first line, so a wrapped sentence keeps its dot at the start. */
 	&::before {
 		@apply size-2 shrink-0 rounded-full bg-primary content-[""];
 		margin-top: calc((1lh - 0.5rem) / 2);
 	}
 }
 
-/*
- * The band of live nebula, as in the design: it rises behind the lede and runs down past
- * the email, on two columns into the links. The shader fades its clouds out along ragged
- * edges; the clear length at the bottom keeps them off the footer.
- *
- * Where muted text sits on it, a veil of page color lets only 18% of the clouds through,
- * so it stays above 4.5:1 over the brightest cloud: over the lede rows, over the links on
- * one column, and behind the sign-off on two columns. The link names are bright enough to
- * sit on the clouds as the band fades out across them.
- */
 .contact__band {
 	--nebula-clear-top: 0rem;
 	--nebula-clear-bottom: 0rem;
@@ -94,20 +74,13 @@
 	@apply pointer-events-none absolute -inset-x-6 -top-8 -bottom-4 -z-2 sm:-inset-x-16;
 	grid-area: lede-start / 1 / elsewhere-end / 2;
 
-	/*
-	 * Two columns: from the screen's left edge into the links column, fading out by its
-	 * middle as in the design; down to the slide's bottom edge (past its 7.5 rem footer
-	 * padding).
-	 */
 	@variant lg {
 		--nebula-clear-bottom: 6rem;
 
 		grid-area: lede-start / 1 / -1 / -1;
 		bottom: -7.5rem;
-		/* The grid is centered in the slide: its left edge is the slide padding or the margin. */
 		left: calc(-1 * max(4rem, (100vw - 75rem) / 2));
 		right: 0;
-		/* Fading out across the first half of the links column (26.25 rem wide); none past it. */
 		mask-image: linear-gradient(
 			to left,
 			transparent calc(var(--contact-end) + 13.125rem),
@@ -117,12 +90,6 @@
 	}
 }
 
-/*
- * The veils: over the lede and availability rows, over the links on one column, and behind
- * the sign-off on two. Each reaches 3 rem past its text and fades over that distance, so it
- * reads as a soft shadow in the clouds, never as a box. (An absolute grid area ends where
- * the row gap starts, hence the insets.)
- */
 .contact::before,
 .contact::after,
 .elsewhere__sign-off::before {
@@ -141,12 +108,10 @@
 	grid-area: elsewhere;
 	inset: -3rem;
 
-	/* Two columns: the band fades out across the links, and only the sign-off needs a veil. */
 	@variant lg {
 		@apply hidden;
 	}
 }
-/* Only as far as the clouds reach, the middle of the links, so it never shows as a box. */
 .elsewhere__sign-off::before {
 	@apply hidden;
 	inset: -3rem 50% -3rem -3rem;
@@ -156,11 +121,6 @@
 	}
 }
 
-/*
- * One frosted button, the size of every other button on the site: the address opens a
- * mail app, the icon beside it copies. The frost is 70% page color, enough to keep the
- * text above 4.5:1 over the brightest cloud.
- */
 .contact__email {
 	grid-area: email;
 	@apply relative mt-3 flex w-full items-stretch rounded-full border not-italic border-foreground/10 font-heading text-[0.8125rem] leading-4 font-semibold tracking-widest text-foreground backdrop-blur-lg transition-[border-color] duration-200 sm:w-max;
@@ -178,7 +138,6 @@
 .contact__mail {
 	@apply flex-1 justify-center py-3.5 pr-1.25 pl-5.5 sm:flex-none;
 
-	/* Without the copy button the pill keeps even padding. */
 	&:has(+ [hidden]) {
 		@apply pr-5.5;
 	}
@@ -202,10 +161,6 @@
 .contact__copy[data-status="copied"] .contact__icon--done {
 	@apply block;
 }
-/*
- * Read out by screen readers as it changes. A copy shows only the check on the button; a
- * failed copy has no check, so it says so for a moment on its own frosted tag.
- */
 .contact__status {
 	@apply pointer-events-none absolute top-full right-0 mt-2 font-sans text-[0.8125rem] font-semibold tracking-normal whitespace-nowrap text-primary sm:top-1/2 sm:right-auto sm:left-full sm:mt-0 sm:ml-3 sm:-translate-y-1/2;
 
@@ -224,14 +179,11 @@
 
 	@variant lg {
 		align-self: end;
-		/* Settles a little lower than the pitch, as in the design. */
 		margin-bottom: -2rem;
 	}
 }
-/* Phones show the links alone, as in the design; screen readers still get the heading. */
 .elsewhere__title {
 	@apply pb-3 font-heading text-[0.6875rem] font-semibold tracking-[0.23em] uppercase max-sm:sr-only;
-	/* Muted, not subtle: on tablets the glow sits behind it, and subtle drops below 4.5:1. */
 	color: var(--text-muted);
 }
 .elsewhere__link {
@@ -276,7 +228,6 @@
 	color: var(--text-muted);
 }
 
-/* The arrow holds still. (The band draws one still frame on its own.) */
 @media (prefers-reduced-motion: reduce) {
 	.contact .elsewhere__arrow {
 		translate: none;

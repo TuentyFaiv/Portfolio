@@ -1,6 +1,5 @@
 @reference "#styles/app.css";
 
-/* Any constellation's drawing: lit (a project) or undiscovered (a place for the next one). */
 .constellation-shape {
 	@apply block size-full overflow-visible;
 
@@ -21,7 +20,6 @@
 		stroke-width: 1;
 		vector-effect: non-scaling-stroke;
 	}
-	/* Dark until the page says this star has been reached (the chart's [data-passed]). */
 	.constellation-shape__core {
 		fill: var(--primary);
 		opacity: 0;
@@ -29,32 +27,14 @@
 	}
 }
 
-.constellation-shape--lit {
-	.constellation-shape__line {
-		stroke: color-mix(in oklch, var(--primary) 55%, transparent);
-	}
-	.constellation-shape__star {
-		fill: var(--primary);
-		stroke: none;
-	}
-	.constellation-shape__glow {
-		fill: color-mix(in oklch, var(--primary) 22%, transparent);
-		filter: blur(2px);
-	}
-}
-
-/* A spark: a short dash that runs along a line once, then waits for the others. */
 .constellation-shape__spark {
 	@apply hidden;
 	stroke: color-mix(in oklch, var(--foreground) 85%, transparent);
 	stroke-width: 0.35;
-	/* Butt ends: a round cap would leave a dot at each end of the line while it waits. */
+	/* Round caps would leave a dot at both ends while the spark waits. */
 	stroke-linecap: butt;
 	stroke-dasharray: 0.16 3;
 	stroke-dashoffset: 0.16;
-}
-.constellation-shape--lit .constellation-shape__spark {
-	stroke: color-mix(in oklch, var(--primary) 90%, white);
 }
 
 @keyframes constellation-spark {
@@ -72,10 +52,6 @@
 	}
 }
 
-/*
- * Never still: each star twinkles on its own beat and a spark runs along one line after
- * another. Only with motion allowed; otherwise the drawing holds still.
- */
 @media (prefers-reduced-motion: no-preference) {
 	.constellation-shape__spark {
 		@apply inline;
@@ -128,16 +104,12 @@
 	.constellation-shape .constellation-shape__star {
 		stroke: CanvasText;
 	}
-	.constellation-shape--lit .constellation-shape__star {
-		fill: CanvasText;
-	}
 	.constellation-shape__core {
 		fill: CanvasText;
 	}
 	.constellation-shape__end {
 		stroke: CanvasText;
 	}
-	.constellation-shape__glow,
 	.constellation-shape__spark {
 		@apply hidden;
 	}

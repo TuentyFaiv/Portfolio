@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Teaser } from "#home/molecules/teaser/index.ts";
+	import { chapterId, chapters } from "#lib/content/story.ts";
 	import { m } from "#lib/paraglide/messages.js";
-	import { chapterId, chapters } from "#utils/story.ts";
 
 	import "./story-teaser.css";
 </script>
@@ -13,7 +13,6 @@
 	punchline={m["translation:story-page.title-end"]()}
 	action={{ href: "/story", text: m["translation:story-teaser.action"]() }}
 >
-	<!-- Each year opens the story right at its chapter. -->
 	<ol class="story-teaser" aria-label={m["translation:story-teaser.years"]()}>
 		{#each chapters as { year, title } (year)}
 			<li>

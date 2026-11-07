@@ -14,7 +14,6 @@
 			rotate 420ms var(--spring),
 			scale 420ms var(--spring);
 	}
-	/* The icon that is not in use waits rotated away, so the swap feels like a turn. */
 	&[aria-checked="true"] .themeswitch__icon--sun,
 	&[aria-checked="false"] .themeswitch__icon--moon {
 		@apply -rotate-90 scale-50 opacity-0;

@@ -2,29 +2,20 @@ import { glslFragment, glslVertex, UNIFORM_FLOATS, wgsl } from "./shaders.ts";
 
 type Surface = HTMLCanvasElement | OffscreenCanvas;
 
-/** What the renderer needs from a GPU API: one full-screen draw with six vec4 uniforms. */
 export interface Backend {
 	name: "webgpu" | "webgl";
-	/** CPU emulation (SwiftShader, llvmpipe, WebGPU fallback adapter): draw once, never animate. */
 	software: boolean;
 	resize(width: number, height: number): void;
 	draw(uniforms: Float32Array): void;
-	/**
-	 * True while the GPU is still on the last frame. Drawing again would queue work faster
-	 * than the GPU finishes it, and a growing queue freezes the whole browser, not just
-	 * this page.
-	 */
+	// Queuing frames faster than the GPU finishes them freezes the whole browser.
 	busy(): boolean;
-	/** How long the GPU took for the last finished frame, in ms, or 0 when unknown. */
 	cost(): number;
 	destroy(): void;
 }
 
-/* A frame the GPU never reports finished (a driver bug, a lost device) must not stop the
-   nebula forever. */
+// A frame the GPU never reports done (driver bug, lost device) must not stop drawing forever.
 const STALE = 500;
 
-/** Tracks one frame in flight: when it was sent and how long the GPU took for it. */
 function inflight() {
 	let sent = 0;
 	let pending = false;
@@ -47,7 +38,6 @@ function inflight() {
 
 const SOFTWARE = /swiftshader|llvmpipe|softpipe|software|microsoft basic render/i;
 
-/** WebGPU first: it is the faster API, and the GPU here is entirely the nebula's. */
 async function webgpu(surface: Surface, transparent: boolean): Promise<Backend | undefined> {
 	const gpu = (globalThis.navigator as Navigator & { gpu?: GPU }).gpu;
 
@@ -57,16 +47,13 @@ async function webgpu(surface: Surface, transparent: boolean): Promise<Backend |
 
 	if (!adapter) return undefined;
 
-	// Ask for the device before touching the canvas: once a canvas has a context it
-	// cannot take another kind, and WebGL still needs to be possible if this fails.
 	const device = await adapter.requestDevice().catch(() => null);
 
 	if (!device) return undefined;
 
 	const format = gpu.getPreferredCanvasFormat();
 	const module = device.createShaderModule({ code: wgsl });
-	// Compile and validate before claiming the canvas: if the shader fails here, the
-	// canvas is still free for WebGL.
+	// Validate the pipeline before claiming the canvas, so WebGL can still take it if this fails.
 	const pipeline = await device
 		.createRenderPipelineAsync({
 			layout: "auto",
@@ -88,13 +75,10 @@ async function webgpu(surface: Surface, transparent: boolean): Promise<Backend |
 		return undefined;
 	}
 
-	// The band lets the page show through where there is no cloud (premultiplied colors).
 	context.configure({ device, format, alphaMode: transparent ? "premultiplied" : "opaque" });
 
 	const buffer = device.createBuffer({
 		size: UNIFORM_FLOATS * 4,
-		// GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST, as numbers: the constants are
-		// not in every TypeScript DOM library yet.
 		usage: 0x40 | 0x08,
 	});
 	const bindings = device.createBindGroup({
@@ -139,7 +123,6 @@ async function webgpu(surface: Surface, transparent: boolean): Promise<Backend |
 			pass.draw(3);
 			pass.end();
 			device.queue.submit([encoder.finish()]);
-			// Older implementations lack it: then nothing is in flight, as far as anyone knows.
 			if (typeof device.queue.onSubmittedWorkDone !== "function") return;
 			frame.send();
 			device.queue.onSubmittedWorkDone().then(frame.done, frame.done);
@@ -163,15 +146,12 @@ function compile(gl: WebGLRenderingContext | WebGL2RenderingContext, type: numbe
 }
 
 function webgl(surface: Surface, transparent: boolean): Backend | undefined {
-	// The band lets the page show through where there is no cloud (premultiplied colors).
 	const options = {
 		alpha: transparent,
 		antialias: false,
 		powerPreference: "low-power",
 		premultipliedAlpha: true,
 	} as const;
-	// WebGL 2 runs the same GLSL ES 1.0 shaders and adds fences, which tell when the GPU is
-	// done with a frame. WebGL 1 has no way to know, so it relies on frame timing alone.
 	const context = (surface.getContext("webgl2", options) ?? surface.getContext("webgl", options)) as
 		| WebGL2RenderingContext
 		| WebGLRenderingContext
@@ -184,7 +164,6 @@ function webgl(surface: Surface, transparent: boolean): Backend | undefined {
 	let fence: WebGLSync | null = null;
 	const frame = inflight();
 
-	/** Polls the fence of the frame in flight, without waiting. */
 	function check() {
 		if (!gl2 || !fence) return;
 		if (gl2.getSyncParameter(fence, gl2.SYNC_STATUS) !== gl2.SIGNALED) return;
@@ -240,8 +219,6 @@ function webgl(surface: Surface, transparent: boolean): Backend | undefined {
 			check();
 			return frame.busy();
 		},
-		// The fence is only polled once per animation frame, so its timing is rounded up
-		// to a whole frame: too coarse to judge cost by. Frame timing and `busy` do instead.
 		cost: () => 0,
 		destroy() {
 			gl.getExtension("WEBGL_lose_context")?.loseContext();
@@ -249,18 +226,9 @@ function webgl(surface: Surface, transparent: boolean): Backend | undefined {
 	};
 }
 
-/*
- * Gecko (Firefox, Zen, LibreWolf…) shows WebGPU canvases far slower than WebGL ones: in
- * Zen 1.24 (Gecko 159) on an M4 Pro the nebula drew 10 frames a second with WebGPU, even
- * at half resolution, and 62 with WebGL at full. Chromium and WebKit draw both alike.
- * "like Gecko" in other engines' user agents never has the slash and build date.
- */
+// Gecko draws WebGPU canvases ~6x slower than WebGL (Zen 1.24, M4 Pro).
 const GECKO = /\bGecko\/\d/;
 
-/**
- * The best API this browser offers for this canvas, or none at all. A transparent canvas
- * shows the page wherever the shader draws nothing.
- */
 export async function pickBackend(
 	surface: Surface,
 	prefer?: "webgpu" | "webgl",

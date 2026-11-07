@@ -3,8 +3,6 @@
 	import { m } from "#lib/paraglide/messages.js";
 </script>
 
-<!-- Until the first posts are out, it says what the blog itself says. Once they are, the
-     latest three go between the heading and the link. -->
 <Teaser
 	id="blog"
 	label={m["translation:deck.blog"]()}

@@ -1,16 +1,11 @@
 @reference "#styles/app.css";
 
-/* Same voice as the intro: centered, gradient headline, quiet eyebrow and lede. */
 .teaser {
 	--teaser-title-scale: 1;
 
 	@apply flex w-full max-w-240 flex-col items-center text-center;
 	gap: clamp(1rem, 3dvh, 1.75rem);
 
-	/*
-	 * Spanish runs longer: like the intro, a smaller headline keeps the English line count,
-	 * so switching language does not move the slide.
-	 */
 	&:lang(es) {
 		--teaser-title-scale: 0.8;
 
@@ -27,7 +22,6 @@
 	.teaser__title {
 		@apply w-full font-heading font-extrabold;
 		font-size: calc(clamp(2rem, min(6vw, 9dvh), 4.5rem) * var(--teaser-title-scale));
-		/* From the full size, so each line is as tall in every language and nothing moves. */
 		line-height: calc(clamp(2rem, min(6vw, 9dvh), 4.5rem) * 1.08);
 		letter-spacing: -0.02em;
 		text-wrap: balance;
@@ -55,7 +49,6 @@
 	stroke-linejoin: round;
 }
 
-/* Gradient text is transparent text over a background that forced colors removes. */
 @media (forced-colors: active) {
 	.teaser .teaser__title {
 		background: none;

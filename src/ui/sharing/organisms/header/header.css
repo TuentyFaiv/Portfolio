@@ -1,12 +1,11 @@
 @reference "#styles/app.css";
 
 .header {
-	/* Overshoots a little, then settles: a spring that needs no JavaScript. */
 	--spring: linear(0, 0.14 3%, 0.5 9%, 0.9 16%, 1.08 22%, 1.12 27%, 1.07 35%, 1 46%, 0.98 56%, 1);
 
 	@apply relative flex w-full items-center justify-between gap-2.5 p-5 sm:gap-6 sm:px-16 sm:py-7;
 
-	/* Stagger order lives here, not in style attributes, so the CSP can forbid those. */
+	/* Stagger order is here, not in style attributes, so the CSP can forbid them. */
 	.header__social:nth-child(1),
 	.header__item:nth-child(1) {
 		--index: 0;
@@ -48,7 +47,6 @@
 		}
 		.header__social {
 			@apply -translate-x-3 -rotate-12 scale-60 opacity-0 blur-xs;
-			/* Close fast, last icon first, after a short grace period for a stray pointer. */
 			transition-property: opacity, translate, scale, rotate, filter;
 			transition-duration: 150ms;
 			transition-timing-function: ease-in;
@@ -107,7 +105,6 @@
 		}
 	}
 
-	/* A popover panel under the header on phones, a plain row of links from sm up. */
 	.header__menu {
 		@apply fixed inset-x-0 top-19 bottom-0 m-0 h-auto w-full flex-col justify-between overflow-y-auto overscroll-contain border-0 bg-background px-6 pt-11 pb-17.5 text-foreground opacity-0 sm:contents;
 		transition:
@@ -166,7 +163,6 @@
 		@apply mt-4 sm:hidden;
 	}
 
-	/* The menu's content arrives right after the panel, one piece at a time. */
 	@media (width < 40rem) {
 		.header__item,
 		.header__socials--menu .header__social {
@@ -209,7 +205,6 @@
 	}
 }
 
-/* Hidden, not just covered: the page behind an open menu leaves the tab order too. */
 @media (width < 40rem) {
 	:root:has(.header__menu:popover-open) {
 		overflow: hidden;

@@ -19,7 +19,6 @@ vi.mock("./backends.ts", () => ({
 
 const { createNebula } = await import("./renderer.ts");
 
-/* A 120 Hz screen, driven by hand. */
 const REFRESH = 1000 / 120;
 let clock = 0;
 let callbacks: ((now: number) => void)[] = [];
@@ -55,7 +54,6 @@ async function open() {
 			{ type: "stats" }
 		>;
 	};
-	/* The pointer keeps moving, so the nebula always has something to ease toward. */
 	const wiggle = (index: number) =>
 		nebula.send({ type: "pointer", x: 400 + (index % 40) * 20, y: 500, touching: true });
 
@@ -124,13 +122,11 @@ describe("nebula render loop", () => {
 		tick(200, wiggle);
 		const lowered = stats().scale;
 
-		// The GPU recovers, but the pointer keeps moving: no resize mid-motion.
 		gpu.cost = 2;
 		const resizes = gpu.sizes.length;
 		tick(1600, wiggle);
 		expect(gpu.sizes.length).toBe(resizes);
 
-		// Everything settles: now it steps back up.
 		tick(1200);
 		expect(stats().scale).toBeGreaterThan(lowered);
 		nebula.stop();
@@ -140,7 +136,6 @@ describe("nebula render loop", () => {
 		const { nebula, stats, wiggle } = await open();
 		const full = stats().scale;
 
-		// Shader compile and page load: a few very slow frames, then a healthy GPU.
 		gpu.cost = 40;
 		tick(40, wiggle);
 		gpu.cost = 4;
@@ -171,7 +166,6 @@ describe("nebula render loop", () => {
 		tick(400, wiggle);
 		expect(stats().scale).toBeLessThan(full);
 
-		// A smaller frame costs less: the GPU now has plenty of room, nothing moves.
 		gpu.cost = 3;
 		tick(4000);
 

@@ -1,12 +1,5 @@
 @reference "#styles/app.css";
 
-/*
- * Three layers behind the slides:
- * 1. ::before, a plain CSS sky in the design's layout, for browsers without a GPU API
- *    and before the first frame. No image, so nothing to download or blur.
- * 2. the nebula canvas, drawn by the GPU (see #sharing/atoms/nebula).
- * 3. ::after, the scrim that keeps the text column readable over both.
- */
 body:has(.opening)::before {
 	@apply pointer-events-none fixed inset-0 -z-10 content-[""];
 	background:
@@ -22,8 +15,6 @@ body:has(.opening)::before {
 		radial-gradient(30% 26% at 95% 84%, #1a4236, transparent), #05070b;
 }
 
-/* The scrim only covers where text sits: the left column on wide screens, a soft wash on
-   phones, where text spans the whole width. The rest of the sky stays bright. */
 body:has(.opening)::after {
 	@apply pointer-events-none fixed inset-0 -z-1 content-[""];
 	background: linear-gradient(#fbf8f7a6, #fbf8f7a6);
@@ -45,12 +36,10 @@ body:has(.opening)::after {
 	}
 }
 
-/* Once the nebula draws, the sky underneath is hidden. It returns if the GPU resets. */
 body:has(.nebula[data-ready]:not([data-leaving]))::before {
 	background: none;
 }
 
-/* More contrast wins over atmosphere: a plain background behind the text. */
 @media (prefers-contrast: more) {
 	body:has(.opening)::before,
 	.dark body:has(.opening)::before,

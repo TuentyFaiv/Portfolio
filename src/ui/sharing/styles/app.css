@@ -5,9 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-	/* #FCFCFC */
 	--background: oklch(99.11% 0 none);
-	/* #090A0D */
 	--foreground: oklch(14.5% 0.01 270.48deg);
 
 	--background-50: oklch(100% 0 none);
@@ -28,7 +26,6 @@
 	--popover: var(--background-700);
 	--popover-foreground: var(--foreground);
 
-	/* #961E1E */
 	--primary: oklch(44.06% 0.16 26.46deg);
 	--primary-foreground: var(--background);
 
@@ -44,7 +41,6 @@
 	--primary-900: oklch(25.94% 0.1 27.27deg);
 	--primary-950: oklch(20.66% 0.08 29.23deg);
 
-	/* #21C08B */
 	--secondary: oklch(71.82% 0.15 163.98deg);
 	--secondary-foreground: var(--foreground);
 
@@ -63,9 +59,7 @@
 	--muted: var(--background-600);
 	--muted-foreground: var(--background-950);
 
-	/* #6E2AB2 */
 	--accent: oklch(45.9% 0.2 301.47deg);
-	/* #FEF6FF */
 	--accent-foreground: oklch(0.9819 0.0145 322.34);
 
 	--accent-50: oklch(81.96% 0.15 320.98deg);
@@ -80,7 +74,6 @@
 	--accent-900: oklch(23.89% 0.13 284.69deg);
 	--accent-950: oklch(17.56% 0.11 275.47deg);
 
-	/* #DB2560 */
 	--destructive: oklch(58.41% 0.21 9.2deg);
 
 	--destructive-50: oklch(84.49% 0.1 349.53deg);
@@ -95,7 +88,6 @@
 	--destructive-900: oklch(34.39% 0.13 23.63deg);
 	--destructive-950: oklch(27.77% 0.11 29.23deg);
 
-	/* #D4A516 */
 	--warning: oklch(74.48% 0.15 87.33deg);
 
 	--warning-50: oklch(97.87% 0.12 108.45deg);
@@ -110,7 +102,6 @@
 	--warning-900: oklch(44.48% 0.09 79.59deg);
 	--warning-950: oklch(36.32% 0.08 75.08deg);
 
-	/* #19B34C */
 	--success: oklch(67.12% 0.19 148.09deg);
 
 	--success-50: oklch(93.41% 0.11 151.41deg);
@@ -131,11 +122,9 @@
 
 	--radius: 0.625rem;
 
-	/* Quiet text. Stronger than the .pen values, so both reach 4.5:1 on the background. */
 	--text-muted: #55565c;
 	--text-subtle: #6b6c72;
 
-	/* Big headlines fade from the text color into the brand color. */
 	--headline-from: #090a0e;
 	--headline-to: #971b1c;
 
@@ -151,9 +140,7 @@
 	--headline-from: #fcfcfc;
 	--headline-to: #5ed9b9;
 
-	/* #090A0D */
 	--background: oklch(14.5% 0.01 270.48deg);
-	/* #FCFCFC */
 	--foreground: oklch(99.11% 0 none);
 
 	--background-50: oklch(54.93% 0 286.52deg);
@@ -174,7 +161,6 @@
 	--popover: var(--background-300);
 	--popover-foreground: var(--foreground);
 
-	/* #21C08B */
 	--primary: oklch(71.82% 0.15 163.98deg);
 	--primary-foreground: var(--foreground);
 
@@ -190,7 +176,6 @@
 	--primary-900: oklch(43.37% 0.11 154.38deg);
 	--primary-950: oklch(35.48% 0.09 151.22deg);
 
-	/* #961E1E */
 	--secondary: oklch(44.06% 0.16 26.46deg);
 	--secondary-foreground: var(--background);
 
@@ -209,9 +194,7 @@
 	--muted: var(--background-400);
 	--muted-foreground: var(--background-50);
 
-	/* #6E2AB2 */
 	--accent: oklch(60.22% 0.18 309.94deg);
-	/* #FEF6FF */
 	--accent-foreground: oklch(0.9819 0.0145 322.34);
 
 	--accent-50: oklch(81.96% 0.15 320.98deg);
@@ -226,7 +209,6 @@
 	--accent-900: oklch(23.89% 0.13 284.69deg);
 	--accent-950: oklch(17.56% 0.11 275.47deg);
 
-	/* #DB2560 - 300 */
 	--destructive: oklch(67.07% 0.18 0.93deg);
 
 	--destructive-50: oklch(84.49% 0.1 349.53deg);
@@ -241,7 +223,6 @@
 	--destructive-900: oklch(34.39% 0.13 23.63deg);
 	--destructive-950: oklch(27.77% 0.11 29.23deg);
 
-	/* #D4A516 - 300*/
 	--warning: oklch(83.72% 0.14 96.5deg);
 
 	--warning-50: oklch(97.87% 0.12 108.45deg);
@@ -256,7 +237,6 @@
 	--warning-900: oklch(44.48% 0.09 79.59deg);
 	--warning-950: oklch(36.32% 0.08 75.08deg);
 
-	/* #19B34C - 300 */
 	--success: oklch(77.05% 0.16 150.83deg);
 
 	--success-50: oklch(93.41% 0.11 151.41deg);
@@ -428,7 +408,6 @@
 	[role="button"]:not(:disabled) {
 		cursor: pointer;
 	}
-	/* Taps answer at once: no waiting to rule out a double tap zoom. */
 	a,
 	button {
 		touch-action: manipulation;
@@ -447,7 +426,6 @@
 	display: contents;
 }
 
-/* The header stays put while the page under it crossfades. */
 .header {
 	view-transition-name: site-header;
 }
@@ -457,7 +435,6 @@
 	animation-duration: 160ms;
 }
 
-/* What both pages show (named in #utils/morph.ts) glides to its new place. */
 ::view-transition-group(story-title),
 ::view-transition-group(story-year),
 ::view-transition-group(blog-label),
@@ -467,7 +444,6 @@
 	animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-/* The theme switch: the whole page changes as one, revealed in a circle from the button. */
 .theme-transition {
 	.header {
 		view-transition-name: none;

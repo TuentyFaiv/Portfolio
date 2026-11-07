@@ -1,6 +1,5 @@
 @reference "#styles/app.css";
 
-/* Above the CSS sky, below the scrim. It fades in once the first frame is drawn. */
 .nebula {
 	@apply pointer-events-none fixed inset-0 -z-5 size-full opacity-0;
 	transition: opacity 700ms ease;
@@ -13,10 +12,6 @@
 	}
 }
 
-/*
- * Where the band's slide has text, at the top and bottom of the band: the clouds fade out
- * before these rows. Registered as lengths so the page reads them in pixels.
- */
 @property --nebula-clear-top {
 	syntax: "<length>";
 	inherits: true;
@@ -28,7 +23,6 @@
 	initial-value: 0px;
 }
 
-/* The band and the slide's sky fill the box their slide places (and masks, for the band). */
 .nebula--band,
 .nebula--slide {
 	@apply absolute inset-0 z-auto size-full;
@@ -40,7 +34,6 @@
 	}
 }
 
-/* More contrast, or the system's own colors (they never reach a canvas): no clouds behind text. */
 @media (prefers-contrast: more), (forced-colors: active) {
 	.nebula {
 		@apply hidden;

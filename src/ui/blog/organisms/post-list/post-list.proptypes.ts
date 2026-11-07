@@ -1,4 +1,4 @@
-import type { PostSummary } from "#typing/blog.ts";
+import type { PostSummary } from "#lib/blog/types.ts";
 
 export interface Props {
 	posts: PostSummary[];

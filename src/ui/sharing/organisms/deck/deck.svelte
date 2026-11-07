@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { scrambleTo } from "#attach/scramble.ts";
 	import { m } from "#lib/paraglide/messages.js";
+	import { pad } from "#lib/shared/format.ts";
+	import { scrambleTo } from "#lib/text/scramble.attach.ts";
 
 	import "./deck.css";
 
@@ -8,24 +9,15 @@
 
 	let { slides, children }: Props = $props();
 
-	const pad = (value: number) => String(value).padStart(2, "0");
 	let first = $derived(slides[0]);
 	let second = $derived(slides[1] ?? slides[0]);
 
-	// Empty until a slide crosses the middle of the screen: the first one is current until then.
 	let tracked = $state<string>();
 	let active = $derived(tracked ?? first.id);
 	let index = $derived(slides.findIndex((slide) => slide.id === active));
 	let last = $derived(index === slides.length - 1);
-	// The last slide has no next one: its link fades out still showing the previous label.
 	let next = $derived(slides[index + 1] ?? slides[index]);
 
-	/**
-	 * A shared link (/#contact) should open on its slide. The browser jumps there while the
-	 * page is still loading, and on a busy machine it can jump before the layout settles and
-	 * stop a slide or more short. Once loaded, line the slide up again, unless the visitor
-	 * has already started moving.
-	 */
 	function keepLinkedSlide() {
 		const target = () => {
 			const id = decodeURIComponent(window.location.hash.slice(1));
@@ -54,7 +46,6 @@
 		};
 	}
 
-	/** The slide crossing the middle of the screen is the current one, whatever its height. */
 	function trackActive() {
 		const observer = new IntersectionObserver(
 			(entries) => {
@@ -71,7 +62,6 @@
 	}
 </script>
 
-<!-- The slides and this nav are direct children of the layout's <main>. -->
 {@render children()}
 
 <nav
@@ -107,7 +97,6 @@
 			<path d="m6 9 6 6 6-6" />
 		</svg>
 	</p>
-	<!-- One spot on the right: the next slide, or the way back once there is no next one. -->
 	<div class="deck__end">
 		<p class="deck__hint deck__hint--swipe" data-hidden={last}>
 			{m["translation:deck.swipe-hint"]()}

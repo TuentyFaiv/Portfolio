@@ -1,22 +1,3 @@
-/*
- * The nebula, drawn from nothing but math: four sheets of curling cloud at different
- * depths, laid out like the design (a band across the top, clusters low on each side,
- * an open middle with thin threads), lit from the upper left. It is sharp at any size
- * because every pixel is computed, never stretched from an image.
- *
- * Two versions of one shader: WGSL for WebGPU and GLSL for WebGL. Keep them in step;
- * the e2e test "both backends draw the same nebula" compares their output.
- *
- * Three scenes share the clouds: the sky behind /story, a band across the Contact slide,
- * and a sky inside the Projects slide. The band is transparent where there is no cloud, and
- * fades out along ragged edges before the rows where the page has text. The ripples' spare
- * floats carry it: r0.w is 1 for the band, r1.w and r2.w are those text rows at the top and
- * bottom, in CSS pixels. Outside the band, r1.w and r2.w are how far the sky has travelled
- * across and up (in screen heights): the Projects sky travels with its camera, near clouds
- * more than far ones and the stars least of all.
- */
-
-/** Uniform layout shared by both backends: six vec4, in this order. */
 export const UNIFORM_FLOATS = 24;
 
 export const glslVertex = `
@@ -85,15 +66,12 @@ vec2 touch(vec2 uv, float aspect) {
 /* One sheet of cloud at depth z: density, purple rim, light and glow from one field. */
 vec4 sheet(vec2 uv, float z, float seed, float shape, float time) {
 	vec2 p = uv * z * 0.95 / u_a.w + vec2(seed * 17.3, seed * 9.1) + vec2(time * 0.012, -time * 0.004);
-	// Two warps feeding each other: the first bends the field, the second curls it.
 	vec2 w1 = vec2(fbm4(p * 0.8 + vec2(time * 0.02, 0.0)), fbm4(p * 0.8 + vec2(5.2, 1.3 - time * 0.015)));
 	vec2 w2 = vec2(fbm3(p * 1.6 + w1 * 1.9 + vec2(1.7, 9.2)), fbm3(p * 1.6 + w1 * 1.9 + vec2(8.3, 2.8)));
 	vec2 base = p * 1.8 + w2 * 1.5;
 	float n = fbm7(base);
 	float cut = 0.42 + 0.3 * (1.0 - shape);
 	float density = smoothstep(cut, cut + 0.36, n);
-	// Lit where the field thins toward the light (upper left), dark in the folds.
-	// Light only follows the large shapes, so three octaves on both sides are enough.
 	float toward = fbm3(base + vec2(-0.05, 0.06));
 	float shade = clamp(0.45 + (fbm3(base) - toward) * 8.0 + (n - cut) * 1.2, 0.0, 1.0);
 	float rim = density * (1.0 - smoothstep(0.1, 0.55, density));
@@ -122,10 +100,6 @@ void main() {
 	vec2 spot = pixel / u_a.xy - 0.5 - moved / vec2(aspect, 1.0);
 	float shape = u_r0.w > 0.5 ? band(spot) : composition(spot);
 
-	// Four sheets at different depths. The camera flies forward with the scroll; a sheet
-	// that passes the camera returns far behind as a new one (its seed changes).
-	// A gentle drift through depth: about a third of a layer per slide, so no layer ever
-	// rushes past the camera between two slides.
 	float camera = u_b.y * 0.32 + time * 0.012;
 	vec4 acc = vec4(0.0); // body, light, purple, glow
 	float cover = 0.0;
@@ -133,24 +107,21 @@ void main() {
 		float travel = float(i) - camera;
 		float z = 0.7 + mod(travel, 4.0);
 		float seed = floor(travel / 4.0) * 7.0 + float(i) * 3.1;
-		// Layers fade in far away and out near the camera over a long stretch, never at once.
 		float fade = smoothstep(4.7, 3.6, z) * smoothstep(0.7, 2.0, z);
 		if (fade < 0.01 || cover > 0.97) continue;
 		vec2 parallax = u_c.xy * 0.16 / z;
 		vec4 s = sheet(uv + parallax, z, seed, shape, time);
 		float alpha = s.x * fade * mix(0.3, 0.75, shape);
 		float weight = (1.0 - cover) * alpha;
-		// x: how lit (0..1), y: purple, z: glow. Farther sheets are a little dimmer.
+		// x: lit (0..1), y: purple, z: glow
 		float lit = min(s.z * (0.55 + 0.45 * shape) * (1.12 - 0.1 * z) + s.w * 0.2, 0.92);
 		acc += weight * vec4(lit, s.y * (0.4 + 0.6 * s.z), s.w, 1.0);
 		cover += weight;
 	}
 
-	// Thin glowing threads drift across the open middle, as in the design.
 	vec2 wuv = uv * 2.6 + vec2(fbm4(uv * 2.0 + time * 0.01), fbm4(uv * 2.0 + 7.3)) * 1.6;
 	float threads = pow(ridge(wuv), 5.0) * (1.0 - cover) * (0.35 + 0.65 * (1.0 - shape));
 	vec2 q = pixel / u_a.xy;
-	// A dim green haze sits behind the clouds, strongest where they gather.
 	float haze = (0.25 + 0.75 * smoothstep(0.25, 0.8, fbm4(uv * 1.4 + vec2(time * 0.008, 0.0)))) * (0.25 + 0.75 * shape);
 	vec3 space = mix(vec3(0.010, 0.013, 0.020), vec3(0.012, 0.022, 0.024), q.y) + vec3(0.016, 0.07, 0.055) * haze;
 	float lit = acc.x / max(cover, 0.001);
@@ -164,9 +135,6 @@ void main() {
 	float star = seed > 0.93 ? smoothstep(0.09, 0.02, length(fract(grid) - 0.5 - (vec2(hash(cell + 1.7), hash(cell + 9.2)) - 0.5) * 0.7)) * (0.55 + 0.45 * sin(time * (0.6 + seed) + seed * 40.0)) : 0.0;
 	dark += vec3(0.85, 0.95, 1.0) * star * 0.8 * pow(1.0 - cover, 2.0);
 
-	// The band: premultiplied color, transparent where there is no cloud, so the page shows
-	// through and the band has no box of its own. Its outline is a ragged, drifting fade that
-	// starts past the rows where the page has text.
 	if (u_r0.w > 0.5) {
 		float css = u_a.z;
 		float room = max(u_a.y / css - u_r1.w - u_r2.w, 1.0);
@@ -198,8 +166,6 @@ void main() {
 		- (paper - vec3(0.80, 0.74, 0.93)) * min(cover * purple * 1.4, 0.6)
 		- (paper - vec3(0.88, 0.72, 0.75)) * min(threads * 1.2, 0.4);
 
-	// The reading area stays calm whatever the clouds do: the centered headline on the
-	// first slide, the text column on the others (a centered band on tall screens).
 	vec2 sc = q - 0.5;
 	float opening = 1.0 - smoothstep(0.3, 0.7, u_b.y);
 	float headline = exp(-dot(sc * vec2(2.4, 3.4), sc * vec2(2.4, 3.4)));
@@ -214,12 +180,12 @@ void main() {
 }
 `;
 
-export const wgsl = /* wgsl */ `
+export const wgsl = `
 struct Uniforms {
 	a: vec4f, // canvas w, h, device pixels per CSS pixel, min(1, w / h)
 	b: vec4f, // time, scroll depth, theme (1 dark), cursor presence
 	c: vec4f, // parallax x, y, cursor x, y (cursor 0..1, y down)
-	r0: vec4f, // ripples: x, y (0..1, y down), start time; spare floats: scene, band clear top, bottom
+	r0: vec4f, // ripples: x, y (0..1), start time; spare: scene, band clear top, bottom
 	r1: vec4f,
 	r2: vec4f,
 };
@@ -427,8 +393,6 @@ fn fragment_main(@builtin(position) position: vec4f) -> @location(0) vec4f {
 		- (paper - vec3f(0.80, 0.74, 0.93)) * min(cover * purple * 1.4, 0.6)
 		- (paper - vec3f(0.88, 0.72, 0.75)) * min(threads * 1.2, 0.4);
 
-	// The reading area stays calm whatever the clouds do: the centered headline on the
-	// first slide, the text column on the others (a centered band on tall screens).
 	let sc = q - 0.5;
 	let opening = 1.0 - smoothstep(0.3, 0.7, u.b.y);
 	let headline = exp(-dot(sc * vec2f(2.4, 3.4), sc * vec2f(2.4, 3.4)));
